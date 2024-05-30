@@ -25,21 +25,21 @@ ChartJS.register(
 );
 
 const CryptoChart = ({ datasets, title, metric }) => {
-    // Collect all unique dates from all datasets
-    const allDates = datasets.reduce((acc, dataset) => {
+    // Collect all unique timestamps from all datasets
+    const allTimestamps = datasets.reduce((acc, dataset) => {
         dataset.data.forEach(entry => {
-            const date = new Date(entry.timestamp).toISOString().split('T')[0];
-            if (!acc.includes(date)) {
-                acc.push(date);
+            const timestamp = new Date(entry.timestamp).toISOString();
+            if (!acc.includes(timestamp)) {
+                acc.push(timestamp);
             }
         });
         return acc;
     }, []).sort((a, b) => new Date(a) - new Date(b));
 
-    // Align each dataset with the unified labels (dates)
+    // Align each dataset with the unified labels (timestamps)
     const alignedDatasets = datasets.map(dataset => {
-        const dataMap = new Map(dataset.data.map(entry => [new Date(entry.timestamp).toISOString().split('T')[0], entry[metric]]));
-        const data = allDates.map(date => dataMap.get(date) || null);
+        const dataMap = new Map(dataset.data.map(entry => [new Date(entry.timestamp).toISOString(), entry[metric]]));
+        const data = allTimestamps.map(timestamp => dataMap.get(timestamp) || null);
         return {
             label: dataset.label,
             data: data,
@@ -50,7 +50,7 @@ const CryptoChart = ({ datasets, title, metric }) => {
     });
 
     const chartData = {
-        labels: allDates,
+        labels: allTimestamps,
         datasets: alignedDatasets,
     };
 
@@ -59,8 +59,7 @@ const CryptoChart = ({ datasets, title, metric }) => {
             x: {
                 type: 'time',
                 time: {
-                    unit: 'day',
-                    tooltipFormat: 'MM/dd/yyyy',
+                    tooltipFormat: 'MM/dd/yyyy HH:mm:ss',
                 },
                 title: {
                     display: true,

@@ -309,9 +309,9 @@ const App = () => {
                             label="Granularity"
                             onChange={(event) => setGranularity(event.target.value)}
                         >
+                            <MenuItem value={"MINUTES"}>Minutes</MenuItem>
                             <MenuItem value={"HOURS"}>Hours</MenuItem>
                             <MenuItem value={"DAYS"}>Days</MenuItem>
-                            <MenuItem value={"MONTHS"}>Months</MenuItem>
                         </Select>
                     </FormControl>
                 </Grid>
