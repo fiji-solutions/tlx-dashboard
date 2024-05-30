@@ -1,7 +1,7 @@
 // src/App.js
 import React, { useState } from 'react';
 import CryptoChart from './components/CryptoChart';
-import {Button, Checkbox, Grid, MenuItem, Select, TextField} from "@mui/material";
+import {Button, Checkbox, FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
@@ -299,15 +299,21 @@ const App = () => {
                     direction={"column"}
                     style={{"width": "unset"}}
                 >
-                    <Select
-                        value={granularity}
-                        label="Granularity"
-                        onChange={(event) => setGranularity(event.target.value)}
-                    >
-                        <MenuItem value={"HOURS"}>Hours</MenuItem>
-                        <MenuItem value={"DAYS"}>Days</MenuItem>
-                        <MenuItem value={"MONTHS"}>Months</MenuItem>
-                    </Select>
+                    <FormControl sx={{minWidth: 150}}>
+                        <InputLabel id="granularity">Granularity</InputLabel>
+
+                        <Select
+                            id="granularity"
+                            labelId="granularity"
+                            value={granularity}
+                            label="Granularity"
+                            onChange={(event) => setGranularity(event.target.value)}
+                        >
+                            <MenuItem value={"HOURS"}>Hours</MenuItem>
+                            <MenuItem value={"DAYS"}>Days</MenuItem>
+                            <MenuItem value={"MONTHS"}>Months</MenuItem>
+                        </Select>
+                    </FormControl>
                 </Grid>
 
                 <Grid
@@ -335,7 +341,7 @@ const App = () => {
                 >
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DatePicker
-                            label="Controlled picker"
+                            label="Start date"
                             value={fromDate}
                             onChange={(newValue) => setFromDate(newValue)}
                         />
@@ -349,7 +355,7 @@ const App = () => {
                     style={{"width": "unset"}}
                 >
                     <TextField
-                        label="Initial capital"
+                        label="Initial invest capital"
                         type="number"
                         InputLabelProps={{
                             shrink: true,
