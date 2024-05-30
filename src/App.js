@@ -359,7 +359,9 @@ const App = () => {
                     />
                 </Grid>
             </Grid>
-            <Button onClick={onSearch}>Fetch</Button>
+            <br />
+            <Button onClick={onSearch} variant="contained">Fetch data</Button>
+            <br />
             <CryptoChart datasets={datasets} title="Price" metric="price" />
             <CryptoChart datasets={datasets} title="Returns" metric="returns" />
             <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" />

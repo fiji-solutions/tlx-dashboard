@@ -25,15 +25,33 @@ ChartJS.register(
 );
 
 const CryptoChart = ({ datasets, title, metric }) => {
-    const chartData = {
-        labels: datasets[0]?.data.map(entry => new Date(entry.timestamp)) || [],
-        datasets: datasets.map(dataset => ({
+    // Collect all unique dates from all datasets
+    const allDates = datasets.reduce((acc, dataset) => {
+        dataset.data.forEach(entry => {
+            const date = new Date(entry.timestamp).toISOString().split('T')[0];
+            if (!acc.includes(date)) {
+                acc.push(date);
+            }
+        });
+        return acc;
+    }, []).sort((a, b) => new Date(a) - new Date(b));
+
+    // Align each dataset with the unified labels (dates)
+    const alignedDatasets = datasets.map(dataset => {
+        const dataMap = new Map(dataset.data.map(entry => [new Date(entry.timestamp).toISOString().split('T')[0], entry[metric]]));
+        const data = allDates.map(date => dataMap.get(date) || null);
+        return {
             label: dataset.label,
-            data: dataset.data.map(entry => entry[metric]),
+            data: data,
             fill: false,
             backgroundColor: dataset.backgroundColor,
             borderColor: dataset.borderColor,
-        })),
+        };
+    });
+
+    const chartData = {
+        labels: allDates,
+        datasets: alignedDatasets,
     };
 
     const options = {
