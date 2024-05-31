@@ -1,12 +1,26 @@
 // src/App.js
 import React, { useState } from 'react';
 import CryptoChart from './components/CryptoChart';
-import {Button, Checkbox, FormControl, Grid, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import {
+    Button,
+    Checkbox,
+    CircularProgress,
+    FormControl,
+    Grid,
+    InputLabel,
+    MenuItem,
+    Select,
+    Tab,
+    Tabs,
+    TextField
+} from "@mui/material";
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import BarChart from "./components/BarChart";
 import "./App.css";
+import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 
 const App = () => {
     const [datasets, setDatasets] = useState([]);
@@ -32,6 +46,7 @@ const App = () => {
 
     const [array,setArray] = useState([]);
 
+    const [tabValue, setTabValue] = React.useState('1');
     const [granularity, setGranularity] = useState("DAYS");
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
@@ -142,13 +157,24 @@ const App = () => {
         setLoading(false);
     };
 
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
+    };
+
     const onSearch = () => {
         fetchData();
     }
 
     return (
         <div className="App">
-            <h1>TLX Dashboard</h1>
+            <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
+                <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
+                <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
+            </Tabs>
+            <h1>
+                TLX Dashboard
+            </h1>
+
             <Grid
                 container
                 spacing={1}
@@ -176,6 +202,7 @@ const App = () => {
                                 value={granularity}
                                 label="Granularity"
                                 onChange={(event) => setGranularity(event.target.value)}
+                                disabled={loading}
                             >
                                 <MenuItem value={"MINUTES"}>Minutes</MenuItem>
                                 <MenuItem value={"HOURS"}>Hours</MenuItem>
@@ -198,6 +225,7 @@ const App = () => {
                             }}
                             value={granularityUnit}
                             onChange={(event) => setGranularityUnit(event.target.value)}
+                            disabled={loading}
                         />
                     </Grid>
 
@@ -212,6 +240,7 @@ const App = () => {
                                 label="Start date"
                                 value={fromDate}
                                 onChange={(newValue) => setFromDate(newValue)}
+                                disabled={loading}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -231,6 +260,7 @@ const App = () => {
                             }}
                             value={initialCapital}
                             onChange={(event) => setInitialCapital(event.target.value)}
+                            disabled={loading}
                         />
                     </Grid>
 
@@ -249,6 +279,7 @@ const App = () => {
                             }}
                             value={riskFreeRate}
                             onChange={(event) => setRiskFreeRate(event.target.value)}
+                            disabled={loading}
                         />
                     </Grid>
                 </Grid>
@@ -397,15 +428,67 @@ const App = () => {
                 </Grid>
             </Grid>
             <br />
-            <Button onClick={onSearch} variant="contained">Fetch data</Button>
+            <Button onClick={onSearch} variant="contained" disabled={loading}>
+                {loading ? (
+                    <CircularProgress size={25} color={"grey"} />
+                ) : (
+                    "Fetch data"
+                )}
+            </Button>
             <br />
-            <CryptoChart datasets={datasets} title="Price" metric="price" />
-            <CryptoChart datasets={datasets} title="Returns" metric="returns" />
-            <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" />
-            <BarChart metrics={metrics} title="Volatility" metric="volatility" />
-            <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio" />
-            <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio" />
-            <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
+            <Grid
+                container
+                direction={"row"}
+            >
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <CryptoChart datasets={datasets} title="Price" metric="price" />
+                </Grid>
+
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <CryptoChart datasets={datasets} title="Returns" metric="returns" />
+                </Grid>
+
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" />
+                </Grid>
+
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Volatility" metric="volatility" />
+                </Grid>
+
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio" />
+                </Grid>
+
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio" />
+                </Grid>
+
+                <Grid
+                    item
+                    xs={12/parseInt(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
+                </Grid>
+            </Grid>
         </div>
     );
 };

@@ -47,7 +47,12 @@ const BarChart = ({ metrics, title, metric }) => {
         },
     };
 
-    return <Bar data={chartData} options={options} />;
+    return (
+        <>
+            <h1>{title}</h1>
+            <Bar data={chartData} options={options} />
+        </>
+    );
 };
 
 export default BarChart;
