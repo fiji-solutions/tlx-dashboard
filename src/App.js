@@ -35,6 +35,7 @@ const App = () => {
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
     const [initialCapital, setInitialCapital] = useState(1000);
+    const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/hello/?";
@@ -117,7 +118,7 @@ const App = () => {
     const fetchData = async () => {
         setLoading(true);
         const dataPromises = array.map(asset =>
-            fetch(domain + "coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initial_investment=" + initialCapital).then(response => response.json())
+            fetch(domain + "coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
         const results = await Promise.all(dataPromises);
@@ -357,11 +358,30 @@ const App = () => {
                     <TextField
                         label="Initial invest capital"
                         type="number"
+                        InputProps={{ inputProps: { min: 1 } }}
                         InputLabelProps={{
                             shrink: true,
                         }}
                         value={initialCapital}
                         onChange={(event) => setInitialCapital(event.target.value)}
+                    />
+                </Grid>
+
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset", "minWidth": "200px"}}
+                >
+                    <TextField
+                        label="Risk free rate percentage"
+                        type="number"
+                        InputProps={{ inputProps: { min: 0, max: 100 } }}
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        value={riskFreeRate}
+                        onChange={(event) => setRiskFreeRate(event.target.value)}
                     />
                 </Grid>
             </Grid>
