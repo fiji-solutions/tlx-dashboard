@@ -444,21 +444,21 @@ const App = () => {
                     item
                     xs={12/parseInt(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Price" metric="price" />
+                    <CryptoChart datasets={datasets} title="Price" metric="price" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
                     xs={12/parseInt(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Returns" metric="returns" />
+                    <CryptoChart datasets={datasets} title="Returns" metric="returns" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
                     xs={12/parseInt(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" />
+                    <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid

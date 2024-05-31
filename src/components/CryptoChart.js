@@ -24,10 +24,10 @@ ChartJS.register(
     Legend
 );
 
-const CryptoChart = ({ datasets, title, metric }) => {
+const CryptoChart = ({ datasets, title, metric, showDatesOnly = false }) => {
     // Collect all unique timestamps from all datasets
     const allTimestamps = datasets.reduce((acc, dataset) => {
-        dataset.data.forEach(entry => {
+        dataset?.data?.forEach(entry => {
             const timestamp = new Date(entry.timestamp).toISOString();
             if (!acc.includes(timestamp)) {
                 acc.push(timestamp);
@@ -59,7 +59,8 @@ const CryptoChart = ({ datasets, title, metric }) => {
             x: {
                 type: 'time',
                 time: {
-                    tooltipFormat: 'MM/dd/yyyy HH:mm:ss',
+                    unit: showDatesOnly ? 'day' : 'minute',  // Adjust unit based on showDatesOnly
+                    tooltipFormat: showDatesOnly ? 'MM/dd/yyyy' : 'MM/dd/yyyy HH:mm:ss',
                 },
                 title: {
                     display: true,
