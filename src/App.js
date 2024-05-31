@@ -6,6 +6,7 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import BarChart from "./components/BarChart";
+import "./App.css";
 
 const App = () => {
     const [datasets, setDatasets] = useState([]);
@@ -151,7 +152,108 @@ const App = () => {
             <Grid
                 container
                 spacing={1}
+                justifyContent={"center"}
             >
+
+                <Grid
+                    item
+                    container
+                    spacing={1}
+                    justifyContent={"center"}
+                >
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <FormControl sx={{minWidth: 150}}>
+                            <InputLabel id="granularity">Granularity</InputLabel>
+
+                            <Select
+                                id="granularity"
+                                labelId="granularity"
+                                value={granularity}
+                                label="Granularity"
+                                onChange={(event) => setGranularity(event.target.value)}
+                            >
+                                <MenuItem value={"MINUTES"}>Minutes</MenuItem>
+                                <MenuItem value={"HOURS"}>Hours</MenuItem>
+                                <MenuItem value={"DAYS"}>Days</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <TextField
+                            label="Granilarity unit"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={granularityUnit}
+                            onChange={(event) => setGranularityUnit(event.target.value)}
+                        />
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="Start date"
+                                value={fromDate}
+                                onChange={(newValue) => setFromDate(newValue)}
+                            />
+                        </LocalizationProvider>
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <TextField
+                            label="Initial invest capital"
+                            type="number"
+                            InputProps={{ inputProps: { min: 1 } }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={initialCapital}
+                            onChange={(event) => setInitialCapital(event.target.value)}
+                        />
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset", "minWidth": "200px"}}
+                    >
+                        <TextField
+                            label="Risk free rate percentage"
+                            type="number"
+                            InputProps={{ inputProps: { min: 0, max: 100 } }}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={riskFreeRate}
+                            onChange={(event) => setRiskFreeRate(event.target.value)}
+                        />
+                    </Grid>
+                </Grid>
+
+
                 <Grid
                     item
                     container
@@ -292,97 +394,6 @@ const App = () => {
                         />
                         <span>SOL5L</span>
                     </Grid>
-                </Grid>
-
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <FormControl sx={{minWidth: 150}}>
-                        <InputLabel id="granularity">Granularity</InputLabel>
-
-                        <Select
-                            id="granularity"
-                            labelId="granularity"
-                            value={granularity}
-                            label="Granularity"
-                            onChange={(event) => setGranularity(event.target.value)}
-                        >
-                            <MenuItem value={"MINUTES"}>Minutes</MenuItem>
-                            <MenuItem value={"HOURS"}>Hours</MenuItem>
-                            <MenuItem value={"DAYS"}>Days</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
-
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <TextField
-                        label="Granilarity unit"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        value={granularityUnit}
-                        onChange={(event) => setGranularityUnit(event.target.value)}
-                    />
-                </Grid>
-
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Start date"
-                            value={fromDate}
-                            onChange={(newValue) => setFromDate(newValue)}
-                        />
-                    </LocalizationProvider>
-                </Grid>
-
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <TextField
-                        label="Initial invest capital"
-                        type="number"
-                        InputProps={{ inputProps: { min: 1 } }}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        value={initialCapital}
-                        onChange={(event) => setInitialCapital(event.target.value)}
-                    />
-                </Grid>
-
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset", "minWidth": "200px"}}
-                >
-                    <TextField
-                        label="Risk free rate percentage"
-                        type="number"
-                        InputProps={{ inputProps: { min: 0, max: 100 } }}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        value={riskFreeRate}
-                        onChange={(event) => setRiskFreeRate(event.target.value)}
-                    />
                 </Grid>
             </Grid>
             <br />
