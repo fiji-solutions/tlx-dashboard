@@ -168,6 +168,7 @@ const App = () => {
     return (
         <div className="App">
             <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
+                <h4>View Mode</h4>
                 <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
                 <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
             </Tabs>
@@ -439,52 +440,53 @@ const App = () => {
             <Grid
                 container
                 direction={"row"}
+                justifyContent={"space-evenly"}
             >
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Price" metric="price" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Returns" metric="returns" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Volatility" metric="volatility" />
                 </Grid>
 
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio" />
                 </Grid>
 
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio" />
                 </Grid>
 
                 <Grid
                     item
-                    xs={12/parseInt(tabValue)}
+                    xs={11/parseInt(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
                 </Grid>
