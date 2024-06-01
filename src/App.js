@@ -21,6 +21,7 @@ import BarChart from "./components/BarChart";
 import "./App.css";
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
 
 const App = () => {
     const [datasets, setDatasets] = useState([]);
@@ -170,6 +171,7 @@ const App = () => {
             <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
                 <h4>View Mode</h4>
                 <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
+                <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.5"} />
                 <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
             </Tabs>
             <h1>
@@ -444,49 +446,49 @@ const App = () => {
             >
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Price" metric="price" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Returns" metric="returns" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" showDatesOnly={granularity === "DAYS"} />
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Volatility" metric="volatility" />
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio" />
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio" />
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseInt(tabValue)}
+                    xs={11/parseFloat(tabValue)}
                 >
                     <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
                 </Grid>
