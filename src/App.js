@@ -46,7 +46,7 @@ const App = () => {
 
     const [array,setArray] = useState([]);
 
-    const [tabValue, setTabValue] = React.useState('1');
+    const [tabValue, setTabValue] = React.useState('2');
     const [granularity, setGranularity] = useState("DAYS");
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
