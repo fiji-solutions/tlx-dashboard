@@ -491,7 +491,6 @@ const App = () => {
                     <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
                 </Grid>
             </Grid>
-            <p>If you find bugs/issues with the website, tag me in TRW and let me know: @01HK0BGJQMWXQC26SRG2W46TET</p>
         </div>
     );
 };
