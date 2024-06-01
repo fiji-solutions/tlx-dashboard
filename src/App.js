@@ -171,7 +171,7 @@ const App = () => {
             <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
                 <h4>View Mode</h4>
                 <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
-                <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.5"} />
+                <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.3"} />
                 <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
             </Tabs>
             <h1>
