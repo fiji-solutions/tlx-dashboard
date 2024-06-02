@@ -224,6 +224,51 @@ const App = () => {
         setLoading(false);
     };
 
+    const downloadData = async () => {
+        try {
+            setLoading(true);
+            const arrayPromises = array.map(asset =>
+                fetch(domain + "tlx-export/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'text/csv'
+                    }
+                }).then(response => response.blob())
+            );
+
+            const torosArrayPromises = torosArray.map(asset =>
+                fetch(domain + "toros-export/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'text/csv'
+                    }
+                }).then(response => response.blob())
+            );
+
+            const results = await Promise.all([...arrayPromises, ...torosArrayPromises]);
+
+            results.forEach((blob, index) => {
+                // Create a link element
+                const link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = index < array.length ? `${array[index]}-${dayjs(fromDate).format("YYYY-MM-DD")}-${interval}.csv` : `${torosArray[index - array.length]}-${dayjs(fromDate).format("YYYY-MM-DD")}-${interval}.csv`;
+
+                // Append the link to the body
+                document.body.appendChild(link);
+
+                // Programmatically click the link to trigger the download
+                link.click();
+
+                // Remove the link from the document
+                document.body.removeChild(link);
+            });
+            setLoading(false);
+        } catch (error) {
+            console.error('Error downloading CSV files:', error);
+            setLoading(false);
+        }
+    };
+
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
@@ -231,6 +276,10 @@ const App = () => {
 
     const onSearch = () => {
         fetchData();
+    }
+
+    const onExport = () => {
+        downloadData();
     }
 
     const handleIntervalChange = (event) => {
@@ -599,6 +648,13 @@ const App = () => {
                     <CircularProgress size={25} color={"grey"} />
                 ) : (
                     "Fetch data"
+                )}
+            </Button>
+            <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained" disabled={loading}>
+                {loading ? (
+                    <CircularProgress size={25} color={"grey"} />
+                ) : (
+                    "Export raw data"
                 )}
             </Button>
             <br />
