@@ -648,14 +648,14 @@ const App = () => {
                 </Grid>
             </Grid>
             <br />
-            <Button onClick={onSearch} variant="contained" disabled={loading}>
+            <Button onClick={onSearch} variant="contained" disabled={loading || (array.length === 0 && torosArray.length === 0)}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"} />
                 ) : (
                     "Fetch data"
                 )}
             </Button>
-            <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained" disabled={loading}>
+            <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained" disabled={loading || (array.length === 0 && torosArray.length === 0)}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"} />
                 ) : (
