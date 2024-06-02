@@ -224,6 +224,8 @@ const App = () => {
         setLoading(false);
     };
 
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
     const downloadData = async () => {
         try {
             setLoading(true);
@@ -247,7 +249,9 @@ const App = () => {
 
             const results = await Promise.all([...arrayPromises, ...torosArrayPromises]);
 
-            results.forEach((blob, index) => {
+            for (let i = 0; i < results.length; i++) {
+                const blob = results[i];
+                const index = results.indexOf(blob);
                 // Create a link element
                 const link = document.createElement('a');
                 link.href = window.URL.createObjectURL(blob);
@@ -261,7 +265,8 @@ const App = () => {
 
                 // Remove the link from the document
                 document.body.removeChild(link);
-            });
+                await delay(150);
+            }
             setLoading(false);
         } catch (error) {
             console.error('Error downloading CSV files:', error);
