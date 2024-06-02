@@ -1,5 +1,5 @@
 // src/App.js
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import CryptoChart from './components/CryptoChart';
 import {
     Button,
@@ -45,17 +45,29 @@ const App = () => {
     const [sol4l, setSol4l] = useState(false);
     const [sol5l, setSol5l] = useState(false);
 
+    const [btc3xpol, setBtc3xpol] = useState(false);
+    const [btc2xopt, setBtc2xopt] = useState(false);
+    const [btc3xopt, setBtc3xopt] = useState(false);
+    const [btc3xarb, setBtc3xarb] = useState(false);
+
+    const [eth3xpol, setEth3xpol] = useState(false);
+    const [eth2xopt, setEth2xopt] = useState(false);
+    const [eth3xopt, setEth3xopt] = useState(false);
+    const [eth3xarb, setEth3xarb] = useState(false);
+
     const [array,setArray] = useState([]);
+    const [torosArray,setTorosArray] = useState([]);
 
     const [tabValue, setTabValue] = React.useState('2');
     const [granularity, setGranularity] = useState("DAYS");
+    const [interval, setInterval] = useState("1d");
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
     const [initialCapital, setInitialCapital] = useState(1000);
     const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/hello/?";
+    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/";
 
     const checkboxClick = (asset) => {
         let boolValue = false;
@@ -132,21 +144,75 @@ const App = () => {
             setArray(array.filter(str => str !== asset));
         }
     };
+
+    const torosCheckboxClick = (asset) => {
+        let boolValue = false;
+        switch (asset) {
+            case "BTC3XPOL":
+                boolValue = !btc3xpol;
+                setBtc3xpol(!btc3xpol);
+                break;
+            case "BTC2XOPT":
+                boolValue = !btc2xopt;
+                setBtc2xopt(!btc2xopt);
+                break;
+            case "BTC3XOPT":
+                boolValue = !btc3xopt;
+                setBtc3xopt(!btc3xopt);
+                break;
+            case "BTC3XARB":
+                boolValue = !btc3xarb;
+                setBtc3xarb(!btc3xarb);
+                break;
+            case "ETH3XPOL":
+                boolValue = !eth3xpol;
+                setEth3xpol(!eth3xpol);
+                break;
+            case "ETH2XOPT":
+                boolValue = !eth2xopt;
+                setEth2xopt(!eth2xopt);
+                break;
+            case "ETH3XOPT":
+                boolValue = !eth3xopt;
+                setEth3xopt(!eth3xopt);
+                break;
+            case "ETH3XARB":
+                boolValue = !eth3xarb;
+                setEth3xarb(!eth3xarb);
+                break;
+            default:
+                break;
+        }
+
+        if (boolValue) {
+            setTorosArray([...torosArray, asset]);
+        } else {
+            setTorosArray(torosArray.filter(str => str !== asset));
+        }
+    }
+
     const fetchData = async () => {
         setLoading(true);
-        const dataPromises = array.map(asset =>
-            fetch(domain + "coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
+
+        const arrayPromises = array.map(asset =>
+            fetch(domain + "hello/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
-        const results = await Promise.all(dataPromises);
+        const torosArrayPromises = torosArray.map(asset =>
+            fetch(domain + "toros/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
+        );
+
+        const results = await Promise.all([...arrayPromises, ...torosArrayPromises]);
+
         const combinedData = results.map((result, index) => ({
-            label: array[index],
+            label: index < array.length ? array[index] : torosArray[index - array.length],
             data: result.data,
             borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
             backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
         }));
+
         const assetMetrics = results.map((result, index) => ({
-            label: array[index],
+            label: index < array.length ? array[index] : torosArray[index - array.length],
             volatility: result.volatility,
             sharpe_ratio: result.sharpe_ratio,
             sortino_ratio: result.sortino_ratio,
@@ -158,6 +224,7 @@ const App = () => {
         setLoading(false);
     };
 
+
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -166,16 +233,44 @@ const App = () => {
         fetchData();
     }
 
+    const handleIntervalChange = (event) => {
+        let value = event.target.value;
+        setInterval(value);
+    }
+
+    useEffect(() => {
+        switch (interval) {
+            case "1h":
+                setGranularity("HOURS");
+                setGranularityUnit(1);
+                break;
+            case "4h":
+                setGranularity("HOURS");
+                setGranularityUnit(4);
+                break;
+            case "1d":
+                setGranularity("DAYS");
+                setGranularityUnit(1);
+                break;
+            case "1w":
+                setGranularity("DAYS");
+                setGranularityUnit(7);
+                break;
+            default:
+                break;
+        }
+    }, [interval]);
+
     return (
         <div className="App">
             <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
-                <h4>View Mode</h4>
+                <h4>Change charts size</h4>
                 <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
                 <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.3"} />
                 <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
             </Tabs>
             <h1>
-                TLX Dashboard
+                TLX & Toros Performance Analysis
             </h1>
 
             <Grid
@@ -196,40 +291,23 @@ const App = () => {
                         direction={"column"}
                         style={{"width": "unset"}}
                     >
-                        <FormControl sx={{minWidth: 150}}>
-                            <InputLabel id="granularity">Granularity</InputLabel>
+                        <FormControl>
+                            <InputLabel id="interval">Interval</InputLabel>
 
                             <Select
-                                id="granularity"
-                                labelId="granularity"
-                                value={granularity}
-                                label="Granularity"
-                                onChange={(event) => setGranularity(event.target.value)}
+                                id="interval"
+                                labelId="interval"
+                                value={interval}
+                                label="Interval"
+                                onChange={handleIntervalChange}
                                 disabled={loading}
                             >
-                                <MenuItem value={"MINUTES"}>Minutes</MenuItem>
-                                <MenuItem value={"HOURS"}>Hours</MenuItem>
-                                <MenuItem value={"DAYS"}>Days</MenuItem>
+                                <MenuItem value={"1h"}>1 Hour</MenuItem>
+                                <MenuItem value={"4h"}>4 Hours</MenuItem>
+                                <MenuItem value={"1d"}>1 Day</MenuItem>
+                                <MenuItem value={"1w"}>1 Week</MenuItem>
                             </Select>
                         </FormControl>
-                    </Grid>
-
-                    <Grid
-                        item
-                        container
-                        direction={"column"}
-                        style={{"width": "unset"}}
-                    >
-                        <TextField
-                            label="Granilarity unit"
-                            type="number"
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                            value={granularityUnit}
-                            onChange={(event) => setGranularityUnit(event.target.value)}
-                            disabled={loading}
-                        />
                     </Grid>
 
                     <Grid
@@ -429,6 +507,91 @@ const App = () => {
                         <span>SOL5L</span>
                     </Grid>
                 </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset", "borderRight": "1px solid"}}
+                >
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={btc2xopt}
+                            onChange={() => torosCheckboxClick("BTC2XOPT")}
+                            disabled={loading}
+                        />
+                        <span>BTC2XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xopt}
+                            onChange={() => torosCheckboxClick("BTC3XOPT")}
+                            disabled={loading}
+                        />
+                        <span>BTC3XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xpol}
+                            onChange={() => torosCheckboxClick("BTC3XPOL")}
+                            disabled={loading}
+                        />
+                        <span>BTC3XPOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xarb}
+                            onChange={() => torosCheckboxClick("BTC3XARB")}
+                            disabled={loading}
+                        />
+                        <span>BTC3XARB</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={eth2xopt}
+                            onChange={() => torosCheckboxClick("ETH2XOPT")}
+                            disabled={loading}
+                        />
+                        <span>ETH2XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth3xopt}
+                            onChange={() => torosCheckboxClick("ETH3XOPT")}
+                            disabled={loading}
+                        />
+                        <span>ETH3XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth3xpol}
+                            onChange={() => torosCheckboxClick("ETH3XPOL")}
+                            disabled={loading}
+                        />
+                        <span>ETH3XPOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth3xarb}
+                            onChange={() => torosCheckboxClick("ETH3XARB")}
+                            disabled={loading}
+                        />
+                        <span>ETH3XARB</span>
+                    </Grid>
+                </Grid>
             </Grid>
             <br />
             <Button onClick={onSearch} variant="contained" disabled={loading}>
@@ -493,7 +656,7 @@ const App = () => {
                     <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
                 </Grid>
             </Grid>
-            <p>If you have any feedback or ideas of how to extend the website, tag me in TRW: @01HK0BGJQMWXQC26SRG2W46TET</p>
+            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW: @01HK0BGJQMWXQC26SRG2W46TET</p>
         </div>
     );
 };
