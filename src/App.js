@@ -45,6 +45,9 @@ const App = () => {
     const [sol4l, setSol4l] = useState(false);
     const [sol5l, setSol5l] = useState(false);
 
+    const [doge2l, setDoge2l] = useState(false);
+    const [doge5l, setDoge5l] = useState(false);
+
     const [btc3xpol, setBtc3xpol] = useState(false);
     const [btc2xopt, setBtc2xopt] = useState(false);
     const [btc3xopt, setBtc3xopt] = useState(false);
@@ -133,6 +136,16 @@ const App = () => {
             case "SOL5L":
                 boolValue = !sol5l;
                 setSol5l(!sol5l);
+                break;
+
+            case "DOGE2L":
+                boolValue = !doge2l;
+                setDoge2l(!doge2l);
+                break;
+
+            case "DOGE5L":
+                boolValue = !doge5l;
+                setDoge5l(!doge5l);
                 break;
             default:
                 break;
@@ -559,6 +572,29 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>SOL5L</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={doge2l}
+                            onChange={() => checkboxClick("DOGE2L")}
+                            disabled={loading}
+                        />
+                        <span>DOGE2L</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={doge5l}
+                            onChange={() => checkboxClick("DOGE5L")}
+                            disabled={loading}
+                        />
+                        <span>DOGE5L</span>
                     </Grid>
                 </Grid>
                 <Grid
