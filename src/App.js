@@ -58,6 +58,9 @@ const App = () => {
     const [eth3xopt, setEth3xopt] = useState(false);
     const [eth3xarb, setEth3xarb] = useState(false);
 
+    const [sol2xopt, setSol2xopt] = useState(false);
+    const [sol3xopt, setSol3xopt] = useState(false);
+
     const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
 
@@ -192,6 +195,14 @@ const App = () => {
             case "ETH3XARB":
                 boolValue = !eth3xarb;
                 setEth3xarb(!eth3xarb);
+                break;
+            case "SOL2XOPT":
+                boolValue = !sol2xopt;
+                setSol2xopt(!sol2xopt);
+                break;
+            case "SOL3XOPT":
+                boolValue = !sol3xopt;
+                setSol3xopt(!sol3xopt);
                 break;
             default:
                 break;
@@ -680,6 +691,29 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>ETH3XARB</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={sol2xopt}
+                            onChange={() => torosCheckboxClick("SOL2XOPT")}
+                            disabled={loading}
+                        />
+                        <span>SOL2XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sol3xopt}
+                            onChange={() => torosCheckboxClick("SOL3XOPT")}
+                            disabled={loading}
+                        />
+                        <span>SOL3XOPT</span>
                     </Grid>
                 </Grid>
             </Grid>
