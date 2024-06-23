@@ -241,7 +241,8 @@ const App = () => {
             volatility: result.volatility,
             sharpe_ratio: result.sharpe_ratio,
             sortino_ratio: result.sortino_ratio,
-            omega_ratio: result.omega_ratio
+            omega_ratio: result.omega_ratio,
+            simple_omega_ratio: result.simple_omega_ratio
         }));
 
         setDatasets(combinedData);
@@ -344,9 +345,9 @@ const App = () => {
         <div className="App">
             <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
                 <h4>Change charts size</h4>
-                <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
-                <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.3"} />
-                <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
+                <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
+                <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
+                <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
             </Tabs>
             <h1>
                 TLX & Toros Performance Analysis
@@ -430,7 +431,7 @@ const App = () => {
                         <TextField
                             label="Initial invest capital"
                             type="number"
-                            InputProps={{ inputProps: { min: 1 } }}
+                            InputProps={{inputProps: {min: 1}}}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -449,7 +450,7 @@ const App = () => {
                         <TextField
                             label="Risk free rate percentage"
                             type="number"
-                            InputProps={{ inputProps: { min: 0, max: 100 } }}
+                            InputProps={{inputProps: {min: 0, max: 100}}}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -734,22 +735,24 @@ const App = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <br />
-            <Button onClick={onSearch} variant="contained" disabled={loading || (array.length === 0 && torosArray.length === 0)}>
+            <br/>
+            <Button onClick={onSearch} variant="contained"
+                    disabled={loading || (array.length === 0 && torosArray.length === 0)}>
                 {loading ? (
-                    <CircularProgress size={25} color={"grey"} />
+                    <CircularProgress size={25} color={"grey"}/>
                 ) : (
                     "Fetch data"
                 )}
             </Button>
-            <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained" disabled={loading || (array.length === 0 && torosArray.length === 0)}>
+            <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained"
+                    disabled={loading || (array.length === 0 && torosArray.length === 0)}>
                 {loading ? (
-                    <CircularProgress size={25} color={"grey"} />
+                    <CircularProgress size={25} color={"grey"}/>
                 ) : (
                     "Export raw data"
                 )}
             </Button>
-            <br />
+            <br/>
             <Grid
                 container
                 direction={"row"}
@@ -757,54 +760,73 @@ const App = () => {
             >
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Price" metric="price" showDatesOnly={granularity === "DAYS"} />
+                    <CryptoChart datasets={datasets} title="Price" metric="price"
+                                 showDatesOnly={granularity === "DAYS"}/>
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Returns" metric="returns" showDatesOnly={granularity === "DAYS"} />
+                    <CryptoChart datasets={datasets} title="Returns" metric="returns"
+                                 showDatesOnly={granularity === "DAYS"}/>
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value" showDatesOnly={granularity === "DAYS"} />
+                    <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value"
+                                 showDatesOnly={granularity === "DAYS"}/>
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <BarChart metrics={metrics} title="Volatility" metric="volatility" />
+                    <BarChart metrics={metrics} title="Volatility" metric="volatility"/>
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio" />
+                    <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio"/>
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio" />
+                    <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio"/>
                 </Grid>
 
                 <Grid
                     item
-                    xs={11/parseFloat(tabValue)}
+                    xs={11 / parseFloat(tabValue)}
                 >
-                    <BarChart metrics={metrics} title="Omega Ratio" metric="omega_ratio" />
+                    <BarChart metrics={metrics} title="CDF-based Omega Ratio" metric="omega_ratio"/>
+                    <p>This chart displays the Omega ratio calculated using probability-weighted gains and losses
+                        derived from the Cumulative Distribution Function (CDF) of the returns.</p>
+                </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Simple Sum-Based Omega Ratio" metric="simple_omega_ratio"/>
+                    <p>This chart shows the Omega ratio calculated using the straightforward sum of gains and absolute
+                        sum of losses without considering probability weights.</p>
                 </Grid>
             </Grid>
-            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW: @01HK0BGJQMWXQC26SRG2W46TET</p>
+            <p>You can view my backend source code for more info on how I perform the calculations here:</p>
+            <p><a
+                href="https://github.com/fiji-solutions/tlx/blob/main/hello_world/app.py">https://github.com/fiji-solutions/tlx/blob/main/hello_world/app.py</a>
+            </p>
+            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
+                @01HK0BGJQMWXQC26SRG2W46TET</p>
         </div>
     );
 };
