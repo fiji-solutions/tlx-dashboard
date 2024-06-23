@@ -74,7 +74,7 @@ const App = () => {
     const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const domain = "http://localhost:3001/";
+    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/";
 
     const checkboxClick = (asset) => {
         let boolValue = false;
