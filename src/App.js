@@ -69,11 +69,12 @@ const App = () => {
     const [interval, setInterval] = useState("1d");
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
+    const [toDate, setToDate] = useState(dayjs(undefined));
     const [initialCapital, setInitialCapital] = useState(1000);
     const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/";
+    const domain = "http://localhost:3001/";
 
     const checkboxClick = (asset) => {
         let boolValue = false;
@@ -219,11 +220,11 @@ const App = () => {
         setLoading(true);
 
         const arrayPromises = array.map(asset =>
-            fetch(domain + "hello/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
+            fetch(domain + "hello/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
         const torosArrayPromises = torosArray.map(asset =>
-            fetch(domain + "toros/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
+            fetch(domain + "toros/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
         const results = await Promise.all([...arrayPromises, ...torosArrayPromises]);
@@ -254,7 +255,7 @@ const App = () => {
         try {
             setLoading(true);
             const arrayPromises = array.map(asset =>
-                fetch(domain + "tlx-export/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
+                fetch(domain + "tlx-export/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/csv'
@@ -263,7 +264,7 @@ const App = () => {
             );
 
             const torosArrayPromises = torosArray.map(asset =>
-                fetch(domain + "toros-export/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
+                fetch(domain + "toros-export/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/csv'
@@ -399,6 +400,22 @@ const App = () => {
                                 label="Start date"
                                 value={fromDate}
                                 onChange={(newValue) => setFromDate(newValue)}
+                                disabled={loading}
+                            />
+                        </LocalizationProvider>
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="End date"
+                                value={toDate}
+                                onChange={(newValue) => setToDate(newValue)}
                                 disabled={loading}
                             />
                         </LocalizationProvider>
