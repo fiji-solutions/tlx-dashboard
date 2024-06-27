@@ -232,15 +232,48 @@ const App = () => {
         }
     }
 
+    const maxDates = {
+        "BTC1L": "2024-05-14",
+        "BTC2L": "2024-05-14",
+        "BTC3L": "2024-05-24",
+        "BTC4L": "2024-05-24",
+        "BTC5L": "2024-05-14",
+        "ETH1L": "2024-05-14",
+        "ETH2L": "2024-05-14",
+        "ETH3L": "2024-05-24",
+        "ETH4L": "2024-05-24",
+        "ETH5L": "2024-05-14",
+        "SOL1L": "2024-05-14",
+        "SOL2L": "2024-05-14",
+        "SOL3L": "2024-05-24",
+        "SOL4L": "2024-05-24",
+        "SOL5L": "2024-05-14",
+        "DOGE2L": "2024-06-13",
+        "DOGE5L": "2024-06-13",
+        "BTC2XOPT": "2023-10-10",
+        "BTC3XOPT": "2024-03-13",
+        "BTC3XPOL": "2023-06-27",
+        "BTC3XARB": "2024-02-22",
+        "ETH2XOPT": "2023-10-10",
+        "ETH3XOPT": "2024-03-12",
+        "ETH3XPOL": "2023-06-27",
+        "ETH3XARB": "2024-02-22",
+        "STETH2X": "2024-06-14",
+        "STETH3X": "2024-06-14",
+        "STETH4X": "2024-06-14",
+        "SOL2XOPT": "2024-05-27",
+        "SOL3XOPT": "2024-05-27",
+    }
+
     const fetchData = async () => {
         setLoading(true);
 
         const arrayPromises = array.map(asset =>
-            fetch(domain + "hello/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
+            fetch(domain + "hello/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + getToDateString(asset) + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
         const torosArrayPromises = torosArray.map(asset =>
-            fetch(domain + "toros/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
+            fetch(domain + "toros/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + getToDateString(asset) + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
         const results = await Promise.all([...arrayPromises, ...torosArrayPromises]);
@@ -272,7 +305,7 @@ const App = () => {
         try {
             setLoading(true);
             const arrayPromises = array.map(asset =>
-                fetch(domain + "tlx-export/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
+                fetch(domain + "tlx-export/?coin=" + asset + "&granularity=" + granularity + "&granularityUnit=" + granularityUnit + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + getToDateString(asset) + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/csv'
@@ -281,7 +314,7 @@ const App = () => {
             );
 
             const torosArrayPromises = torosArray.map(asset =>
-                fetch(domain + "toros-export/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + dayjs(toDate).format("YYYY-MM-DD") + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
+                fetch(domain + "toros-export/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + getToDateString(asset) + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/csv'
@@ -332,6 +365,20 @@ const App = () => {
     const handleIntervalChange = (event) => {
         let value = event.target.value;
         setInterval(value);
+    }
+
+    const maxOfTwoDays = (date1, date2) => {
+        const dateObject1 = new Date(date1);
+        const dateObject2 = new Date(date2);
+
+        return dateObject1.getTime() > dateObject2.getTime() ? date1 : date2;
+    }
+
+    const getToDateString = (asset) => {
+        const assetDateString = maxDates[asset];
+        const toDateString = dayjs(toDate).format("YYYY-MM-DD");
+
+        return maxOfTwoDays(assetDateString, toDateString);
     }
 
     useEffect(() => {
@@ -418,6 +465,7 @@ const App = () => {
                                 value={fromDate}
                                 onChange={(newValue) => setFromDate(newValue)}
                                 disabled={loading}
+                                maxDate={toDate}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -434,6 +482,7 @@ const App = () => {
                                 value={toDate}
                                 onChange={(newValue) => setToDate(newValue)}
                                 disabled={loading}
+                                minDate={fromDate}
                             />
                         </LocalizationProvider>
                     </Grid>
