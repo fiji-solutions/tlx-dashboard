@@ -58,6 +58,10 @@ const App = () => {
     const [eth3xopt, setEth3xopt] = useState(false);
     const [eth3xarb, setEth3xarb] = useState(false);
 
+    const [steth2x, setSteth2x] = useState(false);
+    const [steth3x, setSteth3x] = useState(false);
+    const [steth4x, setSteth4x] = useState(false);
+
     const [sol2xopt, setSol2xopt] = useState(false);
     const [sol3xopt, setSol3xopt] = useState(false);
 
@@ -196,6 +200,18 @@ const App = () => {
             case "ETH3XARB":
                 boolValue = !eth3xarb;
                 setEth3xarb(!eth3xarb);
+                break;
+            case "STETH2X":
+                boolValue = !steth2x;
+                setSteth2x(!steth2x);
+                break;
+            case "STETH3X":
+                boolValue = !steth3x;
+                setSteth3x(!steth3x);
+                break;
+            case "STETH4X":
+                boolValue = !steth4x;
+                setSteth4x(!steth4x);
                 break;
             case "SOL2XOPT":
                 boolValue = !sol2xopt;
@@ -709,6 +725,37 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>ETH3XARB</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={steth2x}
+                            onChange={() => torosCheckboxClick("STETH2X")}
+                            disabled={loading}
+                        />
+                        <span>STETH2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={steth3x}
+                            onChange={() => torosCheckboxClick("STETH3X")}
+                            disabled={loading}
+                        />
+                        <span>STETH3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={steth4x}
+                            onChange={() => torosCheckboxClick("STETH4X")}
+                            disabled={loading}
+                        />
+                        <span>STETH4X</span>
                     </Grid>
                 </Grid>
                 <Grid
