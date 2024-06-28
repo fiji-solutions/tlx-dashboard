@@ -845,7 +845,7 @@ const App = () => {
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
-                    "Export raw data"
+                    "Export raw data CSV"
                 )}
             </Button>
             <br/>
