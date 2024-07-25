@@ -54,12 +54,38 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false }) => {
         datasets: alignedDatasets,
     };
 
+    // Determine the time range
+    const startTime = new Date(allTimestamps[0]);
+    const endTime = new Date(allTimestamps[allTimestamps.length - 1]);
+    const timeDifference = endTime - startTime;
+
+    let unit = 'minute';
+    let stepSize = 1;
+
+    if (timeDifference > 365 * 24 * 60 * 60 * 1000) { // More than a year
+        unit = 'month';
+        stepSize = 1;
+    } else if (timeDifference > 30 * 24 * 60 * 60 * 1000) { // More than a month
+        unit = 'day';
+        stepSize = 1;
+    } else if (timeDifference > 7 * 24 * 60 * 60 * 1000) { // More than a week
+        unit = 'day';
+        stepSize = 1;
+    } else if (timeDifference > 24 * 60 * 60 * 1000) { // More than a day
+        unit = 'hour';
+        stepSize = 1;
+    } else if (timeDifference > 60 * 60 * 1000) { // More than an hour
+        unit = 'minute';
+        stepSize = 15;
+    }
+
     const options = {
         scales: {
             x: {
                 type: 'time',
                 time: {
-                    unit: showDatesOnly ? 'day' : 'minute',  // Adjust unit based on showDatesOnly
+                    unit: showDatesOnly ? 'day' : unit,
+                    stepSize: showDatesOnly ? 1 : stepSize,
                     tooltipFormat: showDatesOnly ? 'MM/dd/yyyy' : 'MM/dd/yyyy HH:mm:ss',
                 },
                 title: {
