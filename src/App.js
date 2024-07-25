@@ -32,12 +32,14 @@ const App = () => {
     const [btc3l, setBtc3l] = useState(false);
     const [btc4l, setBtc4l] = useState(false);
     const [btc5l, setBtc5l] = useState(false);
+    const [btc7l, setBtc7l] = useState(false);
 
     const [eth1l, setEth1l] = useState(false);
     const [eth2l, setEth2l] = useState(false);
     const [eth3l, setEth3l] = useState(false);
     const [eth4l, setEth4l] = useState(false);
     const [eth5l, setEth5l] = useState(false);
+    const [eth7l, setEth7l] = useState(false);
 
     const [sol1l, setSol1l] = useState(false);
     const [sol2l, setSol2l] = useState(false);
@@ -51,11 +53,14 @@ const App = () => {
     const [btc3xpol, setBtc3xpol] = useState(false);
     const [btc2xopt, setBtc2xopt] = useState(false);
     const [btc3xopt, setBtc3xopt] = useState(false);
+    const [btc4xopt, setBtc4xopt] = useState(false);
+    const [btc2xarb, setBtc2xarb] = useState(false);
     const [btc3xarb, setBtc3xarb] = useState(false);
 
     const [eth3xpol, setEth3xpol] = useState(false);
     const [eth2xopt, setEth2xopt] = useState(false);
     const [eth3xopt, setEth3xopt] = useState(false);
+    const [eth2xarb, setEth2xarb] = useState(false);
     const [eth3xarb, setEth3xarb] = useState(false);
 
     const [steth2x, setSteth2x] = useState(false);
@@ -103,6 +108,10 @@ const App = () => {
                 boolValue = !btc5l;
                 setBtc5l(!btc5l);
                 break;
+            case "BTC7L":
+                boolValue = !btc7l;
+                setBtc7l(!btc7l);
+                break;
 
             case "ETH1L":
                 boolValue = !eth1l;
@@ -123,6 +132,10 @@ const App = () => {
             case "ETH5L":
                 boolValue = !eth5l;
                 setEth5l(!eth5l);
+                break;
+            case "ETH7L":
+                boolValue = !eth7l;
+                setEth7l(!eth7l);
                 break;
 
             case "SOL1L":
@@ -181,6 +194,14 @@ const App = () => {
                 boolValue = !btc3xopt;
                 setBtc3xopt(!btc3xopt);
                 break;
+            case "BTC4XOPT":
+                boolValue = !btc4xopt;
+                setBtc4xopt(!btc4xopt);
+                break;
+            case "BTC2XARB":
+                boolValue = !btc2xarb;
+                setBtc2xarb(!btc2xarb);
+                break;
             case "BTC3XARB":
                 boolValue = !btc3xarb;
                 setBtc3xarb(!btc3xarb);
@@ -196,6 +217,10 @@ const App = () => {
             case "ETH3XOPT":
                 boolValue = !eth3xopt;
                 setEth3xopt(!eth3xopt);
+                break;
+            case "ETH2XARB":
+                boolValue = !eth2xarb;
+                setEth2xarb(!eth2xarb);
                 break;
             case "ETH3XARB":
                 boolValue = !eth3xarb;
@@ -238,11 +263,13 @@ const App = () => {
         "BTC3L": "2024-05-24",
         "BTC4L": "2024-05-24",
         "BTC5L": "2024-05-14",
+        "BTC7L": "2024-06-25",
         "ETH1L": "2024-05-14",
         "ETH2L": "2024-05-14",
         "ETH3L": "2024-05-24",
         "ETH4L": "2024-05-24",
         "ETH5L": "2024-05-14",
+        "ETH7L": "2024-07-11",
         "SOL1L": "2024-05-14",
         "SOL2L": "2024-05-14",
         "SOL3L": "2024-05-24",
@@ -252,11 +279,14 @@ const App = () => {
         "DOGE5L": "2024-06-13",
         "BTC2XOPT": "2023-10-10",
         "BTC3XOPT": "2024-03-13",
+        "BTC4XOPT": "2024-06-05",
         "BTC3XPOL": "2023-06-27",
+        "BTC2XARB": "2024-07-16",
         "BTC3XARB": "2024-02-22",
         "ETH2XOPT": "2023-10-10",
         "ETH3XOPT": "2024-03-12",
         "ETH3XPOL": "2023-06-27",
+        "ETH2XARB": "2024-07-16",
         "ETH3XARB": "2024-02-22",
         "STETH2X": "2024-06-14",
         "STETH3X": "2024-06-14",
@@ -406,12 +436,6 @@ const App = () => {
 
     return (
         <div className="App">
-            <Tabs style={{position: "absolute", right: 0, top: 0}} value={tabValue} onChange={handleTabChange}>
-                <h4>Change charts size</h4>
-                <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
-                <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
-                <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
-            </Tabs>
             <h1>
                 TLX & Toros Performance Analysis
             </h1>
@@ -526,6 +550,33 @@ const App = () => {
                     </Grid>
                 </Grid>
 
+                <Grid
+                    item
+                    container
+                    justifyContent={"center"}
+                >
+                    <Grid
+                        item
+                        container
+                        md={8}
+                        justifyContent={"space-around"}
+                    >
+                        <Grid
+                            item
+                            style={{"text-align": "center"}}
+                        >
+                            <h2>TLX Coins</h2>
+                        </Grid>
+
+                        <Grid
+                            item
+                            style={{"text-align": "center"}}
+                        >
+                            <h2>Toros Coins</h2>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
 
                 <Grid
                     item
@@ -573,6 +624,14 @@ const App = () => {
                         />
                         <span>BTC5L</span>
                     </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc7l}
+                            onChange={() => checkboxClick("BTC7L")}
+                            disabled={loading}
+                        />
+                        <span>BTC7L</span>
+                    </Grid>
                 </Grid>
                 <Grid
                     item
@@ -619,6 +678,14 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>ETH5L</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth7l}
+                            onChange={() => checkboxClick("ETH7L")}
+                            disabled={loading}
+                        />
+                        <span>ETH7L</span>
                     </Grid>
                 </Grid>
                 <Grid
@@ -722,11 +789,27 @@ const App = () => {
                     </Grid>
                     <Grid item>
                         <Checkbox
+                            checked={btc4xopt}
+                            onChange={() => torosCheckboxClick("BTC4XOPT")}
+                            disabled={loading}
+                        />
+                        <span>BTC4XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
                             checked={btc3xpol}
                             onChange={() => torosCheckboxClick("BTC3XPOL")}
                             disabled={loading}
                         />
                         <span>BTC3XPOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc2xarb}
+                            onChange={() => torosCheckboxClick("BTC2XARB")}
+                            disabled={loading}
+                        />
+                        <span>BTC2XARB</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -766,6 +849,14 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>ETH3XPOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth2xarb}
+                            onChange={() => torosCheckboxClick("ETH2XARB")}
+                            disabled={loading}
+                        />
+                        <span>ETH2XARB</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -832,6 +923,7 @@ const App = () => {
                 </Grid>
             </Grid>
             <br/>
+
             <Button onClick={onSearch} variant="contained"
                     disabled={loading || (array.length === 0 && torosArray.length === 0)}>
                 {loading ? (
@@ -849,6 +941,26 @@ const App = () => {
                 )}
             </Button>
             <br/>
+
+            <Grid
+                container
+                justifyContent={"center"}
+                alignItems={"center"}
+                direction={"column"}
+            >
+                <Grid item>
+                    <h4>Change charts size</h4>
+                </Grid>
+
+                <Grid item>
+                    <Tabs value={tabValue} onChange={handleTabChange}>
+                        <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
+                        <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.3"} />
+                        <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
+                    </Tabs>
+                </Grid>
+            </Grid>
+
             <Grid
                 container
                 direction={"row"}
