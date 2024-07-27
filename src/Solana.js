@@ -11,7 +11,8 @@ import {
     MenuItem,
     Select,
     Tab,
-    Tabs
+    Tabs,
+    TextField
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -43,6 +44,8 @@ const Solana = () => {
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-07-27"));
     const [toDate, setToDate] = useState(dayjs(undefined));
+    const [initialInvestment, setInitialInvestment] = useState(1000);
+    const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex/";
@@ -113,7 +116,7 @@ const Solana = () => {
         setLoading(true);
 
         const arrayPromises = array.map(asset =>
-            fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).add(1, "day").format("YYYY-MM-DD")}&granularity=${granularity}&granularityUnit=${granularityUnit}`).then(response => response.json())
+            fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).add(1, "day").format("YYYY-MM-DD")}&granularity=${granularity}&granularityUnit=${granularityUnit}&initialInvestment=${initialInvestment}&riskFreeRate=${riskFreeRate}`).then(response => response.json())
         );
 
         const results = await Promise.all(arrayPromises);
@@ -136,19 +139,18 @@ const Solana = () => {
                 return acc;
             }, []);
 
-            // Calculate investment value (assuming initial investment of 1000)
-            const initialInvestment = 1000;
+            // Calculate investment value
             const investmentValue = cumulativeReturns.map(value => value * initialInvestment);
 
             // Calculate volatility
             const volatility = Math.sqrt(returns.reduce((acc, r) => acc + Math.pow(r - (returns.reduce((a, b) => a + b, 0) / returns.length), 2), 0) / returns.length);
 
-            // Calculate sharpe ratio (assuming risk free rate is 0)
-            const sharpeRatio = (returns.reduce((a, b) => a + b, 0) / returns.length) / volatility;
+            // Calculate sharpe ratio
+            const sharpeRatio = (returns.reduce((a, b) => a + b, 0) / returns.length - (riskFreeRate / 100)) / volatility;
 
-            // Calculate sortino ratio (assuming risk free rate is 0)
+            // Calculate sortino ratio
             const downsideRisk = Math.sqrt(returns.filter(r => r < 0).reduce((acc, r) => acc + Math.pow(r, 2), 0) / returns.filter(r => r < 0).length);
-            const sortinoRatio = (returns.reduce((a, b) => a + b, 0) / returns.length) / downsideRisk;
+            const sortinoRatio = (returns.reduce((a, b) => a + b, 0) / returns.length - (riskFreeRate / 100)) / downsideRisk;
 
             return {
                 data: df.map((item) => ({ timestamp: item.timestamp, marketcap: item.marketcap })), // Ensure correct data structure
@@ -180,7 +182,7 @@ const Solana = () => {
         try {
             setLoading(true);
             const arrayPromises = array.map(asset =>
-                fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}&granularity=${granularity}&granularityUnit=${granularityUnit}`, {
+                fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).add(1, "day").format("YYYY-MM-DD")}&granularity=${granularity}&granularityUnit=${granularityUnit}&initialInvestment=${initialInvestment}&riskFreeRate=${riskFreeRate}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/csv'
@@ -330,6 +332,36 @@ const Solana = () => {
                                 minDate={fromDate}
                             />
                         </LocalizationProvider>
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <TextField
+                            label="Initial Investment"
+                            type="number"
+                            value={initialInvestment}
+                            onChange={(e) => setInitialInvestment(e.target.value)}
+                            disabled={loading}
+                        />
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset", "minWidth": "200px"}}
+                    >
+                        <TextField
+                            label="Risk Free Rate (%)"
+                            type="number"
+                            value={riskFreeRate}
+                            onChange={(e) => setRiskFreeRate(e.target.value)}
+                            disabled={loading}
+                        />
                     </Grid>
                 </Grid>
 
