@@ -395,7 +395,7 @@ const Solana = () => {
                             item
                             style={{"text-align": "center"}}
                         >
-                            <h2>Market Cap of coins in Solindex indexes</h2>
+                            <h2>Solindex</h2>
                         </Grid>
                     </Grid>
                 </Grid>
