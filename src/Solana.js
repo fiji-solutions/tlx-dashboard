@@ -170,13 +170,6 @@ const Solana = () => {
             backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
         }));
 
-        const assetMetrics = processedResults.map((result, index) => ({
-            label: array[index],
-            volatility: result.volatility,
-            sharpe_ratio: result.sharpeRatio,
-            sortino_ratio: result.sortinoRatio,
-        }));
-
         setDatasets(combinedData);
         setLoading(false);
     };
