@@ -539,7 +539,8 @@ const Solana = () => {
                 )}
             </Button>
             <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained"
-                    disabled={loading || array.length === 0}>
+                    // disabled={loading || array.length === 0}>
+                    disabled={true}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
