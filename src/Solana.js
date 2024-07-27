@@ -41,7 +41,7 @@ const Solana = () => {
     const [cats2, setCats2] = useState(false);
 
     const [array, setArray] = useState([]);
-    const [tabValue, setTabValue] = useState('1');
+    const [tabValue, setTabValue] = useState('2');
     const [granularity, setGranularity] = useState("HOURS");
     const [interval, setInterval] = useState("1h");
     const [granularityUnit, setGranularityUnit] = useState(1);
@@ -51,7 +51,7 @@ const Solana = () => {
     const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex-performance/";
+    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex/";
 
     const checkboxClick = (asset) => {
         let boolValue = false;
@@ -579,19 +579,22 @@ const Solana = () => {
                     <CryptoChart datasets={datasets} title="Market Cap" metric="marketcap"
                                  showDatesOnly={granularity === "DAYS"}/>
                 </Grid>
+
                 <Grid
                     item
                     xs={11 / parseFloat(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Price" metric="portfolio_value"
+                    <CryptoChart datasets={datasets} title="Investment Value" metric="portfolioValue"
                                  showDatesOnly={granularity === "DAYS"}/>
-                </Grid><Grid
-                item
-                xs={11 / parseFloat(tabValue)}
-            >
-                <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value"
-                             showDatesOnly={granularity === "DAYS"}/>
-            </Grid>
+                </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <CryptoChart datasets={datasets} title="Capital Gains" metric="capitalGains"
+                                 showDatesOnly={granularity === "DAYS"}/>
+                </Grid>
 
                 <Grid
                     item
