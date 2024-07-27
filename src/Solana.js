@@ -121,7 +121,7 @@ const Solana = () => {
         const processData = (data) => {
             const df = data.map(item => ({
                 timestamp: new Date(item.timestamp).toISOString(), // Ensure ISO string format
-                marketcap: item.marketcap
+                marketcap: item.MarketCap
             }));
 
             // Calculate returns
