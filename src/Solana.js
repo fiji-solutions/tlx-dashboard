@@ -21,9 +21,12 @@ import "./App.css";
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
+import BarChart from "./components/BarChart";
 
 const Solana = () => {
     const [datasets, setDatasets] = useState([]);
+    const [metrics, setMetrics] = useState([]);
+
     const [solEssential, setSolEssential] = useState(false);
     const [solEssential1, setSolEssential1] = useState(false);
     const [solEssential2, setSolEssential2] = useState(false);
@@ -48,7 +51,7 @@ const Solana = () => {
     const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex/";
+    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex-performance/";
 
     const checkboxClick = (asset) => {
         let boolValue = false;
@@ -122,9 +125,11 @@ const Solana = () => {
         const results = await Promise.all(arrayPromises);
 
         const processData = (data) => {
-            const df = data.map(item => ({
+            const df = data.data.map(item => ({
                 timestamp: new Date(item.timestamp).toISOString(), // Ensure ISO string format
-                marketcap: item.MarketCap
+                marketcap: item.MarketCap,
+                portfolioValue: item.portfolio_value,
+                capitalGains: item.capital_gains
             }));
 
             // Calculate returns
@@ -153,7 +158,7 @@ const Solana = () => {
             const sortinoRatio = (returns.reduce((a, b) => a + b, 0) / returns.length - (riskFreeRate / 100)) / downsideRisk;
 
             return {
-                data: df.map((item) => ({ timestamp: item.timestamp, marketcap: item.marketcap })), // Ensure correct data structure
+                data: df.map((item) => ({ timestamp: item.timestamp, marketcap: item.marketcap, portfolioValue: item.portfolioValue, capitalGains: item.capitalGains })), // Ensure correct data structure
                 returns,
                 cumulativeReturns,
                 investmentValue,
@@ -172,7 +177,17 @@ const Solana = () => {
             backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
         }));
 
+        const assetMetrics = results.map((result, index) => ({
+            label: array[index],
+            volatility: result.volatility,
+            sharpe_ratio: result.sharpe_ratio,
+            sortino_ratio: result.sortino_ratio,
+            omega_ratio: result.omega_ratio,
+            simple_omega_ratio: result.simple_omega_ratio
+        }));
+
         setDatasets(combinedData);
+        setMetrics(assetMetrics);
         setLoading(false);
     };
 
@@ -563,6 +578,58 @@ const Solana = () => {
                 >
                     <CryptoChart datasets={datasets} title="Market Cap" metric="marketcap"
                                  showDatesOnly={granularity === "DAYS"}/>
+                </Grid>
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <CryptoChart datasets={datasets} title="Price" metric="portfolio_value"
+                                 showDatesOnly={granularity === "DAYS"}/>
+                </Grid><Grid
+                item
+                xs={11 / parseFloat(tabValue)}
+            >
+                <CryptoChart datasets={datasets} title="Investment Value" metric="investment-value"
+                             showDatesOnly={granularity === "DAYS"}/>
+            </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Volatility" metric="volatility"/>
+                </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Sharpe Ratio" metric="sharpe_ratio"/>
+                </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Sortino Ratio" metric="sortino_ratio"/>
+                </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="CDF-based Omega Ratio" metric="omega_ratio"/>
+                    <p>This chart displays the Omega ratio calculated using probability-weighted gains and losses
+                        derived from the Cumulative Distribution Function (CDF) of the returns.</p>
+                </Grid>
+
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <BarChart metrics={metrics} title="Simple Sum-Based Omega Ratio" metric="simple_omega_ratio"/>
+                    <p>This chart shows the Omega ratio calculated using the straightforward sum of gains and absolute
+                        sum of losses without considering probability weights.</p>
                 </Grid>
             </Grid>
             <p>You can view my backend source code for more info on how I perform the calculations here:</p>
