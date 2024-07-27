@@ -37,12 +37,12 @@ const Solana = () => {
     const [cats2, setCats2] = useState(false);
 
     const [array, setArray] = useState([]);
-    const [tabValue, setTabValue] = useState('2');
-    const [granularity, setGranularity] = useState("DAYS");
-    const [interval, setInterval] = useState("1d");
+    const [tabValue, setTabValue] = useState('1');
+    const [granularity, setGranularity] = useState("HOURS");
+    const [interval, setInterval] = useState("1h");
     const [granularityUnit, setGranularityUnit] = useState(1);
-    const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
-    const [toDate, setToDate] = useState(dayjs("2024-07-28"));
+    const [fromDate, setFromDate] = useState(dayjs("2024-07-27"));
+    const [toDate, setToDate] = useState(dayjs(undefined));
     const [loading, setLoading] = useState(false);
 
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex/";
@@ -113,7 +113,7 @@ const Solana = () => {
         setLoading(true);
 
         const arrayPromises = array.map(asset =>
-            fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}`).then(response => response.json())
+            fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).add(1, "day").format("YYYY-MM-DD")}&granularity=${granularity}&granularityUnit=${granularityUnit}`).then(response => response.json())
         );
 
         const results = await Promise.all(arrayPromises);
@@ -187,7 +187,7 @@ const Solana = () => {
         try {
             setLoading(true);
             const arrayPromises = array.map(asset =>
-                fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}`, {
+                fetch(domain + `?index=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}&granularity=${granularity}&granularityUnit=${granularityUnit}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'text/csv'
@@ -265,7 +265,7 @@ const Solana = () => {
     return (
         <div className="App">
             <h1>
-                Solana Index Performance Analysis
+                Solana Index Market Caps
             </h1>
 
             <Grid
@@ -355,7 +355,7 @@ const Solana = () => {
                             item
                             style={{"text-align": "center"}}
                         >
-                            <h2>Solana Indexes</h2>
+                            <h2>Market Cap of coins in Solindex indexes</h2>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -368,19 +368,11 @@ const Solana = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={solEssential}
-                            onChange={() => checkboxClick("sol-essentials")}
-                            disabled={loading}
-                        />
-                        <span>sol-essentials</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
                             checked={solEssential1}
                             onChange={() => checkboxClick("sol-essentials1")}
                             disabled={loading}
                         />
-                        <span>sol-essentials1</span>
+                        <span>Sol Essentials TOP 10</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -388,7 +380,15 @@ const Solana = () => {
                             onChange={() => checkboxClick("sol-essentials2")}
                             disabled={loading}
                         />
-                        <span>sol-essentials2</span>
+                        <span>Sol Essentials TOP 11-20</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={solEssential}
+                            onChange={() => checkboxClick("sol-essentials")}
+                            disabled={loading}
+                        />
+                        <span>Sol Essentials TOP 20</span>
                     </Grid>
                 </Grid>
 
@@ -400,19 +400,11 @@ const Solana = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={memes}
-                            onChange={() => checkboxClick("memes")}
-                            disabled={loading}
-                        />
-                        <span>memes</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
                             checked={memes1}
                             onChange={() => checkboxClick("memes1")}
                             disabled={loading}
                         />
-                        <span>memes1</span>
+                        <span>Memes TOP 10</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -420,7 +412,15 @@ const Solana = () => {
                             onChange={() => checkboxClick("memes2")}
                             disabled={loading}
                         />
-                        <span>memes2</span>
+                        <span>Memes TOP 11-20</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={memes}
+                            onChange={() => checkboxClick("memes")}
+                            disabled={loading}
+                        />
+                        <span>Memes TOP 20</span>
                     </Grid>
                 </Grid>
 
@@ -432,19 +432,11 @@ const Solana = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={dogs}
-                            onChange={() => checkboxClick("dogs")}
-                            disabled={loading}
-                        />
-                        <span>dogs</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
                             checked={dogs1}
                             onChange={() => checkboxClick("dogs1")}
                             disabled={loading}
                         />
-                        <span>dogs1</span>
+                        <span>Dogs TOP 10</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -452,7 +444,15 @@ const Solana = () => {
                             onChange={() => checkboxClick("dogs2")}
                             disabled={loading}
                         />
-                        <span>dogs2</span>
+                        <span>Dogs TOP 11-20</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={dogs}
+                            onChange={() => checkboxClick("dogs")}
+                            disabled={loading}
+                        />
+                        <span>Dogs TOP 20</span>
                     </Grid>
                 </Grid>
 
@@ -464,19 +464,11 @@ const Solana = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={cats}
-                            onChange={() => checkboxClick("cats")}
-                            disabled={loading}
-                        />
-                        <span>cats</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
                             checked={cats1}
                             onChange={() => checkboxClick("cats1")}
                             disabled={loading}
                         />
-                        <span>cats1</span>
+                        <span>Cats TOP 10</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -484,7 +476,15 @@ const Solana = () => {
                             onChange={() => checkboxClick("cats2")}
                             disabled={loading}
                         />
-                        <span>cats2</span>
+                        <span>Cats TOP 11-20</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={cats}
+                            onChange={() => checkboxClick("cats")}
+                            disabled={loading}
+                        />
+                        <span>Cats TOP 20</span>
                     </Grid>
                 </Grid>
             </Grid>
@@ -536,13 +536,13 @@ const Solana = () => {
                     item
                     xs={11 / parseFloat(tabValue)}
                 >
-                    <CryptoChart datasets={datasets} title="Price" metric="marketcap"
+                    <CryptoChart datasets={datasets} title="Market Cap" metric="marketcap"
                                  showDatesOnly={granularity === "DAYS"}/>
                 </Grid>
             </Grid>
             <p>You can view my backend source code for more info on how I perform the calculations here:</p>
             <p><a
-                href="https://github.com/fiji-solutions/tlx/blob/main/hello_world/app.py">https://github.com/fiji-solutions/tlx/blob/main/hello_world/app.py</a>
+                href="https://github.com/fiji-solutions/tlx/blob/main/solindex_cron/app.py">https://github.com/fiji-solutions/tlx/blob/main/solindex_cron/app.py</a>
             </p>
             <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
                 @01HK0BGJQMWXQC26SRG2W46TET</p>
