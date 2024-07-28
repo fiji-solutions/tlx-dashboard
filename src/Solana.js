@@ -1,4 +1,3 @@
-// src/Solana.js
 import React, { useEffect, useState } from 'react';
 import CryptoChart from './components/CryptoChart';
 import {
@@ -10,6 +9,7 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    Snackbar,
     Tab,
     Tabs,
     TextField
@@ -21,6 +21,8 @@ import "./App.css";
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import Tooltip from '@mui/material/Tooltip';
 import BarChart from "./components/BarChart";
 
 const Solana = () => {
@@ -50,6 +52,8 @@ const Solana = () => {
     const [initialInvestment, setInitialInvestment] = useState(1000);
     const [riskFreeRate, setRiskFreeRate] = useState(0);
     const [loading, setLoading] = useState(false);
+
+    const [openSnackbar, setOpenSnackbar] = React.useState(false);
 
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/solindex/";
 
@@ -249,6 +253,54 @@ const Solana = () => {
         setInterval(value);
     };
 
+    // New function to generate Pine Script
+    const generatePineScript = (assetName) => {
+        const assetData = datasets.find(dataset => dataset.label === assetName);
+        if (!assetData) return;
+
+        let pineScript = `//@version=5
+indicator("${assetName} Data Plot", overlay=true)
+var float[] customValues = array.new_float()
+var string[] customDates = array.new_string()
+
+if (bar_index == 0)  // Initialize data once
+`;
+
+        assetData.data.forEach(item => {
+            pineScript += `    array.push(customDates, "${item.timestamp}")
+    array.push(customValues, ${item.marketcap})
+`;
+        });
+
+        pineScript += `
+parseDate(dateString) =>
+    year = str.tonumber(str.substring(dateString, 0, 4))
+    month = str.tonumber(str.substring(dateString, 5, 7))
+    day = str.tonumber(str.substring(dateString, 8, 10))
+    hour = str.tonumber(str.substring(dateString, 11, 13))
+    minute = str.tonumber(str.substring(dateString, 14, 16))
+    second = str.tonumber(str.substring(dateString, 17, 19))
+    timestamp = timestamp(int(year), int(month), int(day), int(hour), int(minute), int(second))
+    timestamp
+
+var float customValue = na
+
+for i = 0 to array.size(customDates) - 1
+    customDate = array.get(customDates, i)
+    customTimestamp = parseDate(customDate)
+    if (time == customTimestamp)
+        customValue := array.get(customValues, i)
+
+plot(customValue, color=color.red, title="Custom Data", linewidth=2)
+`;
+
+        navigator.clipboard.writeText(pineScript).then(() => {
+            setOpenSnackbar(true);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    };
+
     useEffect(() => {
         switch (interval) {
             case "1h":
@@ -271,6 +323,28 @@ const Solana = () => {
                 break;
         }
     }, [interval]);
+
+    const copyButton = (asset) => {
+        return (
+            <>
+                {datasets.some(dataset => dataset.label === asset) && (
+                    <Tooltip title="Copy Market Cap Pine Script">
+                        <Button onClick={() => generatePineScript(asset)}>
+                            <ContentCopyIcon />
+                        </Button>
+                    </Tooltip>
+                )}
+            </>
+        );
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenSnackbar(false);
+    };
 
     return (
         <div className="App">
@@ -413,6 +487,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Sol Essentials TOP 10</span>
+                        {copyButton("sol-essentials1")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -421,6 +496,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Sol Essentials TOP 11-20</span>
+                        {copyButton("sol-essentials2")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -429,6 +505,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Sol Essentials TOP 20</span>
+                        {copyButton("sol-essentials")}
                     </Grid>
                 </Grid>
 
@@ -445,6 +522,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Memes TOP 10</span>
+                        {copyButton("memes1")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -453,6 +531,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Memes TOP 11-20</span>
+                        {copyButton("memes2")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -461,6 +540,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Memes TOP 20</span>
+                        {copyButton("memes")}
                     </Grid>
                 </Grid>
 
@@ -477,6 +557,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Dogs TOP 10</span>
+                        {copyButton("dogs1")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -485,6 +566,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Dogs TOP 11-20</span>
+                        {copyButton("dogs2")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -493,6 +575,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Dogs TOP 20</span>
+                        {copyButton("dogs")}
                     </Grid>
                 </Grid>
 
@@ -509,6 +592,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Cats TOP 10</span>
+                        {copyButton("cats1")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -517,6 +601,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Cats TOP 11-20</span>
+                        {copyButton("cats2")}
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -525,6 +610,7 @@ const Solana = () => {
                             disabled={loading}
                         />
                         <span>Cats TOP 20</span>
+                        {copyButton("cats")}
                     </Grid>
                 </Grid>
             </Grid>
@@ -642,6 +728,13 @@ const Solana = () => {
             </p>
             <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
                 @01HK0BGJQMWXQC26SRG2W46TET</p>
+
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message="Pine Script copied to clipboard!"
+            />
         </div>
     );
 };
