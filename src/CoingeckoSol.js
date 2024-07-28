@@ -33,7 +33,7 @@ const CoingeckoSol = () => {
     const [fromDate, setFromDate] = useState(dayjs("2024-07-01"));
     const [toDate, setToDate] = useState(dayjs("2024-07-28"));
     const [loading, setLoading] = useState(false);
-    const [tabValue, setTabValue] = useState('2');
+    const [tabValue, setTabValue] = useState('1');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const [startIndex, setStartIndex] = useState(1);
@@ -275,7 +275,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                     {datasets2.map((coin) => (
                                         <MenuItem key={coin.id} value={coin.id}>
                                             <Checkbox checked={coinsSelected.indexOf(coin.id) > -1}/>
-                                            <img style={{"height": "24px", "marginRight": "8px"}} src={coin.image} alt={coin.id}/>
+                                            <img style={{"height": "24px", "marginRight": "8px"}} src={coin.image}
+                                                 alt={coin.id}/>
                                             <ListItemText primary={coin.id}/>
                                         </MenuItem>
                                     ))}
@@ -286,7 +287,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         <Switch
                                             checked={checked}
                                             onChange={handleSwitchChange}
-                                            inputProps={{ 'aria-label': 'controlled' }}
+                                            inputProps={{'aria-label': 'controlled'}}
                                         />
                                     }
                                     label={checked ? "Exclude" : "Include"}
@@ -314,13 +315,19 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 )}
             </Button>
 
-            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript("Market Cap")} variant="contained" disabled={loading || datasets.length === 0}>
+            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript("Market Cap")} variant="contained"
+                    disabled={loading || datasets.length === 0}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
                     "Copy Pine Script"
                 )}
             </Button>
+
+            <br/>
+
+            <span>To view the data in TradingView, copy the Pine script, go to the Pine Editor in TradingView, and paste it.</span>
+
             <br/>
 
             <Grid
@@ -335,9 +342,9 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
 
                 <Grid item>
                     <Tabs value={tabValue} onChange={handleTabChange}>
-                        <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
-                        <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.3"} />
-                        <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
+                        <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
+                        <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
+                        <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
                     </Tabs>
                 </Grid>
             </Grid>
@@ -354,6 +361,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     <CryptoChart datasets={datasets} title="Market Cap" metric="marketcap" showDatesOnly={true}/>
                 </Grid>
             </Grid>
+            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
+                @01HK0BGJQMWXQC26SRG2W46TET</p>
 
             <Snackbar
                 open={openSnackbar}
