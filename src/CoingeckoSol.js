@@ -36,11 +36,11 @@ const CoingeckoSol = () => {
     const [tabValue, setTabValue] = useState('2');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const [startIndex, setStartIndex] = useState(0);
-    const [endIndex, setEndIndex] = useState(9);
+    const [startIndex, setStartIndex] = useState(1);
+    const [endIndex, setEndIndex] = useState(10);
 
-    const [coinsSelected, setCoinsSelected] = React.useState([]);
-    const [checked, setChecked] = React.useState(true);
+    const [coinsSelected, setCoinsSelected] = useState([]);
+    const [checked, setChecked] = useState(true);
 
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/coingecko-sol";
 
@@ -59,8 +59,9 @@ const CoingeckoSol = () => {
 
     const fetchData = async () => {
         setLoading(true);
+        const coinParams = coinsSelected.join(',');
 
-        const response = await fetch(`${domain}?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}&index_start=0&index_end=9&exclude_ids=solana,tether,usd-coin,chainlink`);
+        const response = await fetch(`${domain}?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}&index_start=${startIndex - 1}&index_end=${endIndex - 1}&exclude_ids=${coinParams}`);
         const result = await response.json();
 
         const data = Object.keys(result).map(date => ({
@@ -106,9 +107,47 @@ const CoingeckoSol = () => {
         setOpenSnackbar(false);
     };
 
-    useEffect(() => {
-        fetchData2();
-    }, []);
+    const generatePineScript = (assetName) => {
+        const assetData = datasets.find(dataset => dataset.label === assetName);
+        if (!assetData) return;
+
+        const firstDate = new Date(assetData.data[0].timestamp).toISOString().split('T')[0];
+
+        let pineScript = `//@version=5
+indicator("${assetName} Data Plot", overlay=true)
+
+var customValues = array.new_float()
+bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
+date = input.time(timestamp("${firstDate} 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
+
+indx = not bump ? 0 : ta.valuewhen(time == date, bar_index, 0) // Origin bar index.
+
+if bar_index == indx
+    customValues := array.from(
+     `;
+
+        assetData.data.forEach((item, index) => {
+            pineScript += `${item.marketcap}${index < assetData.data.length - 1 ? ', ' : `
+ `}`;
+        });
+
+        pineScript += `    )`;
+
+        pineScript += `
+
+plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00) // Plot and shrink dataset for bars within data range.
+`;
+
+        navigator.clipboard.writeText(pineScript).then(() => {
+            setOpenSnackbar(true);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    };
+
+    // useEffect(() => {
+    //     fetchData2();
+    // }, []);
 
     return (
         <div className="App">
@@ -204,6 +243,8 @@ const CoingeckoSol = () => {
                         container
                         direction={"column"}
                     >
+                        <span>Specify the range of indices to view the coins by market cap.</span>
+                        <span>For example, setting the start index to 1 and the end index to 10 will display the top 10 coins by market cap.</span>
                     </Grid>
 
                     <Grid
@@ -228,7 +269,7 @@ const CoingeckoSol = () => {
                                     {datasets2.map((coin) => (
                                         <MenuItem key={coin.id} value={coin.id}>
                                             <Checkbox checked={coinsSelected.indexOf(coin.id) > -1}/>
-                                            <img style={{"height": "24px", "margin-right": "8px"}} src={coin.image}/>
+                                            <img style={{"height": "24px", "margin-right": "8px"}} src={coin.image} alt={coin.id}/>
                                             <ListItemText primary={coin.id}/>
                                         </MenuItem>
                                     ))}
@@ -256,6 +297,14 @@ const CoingeckoSol = () => {
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
                     "Fetch data"
+                )}
+            </Button>
+
+            <Button style={{"margin-left": "8px"}} onClick={() => generatePineScript("Market Cap")} variant="contained" disabled={loading || datasets.length === 0}>
+                {loading ? (
+                    <CircularProgress size={25} color={"grey"}/>
+                ) : (
+                    "Copy Pine Script"
                 )}
             </Button>
             <br/>
@@ -296,7 +345,7 @@ const CoingeckoSol = () => {
                 open={openSnackbar}
                 autoHideDuration={6000}
                 onClose={handleCloseSnackbar}
-                message="Data fetched successfully!"
+                message="Pine Script copied to clipboard!"
             />
         </div>
     );
