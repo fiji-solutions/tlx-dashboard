@@ -260,19 +260,30 @@ const Solana = () => {
 
         let pineScript = `//@version=5
 indicator("${assetName} Data Plot", overlay=true)
-var float[] customValues = array.new_float()
-var string[] customDates = array.new_string()
 
-if (bar_index == 0)  // Initialize data once
-`;
+var customValues = array.new_float()
+var customDates = array.new_string()
 
-        assetData.data.forEach(item => {
-            pineScript += `    array.push(customDates, "${item.timestamp}")
-    array.push(customValues, ${item.marketcap})
-`;
+if bar_index == 0 // If current bar is origin of data range populate the array.
+    customValues := array.from(
+     `;
+
+        assetData.data.forEach((item, index) => {
+            pineScript += `${item.marketcap}${index < assetData.data.length - 1 ? ', ' : `
+ `}`;
         });
 
-        pineScript += `
+        pineScript += `    )
+    customDates := array.from(
+     `;
+
+        assetData.data.forEach((item, index) => {
+            pineScript += `"${item.timestamp}"${index < assetData.data.length - 1 ? ', ' : `
+ `}`;
+        });
+
+        pineScript += `    )
+
 parseDate(dateString) =>
     year = str.tonumber(str.substring(dateString, 0, 4))
     month = str.tonumber(str.substring(dateString, 5, 7))
