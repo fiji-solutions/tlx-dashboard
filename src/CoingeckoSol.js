@@ -59,7 +59,13 @@ const CoingeckoSol = () => {
 
     const fetchData = async () => {
         setLoading(true);
-        const coinParams = coinsSelected.join(',');
+        let coinParams = coinsSelected.join(',');
+
+        if (!checked) {
+            const allCoins = datasets2.map(coin => coin.id);
+            const includedCoins = allCoins.filter(coin => !coinsSelected.includes(coin));
+            coinParams = includedCoins.join(',');
+        }
 
         const response = await fetch(`${domain}?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}&index_start=${startIndex - 1}&index_end=${endIndex - 1}&exclude_ids=${coinParams}`);
         const result = await response.json();
@@ -145,9 +151,9 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         });
     };
 
-    // useEffect(() => {
-    //     fetchData2();
-    // }, []);
+    useEffect(() => {
+        fetchData2();
+    }, []);
 
     return (
         <div className="App">
@@ -269,7 +275,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                     {datasets2.map((coin) => (
                                         <MenuItem key={coin.id} value={coin.id}>
                                             <Checkbox checked={coinsSelected.indexOf(coin.id) > -1}/>
-                                            <img style={{"height": "24px", "margin-right": "8px"}} src={coin.image} alt={coin.id}/>
+                                            <img style={{"height": "24px", "marginRight": "8px"}} src={coin.image} alt={coin.id}/>
                                             <ListItemText primary={coin.id}/>
                                         </MenuItem>
                                     ))}
@@ -288,6 +294,14 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             </FormControl>
                         </div>
                     </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                    >
+                        <span>You can either exclude specific coins from the results or include only selected coins.</span>
+                    </Grid>
                 </Grid>
             </Grid>
             <br/>
@@ -300,7 +314,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 )}
             </Button>
 
-            <Button style={{"margin-left": "8px"}} onClick={() => generatePineScript("Market Cap")} variant="contained" disabled={loading || datasets.length === 0}>
+            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript("Market Cap")} variant="contained" disabled={loading || datasets.length === 0}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
