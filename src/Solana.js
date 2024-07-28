@@ -327,13 +327,16 @@ plot(customValue, color=color.red, title="Custom Data", linewidth=2)
     const copyButton = (asset) => {
         return (
             <>
-                {datasets.some(dataset => dataset.label === asset) && (
-                    <Tooltip title="Copy Market Cap Pine Script">
-                        <Button onClick={() => generatePineScript(asset)}>
+                <Tooltip title="Copy Market Cap Pine Script">
+                    <span>
+                        <Button
+                            onClick={() => generatePineScript(asset)}
+                            disabled={!datasets.some(dataset => dataset.label === asset)}
+                        >
                             <ContentCopyIcon />
                         </Button>
-                    </Tooltip>
-                )}
+                    </span>
+                </Tooltip>
             </>
         );
     };
