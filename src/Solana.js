@@ -258,12 +258,14 @@ const Solana = () => {
         const assetData = datasets.find(dataset => dataset.label === assetName);
         if (!assetData) return;
 
+        const firstDate = new Date(assetData.data[0].timestamp).toISOString().split('T')[0];
+
         let pineScript = `//@version=5
 indicator("${assetName} Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
-date = input.time(timestamp("27 Jul 2024 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
+date = input.time(timestamp("${firstDate} 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
 
 indx = not bump ? 0 : ta.valuewhen(time == date, bar_index, 0) // Origin bar index.
 
