@@ -262,9 +262,12 @@ const Solana = () => {
 indicator("${assetName} Data Plot", overlay=true)
 
 var customValues = array.new_float()
-var customDates = array.new_string()
+bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
+date = input.time(timestamp("27 Jul 2024 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
 
-if bar_index == 0 // If current bar is origin of data range populate the array.
+indx = not bump ? 0 : ta.valuewhen(time == date, bar_index, 0) // Origin bar index.
+
+if bar_index == indx
     customValues := array.from(
      `;
 
@@ -273,36 +276,16 @@ if bar_index == 0 // If current bar is origin of data range populate the array.
  `}`;
         });
 
-        pineScript += `    )
-    customDates := array.from(
-     `;
+        pineScript += `    )`;
 
-        assetData.data.forEach((item, index) => {
-            pineScript += `"${item.timestamp}"${index < assetData.data.length - 1 ? ', ' : `
- `}`;
-        });
+ //        assetData.data.forEach((item, index) => {
+ //            pineScript += `"${item.timestamp}"${index < assetData.data.length - 1 ? ', ' : `
+ // `}`;
+ //        });
 
-        pineScript += `    )
+        pineScript += `
 
-parseDate(dateString) =>
-    year = str.tonumber(str.substring(dateString, 0, 4))
-    month = str.tonumber(str.substring(dateString, 5, 7))
-    day = str.tonumber(str.substring(dateString, 8, 10))
-    hour = str.tonumber(str.substring(dateString, 11, 13))
-    minute = str.tonumber(str.substring(dateString, 14, 16))
-    second = str.tonumber(str.substring(dateString, 17, 19))
-    timestamp = timestamp(int(year), int(month), int(day), int(hour), int(minute), int(second))
-    timestamp
-
-var float customValue = na
-
-for i = 0 to array.size(customDates) - 1
-    customDate = array.get(customDates, i)
-    customTimestamp = parseDate(customDate)
-    if (time == customTimestamp)
-        customValue := array.get(customValues, i)
-
-plot(customValue, color=color.red, title="Custom Data", linewidth=2)
+plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00) // Plot and shrink dataset for bars within data range.
 `;
 
         navigator.clipboard.writeText(pineScript).then(() => {
