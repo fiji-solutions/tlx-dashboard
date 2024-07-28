@@ -327,7 +327,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     <span>
                         <Button
                             onClick={() => generatePineScript(asset)}
-                            disabled={!datasets.some(dataset => dataset.label === asset)}
+                            disabled={!datasets.some(dataset => dataset.label === asset) || loading}
                         >
                             <ContentCopyIcon />
                         </Button>
