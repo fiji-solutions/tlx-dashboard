@@ -42,7 +42,7 @@ const CoingeckoSol = () => {
     const [coinsSelected, setCoinsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
-    const domain = "http://charismoutafidis.com:8000/coingecko-sol";
+    const domain = "https://api.fijisolutions.net/coingecko-sol";
 
     const handleCoinSelectChange = (event) => {
         const {
