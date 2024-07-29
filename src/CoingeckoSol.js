@@ -38,7 +38,8 @@ const columns = [
         )
     },
     { field: 'coin', headerName: 'Coin', width: 200 },
-    { field: 'percentage', headerName: 'Participation (%)', width: 200 }
+    { field: 'percentage', headerName: 'Participation (%)', width: 200 },
+    { field: 'days_participated', headerName: 'Days Participated', width: 200 }
 ];
 
 const CoingeckoSol = () => {
@@ -57,7 +58,8 @@ const CoingeckoSol = () => {
     const [coinsSelected, setCoinsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
-    const domain = "http://127.0.0.1:8000/coingecko-sol";
+    const domain = "https://api.fijisolutions.net/coingecko-sol";
+    // const domain = "http://127.0.0.1:8000/coingecko-sol";
 
     const handleCoinSelectChange = (event) => {
         const {
@@ -104,6 +106,7 @@ const CoingeckoSol = () => {
             id: item.coin,
             coin: item.coin,
             percentage: item.percentage + "%",
+            days_participated: item.days_participated,
             icon: item.icon
         }));
 
