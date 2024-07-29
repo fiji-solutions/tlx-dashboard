@@ -113,14 +113,12 @@ const CoingeckoSol = () => {
         setOpenSnackbar(false);
     };
 
-    const generatePineScript = (assetName) => {
-        const assetData = datasets.find(dataset => dataset.label === assetName);
-        if (!assetData) return;
+    const generatePineScript = () => {
 
-        const firstDate = new Date(assetData.data[0].timestamp).toISOString().split('T')[0];
+        const firstDate = new Date(datasets[0].data[0].timestamp).toISOString().split('T')[0];
 
         let pineScript = `//@version=5
-indicator("${assetName} Data Plot", overlay=true)
+indicator("${datasets} Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
@@ -132,8 +130,8 @@ if bar_index == indx
     customValues := array.from(
      `;
 
-        assetData.data.forEach((item, index) => {
-            pineScript += `${item.marketcap}${index < assetData.data.length - 1 ? ', ' : `
+        datasets[0].data.forEach((item, index) => {
+            pineScript += `${item.marketcap}${index < datasets[0].data.length - 1 ? ', ' : `
  `}`;
         });
 
@@ -160,6 +158,10 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             <h1>
                 Coingecko Sol Market Caps
             </h1>
+
+            <span>The data used for this chart was fetched from the Coingecko /history API. The information is updated daily.</span>
+            <br />
+            <br />
 
             <Grid
                 container
@@ -315,7 +317,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 )}
             </Button>
 
-            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript("Market Cap")} variant="contained"
+            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript()} variant="contained"
                     disabled={loading || datasets.length === 0}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
