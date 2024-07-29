@@ -114,15 +114,16 @@ const CoingeckoSol = () => {
     };
 
     const generatePineScript = () => {
+        const sortedData = datasets[0].data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 
-        const firstDate = new Date(datasets[0].data[0].timestamp).toISOString().split('T')[0];
+        const mostRecentDate = new Date(sortedData[sortedData.length - 1].timestamp).toISOString().split('T')[0];
 
         let pineScript = `//@version=5
-indicator("${datasets} Data Plot", overlay=true)
+indicator("${datasets[0].label} Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
-date = input.time(timestamp("${firstDate} 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
+date = input.time(timestamp("${mostRecentDate} 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
 
 indx = not bump ? 0 : ta.valuewhen(time == date, bar_index, 0) // Origin bar index.
 
@@ -130,8 +131,8 @@ if bar_index == indx
     customValues := array.from(
      `;
 
-        datasets[0].data.forEach((item, index) => {
-            pineScript += `${item.marketcap}${index < datasets[0].data.length - 1 ? ', ' : `
+        sortedData.forEach((item, index) => {
+            pineScript += `${item.marketcap}${index < sortedData.length - 1 ? ', ' : `
  `}`;
         });
 
