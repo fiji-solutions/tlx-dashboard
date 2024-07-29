@@ -6,11 +6,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Solana from './Solana';
 import CoingeckoSol from "./CoingeckoSol";
+import NavTabs from './components/NavTabs';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <Router>
+            <NavTabs />
             <Routes>
                 <Route path="/" element={<App />} />
                 <Route path="/solana" element={<Solana />} />

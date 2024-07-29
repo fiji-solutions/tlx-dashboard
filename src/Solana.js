@@ -351,6 +351,10 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 Solana Index Market Caps
             </h1>
 
+            <span><strong>Disclaimer</strong>: Due to lack of time, not much brain power has been put into the math behind Investment Value.</span>
+            <br/>
+            <br/>
+
             <Grid
                 container
                 spacing={1}

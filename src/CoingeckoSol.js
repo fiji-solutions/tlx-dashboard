@@ -356,6 +356,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             </Button>
 
             <br/>
+            <br/>
 
             <span>To view the data in TradingView, copy the Pine script, go to the Pine Editor in TradingView, and paste it.</span>
 
