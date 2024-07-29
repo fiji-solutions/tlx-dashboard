@@ -189,7 +189,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 onChange={(newValue) => setFromDate(newValue)}
                                 disabled={loading}
                                 maxDate={toDate}
-                                minDate={dayjs("2024-01-01")}
+                                minDate={dayjs("2023-01-01")}
                             />
                         </LocalizationProvider>
                     </Grid>
