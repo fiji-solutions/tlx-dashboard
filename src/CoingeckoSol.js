@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { DataGrid } from '@mui/x-data-grid';
 import dayjs from "dayjs";
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
@@ -27,13 +28,27 @@ const MenuProps = {
     },
 };
 
+const columns = [
+    {
+        field: 'icon',
+        headerName: '',
+        width: 100,
+        renderCell: (params) => (
+            <img src={params.value} alt={params.row.coin} style={{ height: '24px', width: '24px' }} />
+        )
+    },
+    { field: 'coin', headerName: 'Coin', width: 200 },
+    { field: 'percentage', headerName: 'Participation (%)', width: 200 }
+];
+
 const CoingeckoSol = () => {
     const [datasets, setDatasets] = useState([]);
     const [datasets2, setDatasets2] = useState([]);
+    const [participation, setParticipation] = useState([]);
     const [fromDate, setFromDate] = useState(dayjs("2024-07-01"));
     const [toDate, setToDate] = useState(dayjs("2024-07-28"));
     const [loading, setLoading] = useState(false);
-    const [tabValue, setTabValue] = useState('1');
+    const [tabValue, setTabValue] = useState('2');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
     const [startIndex, setStartIndex] = useState(1);
@@ -42,7 +57,7 @@ const CoingeckoSol = () => {
     const [coinsSelected, setCoinsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
-    const domain = "https://api.fijisolutions.net/coingecko-sol";
+    const domain = "http://127.0.0.1:8000/coingecko-sol";
 
     const handleCoinSelectChange = (event) => {
         const {
@@ -70,10 +85,11 @@ const CoingeckoSol = () => {
         const response = await fetch(`${domain}?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}&index_start=${startIndex - 1}&index_end=${endIndex - 1}&exclude_ids=${coinParams}`);
         const result = await response.json();
 
-        const data = Object.keys(result).map(date => ({
+        const data = Object.keys(result["market_cap_sums"]).map(date => ({
             timestamp: date,
-            marketcap: result[date]
+            marketcap: result["market_cap_sums"][date]
         }));
+        console.log(data);
 
         const combinedData = [
             {
@@ -84,7 +100,15 @@ const CoingeckoSol = () => {
             }
         ];
 
+        const participationData = result["participation"].map(item => ({
+            id: item.coin,
+            coin: item.coin,
+            percentage: item.percentage + "%",
+            icon: item.icon
+        }));
+
         setDatasets(combinedData);
+        setParticipation(participationData);
         setLoading(false);
     };
 
@@ -363,6 +387,20 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     xs={11 / parseFloat(tabValue)}
                 >
                     <CryptoChart datasets={datasets} title="Market Cap" metric="marketcap" showDatesOnly={true}/>
+                </Grid>
+                <Grid
+                    item
+                    xs={11 / parseFloat(tabValue)}
+                >
+                    <h1>Participation Data</h1>
+                    <div style={{height: 400, width: '100%'}}>
+                        <DataGrid
+                            rows={participation}
+                            columns={columns}
+                            pageSize={10}
+                            rowsPerPageOptions={[10]}
+                        />
+                    </div>
                 </Grid>
             </Grid>
             <h2>Important Disclaimer</h2>
