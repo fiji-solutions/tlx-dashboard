@@ -161,8 +161,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             </h1>
 
             <span>The data used for this chart was fetched from the Coingecko /history API. The information is updated daily.</span>
-            <br />
-            <br />
+            <br/>
+            <br/>
 
             <Grid
                 container
@@ -365,6 +365,16 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     <CryptoChart datasets={datasets} title="Market Cap" metric="marketcap" showDatesOnly={true}/>
                 </Grid>
             </Grid>
+            <h2>Important Disclaimer</h2>
+            <p>On <strong>28/07/2024</strong>, the <strong>Top 400 Coins by Market Cap order</strong> were fetched for
+                the Solana Ecosystem from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-ecosystem"
+                                                        target="_blank" rel="noreferrer">https://www.coingecko.com/en/categories/solana-ecosystem</a>.
+            </p>
+            <p>From <strong>01/01/2023</strong> until <strong>28/07/2024</strong>, the data
+                includes <strong>ONLY</strong> these coins.</p>
+            <p>This is because I did not find a way to view the Market Cap order history for the past.</p>
+            <p>If I find a way to do so in the future, the data will be corrected and this disclaimer will be
+                removed.</p>
             <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
                 @01HK0BGJQMWXQC26SRG2W46TET</p>
 
