@@ -42,7 +42,7 @@ const CoingeckoSol = () => {
     const [coinsSelected, setCoinsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
-    const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/coingecko-sol";
+    const domain = "http://charismoutafidis.com:8000/coingecko-sol";
 
     const handleCoinSelectChange = (event) => {
         const {
