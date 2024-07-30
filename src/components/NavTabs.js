@@ -16,6 +16,7 @@ const NavTabs = () => {
                 <Tab label="TLX & Toros" value="/" component={Link} to="/" />
                 <Tab label="Solindex" value="/solana" component={Link} to="/solana" />
                 <Tab label="Solana Ecosystem" value="/coingecko-sol" component={Link} to="/coingecko-sol" />
+                <Tab label="Solana Memes" value="/coingecko-sol-memes" component={Link} to="/coingecko-sol-memes" />
             </Tabs>
         </Box>
     );

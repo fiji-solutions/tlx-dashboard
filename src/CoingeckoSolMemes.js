@@ -42,7 +42,7 @@ const columns = [
     { field: 'days_participated', headerName: 'Days Participated', width: 200 }
 ];
 
-const CoingeckoSol = () => {
+const CoingeckoSolMemes = () => {
     const [datasets, setDatasets] = useState([]);
     const [datasets2, setDatasets2] = useState([]);
     const [participation, setParticipation] = useState([]);
@@ -58,8 +58,8 @@ const CoingeckoSol = () => {
     const [coinsSelected, setCoinsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
-    const domain = "https://api.fijisolutions.net/coingecko-sol";
-    // const domain = "http://127.0.0.1:8000/coingecko-sol";
+    const domain = "https://api.fijisolutions.net/coingecko-sol-memes";
+    // const domain = "http://127.0.0.1:8000/coingecko-sol-memes";
 
     const handleCoinSelectChange = (event) => {
         const {
@@ -146,7 +146,7 @@ const CoingeckoSol = () => {
         const mostRecentDate = new Date(sortedData[sortedData.length - 1].timestamp).toISOString().split('T')[0];
 
         let pineScript = `//@version=5
-indicator("${datasets[0].label} Data Plot", overlay=true)
+indicator("Solana Memes Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
@@ -184,7 +184,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     return (
         <div className="App">
             <h1>
-                Coingecko Sol Market Caps
+                Coingecko Solana Memes Market Caps
             </h1>
 
             <span>The data used for this chart was fetched from the Coingecko /history API. The information is updated daily.</span>
@@ -294,7 +294,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     >
                         <div>
                             <FormControl sx={{m: 1, width: 300}}>
-                            <InputLabel id="demo-multiple-checkbox-label">Coins to...</InputLabel>
+                                <InputLabel id="demo-multiple-checkbox-label">Coins to...</InputLabel>
                                 <Select
                                     labelId="demo-multiple-checkbox-label"
                                     id="demo-multiple-checkbox"
@@ -410,11 +410,11 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 </Grid>
             </Grid>
             <h2>Important Disclaimer</h2>
-            <p>On <strong>28/07/2024</strong>, the <strong>Top 400 Coins by Market Cap order</strong> were fetched for
-                the Solana Ecosystem from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-ecosystem"
-                                                        target="_blank" rel="noreferrer">https://www.coingecko.com/en/categories/solana-ecosystem</a>.
+            <p>On <strong>30/07/2024</strong>, all the Solana Meme Coins by Market Cap order were fetched
+                 from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-meme-coins"
+                                                        target="_blank" rel="noreferrer">https://www.coingecko.com/en/categories/solana-meme-coins</a>.
             </p>
-            <p>From <strong>01/01/2023</strong> until <strong>28/07/2024</strong>, the data
+            <p>From <strong>01/01/2023</strong> until <strong>30/07/2024</strong>, the data
                 includes <strong>ONLY</strong> these coins.</p>
             <p>This is because I did not find a way to view the Market Cap order history for the past.</p>
             <p>If I find a way to do so in the future, the data will be corrected and this disclaimer will be
@@ -432,4 +432,4 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     );
 };
 
-export default CoingeckoSol;
+export default CoingeckoSolMemes;
