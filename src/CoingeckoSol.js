@@ -38,7 +38,7 @@ const columns = [
         )
     },
     { field: 'coin', headerName: 'Coin', width: 200 },
-    { field: 'percentage', headerName: 'Participation (%)', width: 200 },
+    { field: 'percentage', headerName: 'Days Participation (%)', width: 200 },
     { field: 'days_participated', headerName: 'Days Participated', width: 200 }
 ];
 
