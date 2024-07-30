@@ -47,7 +47,7 @@ const CoingeckoSol = () => {
     const [datasets2, setDatasets2] = useState([]);
     const [participation, setParticipation] = useState([]);
     const [fromDate, setFromDate] = useState(dayjs("2024-07-01"));
-    const [toDate, setToDate] = useState(dayjs("2024-07-28"));
+    const [toDate, setToDate] = useState(dayjs().add(-1, "day"));
     const [loading, setLoading] = useState(false);
     const [tabValue, setTabValue] = useState('2');
     const [openSnackbar, setOpenSnackbar] = useState(false);
