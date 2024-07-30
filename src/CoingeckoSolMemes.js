@@ -184,7 +184,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     return (
         <div className="App">
             <h1>
-                Coingecko Solana Memes Market Caps
+                Solana Memes Market Caps
             </h1>
 
             <span>The data used for this chart was fetched from the Coingecko /history API. The information is updated daily.</span>
