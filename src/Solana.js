@@ -44,8 +44,8 @@ const Solana = () => {
 
     const [array, setArray] = useState([]);
     const [tabValue, setTabValue] = useState('2');
-    const [granularity, setGranularity] = useState("HOURS");
-    const [interval, setInterval] = useState("1h");
+    const [granularity, setGranularity] = useState("DAYS");
+    const [interval, setInterval] = useState("1d");
     const [granularityUnit, setGranularityUnit] = useState(1);
     const [fromDate, setFromDate] = useState(dayjs("2024-07-27"));
     const [toDate, setToDate] = useState(dayjs(undefined));
