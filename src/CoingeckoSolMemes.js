@@ -16,6 +16,7 @@ import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
 import "./App.css";
+import DoubleYAxisCryptoChart from "./components/DoubleYAxisCryptoChart";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -42,10 +43,56 @@ const columns = [
     { field: 'days_participated', headerName: 'Days Participated', width: 200 }
 ];
 
+const correlationColumns = [
+    {
+        field: 'icon',
+        headerName: '',
+        width: 100,
+    },
+    { field: 'rollingWindow', headerName: 'Window', width: 170 },
+    { field: 'value', headerName: 'Value', width: undefined }
+];
+
+const correlationCoins = [
+    {
+        "id": "Solana",
+        "image": "https://synthetixio.github.io/synthetix-assets/markets/SOL.svg"
+    },
+    {
+        "id": "SOL2XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75"
+    },
+    {
+        "id": "SOL3XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75"
+    },
+    {
+        "id": "SOL1L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "SOL2L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "SOL3L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "SOL4L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "SOL5L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+]
+
 const CoingeckoSolMemes = () => {
     const [datasets, setDatasets] = useState([]);
     const [datasets2, setDatasets2] = useState([]);
     const [participation, setParticipation] = useState([]);
+    const [correlations, setCorrelations] = useState([]);
     const [fromDate, setFromDate] = useState(dayjs("2024-07-01"));
     const [toDate, setToDate] = useState(dayjs().add(-1, "day"));
     const [loading, setLoading] = useState(false);
@@ -56,6 +103,7 @@ const CoingeckoSolMemes = () => {
     const [endIndex, setEndIndex] = useState(10);
 
     const [coinsSelected, setCoinsSelected] = useState([]);
+    const [correlationsSelected, setCorrelationsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
     const domain = "https://api.fijisolutions.net/coingecko-sol-memes";
@@ -70,6 +118,15 @@ const CoingeckoSolMemes = () => {
         );
     };
 
+    const handleCorrelationsSelected = (event) => {
+        const {
+            target: { value },
+        } = event;
+        setCorrelationsSelected(
+            typeof value === 'string' ? value.split(',') : value,
+        );
+    };
+
     const handleSwitchChange = (event) => {
         setChecked(event.target.checked);
     };
@@ -77,6 +134,7 @@ const CoingeckoSolMemes = () => {
     const fetchData = async () => {
         setLoading(true);
         let coinParams = coinsSelected.join(',');
+        let correlationsParams = correlationsSelected.join(',');
 
         if (!checked) {
             const allCoins = datasets2.map(coin => coin.id);
@@ -84,21 +142,20 @@ const CoingeckoSolMemes = () => {
             coinParams = includedCoins.join(',');
         }
 
-        const response = await fetch(`${domain}?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}&index_start=${startIndex - 1}&index_end=${endIndex - 1}&exclude_ids=${coinParams}`);
+        const response = await fetch(`${domain}?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}&index_start=${startIndex - 1}&index_end=${endIndex - 1}&exclude_ids=${coinParams}&correlation_coin_ids=${correlationsParams}`);
         const result = await response.json();
 
         const data = Object.keys(result["market_cap_sums"]).map(date => ({
             timestamp: date,
             marketcap: result["market_cap_sums"][date]
         }));
-        console.log(data);
 
         const combinedData = [
             {
                 label: 'Market Cap',
                 data: data,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(162,89,255, 1)',
+                backgroundColor: 'rgba(162,89,255, 0.2)',
             }
         ];
 
@@ -110,8 +167,40 @@ const CoingeckoSolMemes = () => {
             icon: item.icon
         }));
 
+        const correlationData =  Object.keys(result["correlation_data"]).map(key => ({
+            id: key,
+            coin: key,
+            correlations: ["correlation15", "correlation30", "correlation60", "correlation90", "correlation120"].map((correlation) => ({
+                    "id": correlation,
+                    "rollingWindow": correlation.replace("correlation", "") + "d",
+                    "value": result["correlation_data"][key][correlation] !== 2 ? result["correlation_data"][key][correlation] : "-"
+                }
+            )),
+            data: {
+                label: key,
+                data: Object.keys(result["correlation_data"][key].data).map(date => ({
+                    timestamp: date,
+                    marketcap: result["correlation_data"][key].data[date]
+                })),
+                borderColor: key === "Solana" ? 'rgba(220, 31, 255, 1)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 1)' : 'rgba(237, 140, 178, 1)'),
+                backgroundColor: key === "Solana" ? 'rgba(220, 31, 255, 0.2)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 0.2)' : 'rgba(237, 140, 178, 0.2)'),
+            }
+        }));
+
+        const order = ["Solana", "SOL2XOPT", "SOL3XOPT", "SOL1L", "SOL2L", "SOL3L", "SOL4L", "SOL5L"];
+
+        const orderMap = new Map();
+        order.forEach((id, index) => {
+            orderMap.set(id, index);
+        });
+
+        correlationData.sort((a, b) => {
+            return orderMap.get(a.id) - orderMap.get(b.id);
+        });
+
         setDatasets(combinedData);
         setParticipation(participationData);
+        setCorrelations(correlationData);
         setLoading(false);
     };
 
@@ -333,6 +422,38 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         item
                         container
                         direction={"column"}
+                        style={{"width": "unset"}}
+                    >
+                        <div>
+                            <FormControl sx={{m: 1, width: 300}}>
+                                <InputLabel id="demo-multiple-checkbox-label">Compare against</InputLabel>
+                                <Select
+                                    labelId="demo-multiple-checkbox-label"
+                                    id="demo-multiple-checkbox"
+                                    multiple
+                                    value={correlationsSelected}
+                                    onChange={handleCorrelationsSelected}
+                                    input={<OutlinedInput label="Compare against"/>}
+                                    renderValue={(selected) => selected.join(', ')}
+                                    MenuProps={MenuProps}
+                                >
+                                    {correlationCoins.map((coin) => (
+                                        <MenuItem key={coin.id} value={coin.id}>
+                                            <Checkbox checked={correlationsSelected.indexOf(coin.id) > -1}/>
+                                            <img style={{"height": "24px", "marginRight": "8px"}} src={coin.image}
+                                                 alt={coin.id}/>
+                                            <ListItemText primary={coin.id}/>
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </div>
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
                     >
                         <span>You can either exclude specific coins from the results or include only selected coins.</span>
                     </Grid>
@@ -409,6 +530,40 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     </div>
                 </Grid>
             </Grid>
+
+            {correlations.map((correlation) => (
+                <Grid
+                    container
+                    direction={"row"}
+                    justifyContent={"space-evenly"}
+                >
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                    >
+                        <DoubleYAxisCryptoChart
+                            dataset1={datasets[0]}
+                            dataset2={correlation.data}
+                            title1="Market Cap"
+                            title2={correlation.coin}
+                            metric="marketcap"
+                        />
+                    </Grid>
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                    >
+                        <h1>Correlation Table</h1>
+                        <div style={{height: 400, width: '100%'}}>
+                            <DataGrid
+                                rows={correlation.correlations}
+                                columns={correlationColumns}
+                            />
+                        </div>
+                    </Grid>
+                </Grid>
+            ))}
+
             <h2>Important Disclaimer</h2>
             <p>On <strong>30/07/2024</strong>, all the Solana Meme Coins by Market Cap order were fetched
                  from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-meme-coins"

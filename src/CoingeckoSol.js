@@ -184,12 +184,9 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     return (
         <div className="App">
             <h1>
-                Solona Market Caps (To be Discontinued)
+                Solona Market Caps
             </h1>
 
-            <span>This dashboard seem to not me useful, hence I will stop updating the data soon. If you still use this and don't want it to be discontinued, dm me.</span>
-            <br/>
-            <br/>
             <span>The data used for this chart was fetched from the Coingecko /history API. The information is updated daily.</span>
             <br/>
             <br/>
@@ -297,7 +294,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     >
                         <div>
                             <FormControl sx={{m: 1, width: 300}}>
-                                <InputLabel id="demo-multiple-checkbox-label">Coins to...</InputLabel>
+                            <InputLabel id="demo-multiple-checkbox-label">Coins to...</InputLabel>
                                 <Select
                                     labelId="demo-multiple-checkbox-label"
                                     id="demo-multiple-checkbox"
@@ -415,8 +412,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             <h2>Important Disclaimer</h2>
             <p>On <strong>28/07/2024</strong>, the <strong>Top 400 Coins by Market Cap order</strong> were fetched for
                 the Solana Ecosystem from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-ecosystem"
-                                                        target="_blank"
-                                                        rel="noreferrer">https://www.coingecko.com/en/categories/solana-ecosystem</a>.
+                                                        target="_blank" rel="noreferrer">https://www.coingecko.com/en/categories/solana-ecosystem</a>.
             </p>
             <p>From <strong>01/01/2023</strong> until <strong>28/07/2024</strong>, the data
                 includes <strong>ONLY</strong> these coins.</p>
