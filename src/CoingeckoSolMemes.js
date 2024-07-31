@@ -294,7 +294,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     >
                         <div>
                             <FormControl sx={{m: 1, width: 300}}>
-                                <InputLabel id="demo-multiple-checkbox-label">Coins to...</InputLabel>
+                                <InputLabel id="demo-multiple-checkbox-label">Coins</InputLabel>
                                 <Select
                                     labelId="demo-multiple-checkbox-label"
                                     id="demo-multiple-checkbox"
@@ -323,7 +323,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                             inputProps={{'aria-label': 'controlled'}}
                                         />
                                     }
-                                    label={checked ? "Exclude" : "Include"}
+                                    label={checked ? "Exclude the above coins" : "Include only the above coins"}
                                 />
                             </FormControl>
                         </div>
