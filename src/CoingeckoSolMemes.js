@@ -531,6 +531,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 </Grid>
             </Grid>
 
+            <h2>Correlations</h2>
+
             {correlations.map((correlation) => (
                 <Grid
                     container
@@ -564,10 +566,12 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 </Grid>
             ))}
 
+            <hr style={{"marginTop": "160px"}}/>
             <h2>Important Disclaimer</h2>
             <p>On <strong>30/07/2024</strong>, all the Solana Meme Coins by Market Cap order were fetched
-                 from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-meme-coins"
-                                                        target="_blank" rel="noreferrer">https://www.coingecko.com/en/categories/solana-meme-coins</a>.
+                from CoinGecko: <a href="https://www.coingecko.com/en/categories/solana-meme-coins"
+                                   target="_blank"
+                                   rel="noreferrer">https://www.coingecko.com/en/categories/solana-meme-coins</a>.
             </p>
             <p>From <strong>01/01/2023</strong> until <strong>30/07/2024</strong>, the data
                 includes <strong>ONLY</strong> these coins.</p>
