@@ -553,7 +553,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         item
                         xs={11 / parseFloat(tabValue)}
                     >
-                        <h1>Correlation Table</h1>
+                        <h1>{correlation.coin} Correlation Table</h1>
                         <div style={{height: 400, width: '100%'}}>
                             <DataGrid
                                 rows={correlation.correlations}
