@@ -323,7 +323,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                             inputProps={{'aria-label': 'controlled'}}
                                         />
                                     }
-                                    label={checked ? "Exclude the above coins" : "Include only the above coins"}
+                                    label={checked ? "Exclude the above coins from the results" : "Include only the above coins in the results"}
                                 />
                             </FormControl>
                         </div>
