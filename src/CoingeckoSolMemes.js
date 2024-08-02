@@ -176,6 +176,12 @@ const CoingeckoSolMemes = () => {
                     "value": result["correlation_data"][key][correlation] !== 2 ? result["correlation_data"][key][correlation] : "-"
                 }
             )),
+            correlations_base_indexed: ["correlation15_base_indexed", "correlation30_base_indexed", "correlation60_base_indexed", "correlation90_base_indexed", "correlation120_base_indexed"].map((correlation) => ({
+                    "id": correlation,
+                    "rollingWindow": correlation.replace("correlation", "").replace("_base_indexed", "") + "d",
+                    "value": result["correlation_data"][key][correlation] !== 2 ? result["correlation_data"][key][correlation] : "-"
+                }
+            )),
             data: {
                 label: key,
                 data: Object.keys(result["correlation_data"][key].data).map(date => ({
@@ -184,7 +190,27 @@ const CoingeckoSolMemes = () => {
                 })),
                 borderColor: key === "Solana" ? 'rgba(220, 31, 255, 1)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 1)' : 'rgba(237, 140, 178, 1)'),
                 backgroundColor: key === "Solana" ? 'rgba(220, 31, 255, 0.2)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 0.2)' : 'rgba(237, 140, 178, 0.2)'),
-            }
+            },
+            combinedData: [
+                {
+                    label: key,
+                    data: Object.keys(result["correlation_data"][key].base_indexed_data).map(date => ({
+                        timestamp: date,
+                        marketcap: result["correlation_data"][key].base_indexed_data[date]
+                    })),
+                    borderColor: key === "Solana" ? 'rgba(220, 31, 255, 1)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 1)' : 'rgba(237, 140, 178, 1)'),
+                    backgroundColor: key === "Solana" ? 'rgba(220, 31, 255, 0.2)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 0.2)' : 'rgba(237, 140, 178, 0.2)'),
+                },
+                {
+                    label: 'Market Cap',
+                    data: Object.keys(result["market_cap_sums_base_indexed"]).map(date => ({
+                        timestamp: date,
+                        marketcap: result["market_cap_sums_base_indexed"][date]
+                    })),
+                    borderColor: 'rgba(162,89,255, 1)',
+                    backgroundColor: 'rgba(162,89,255, 0.2)',
+                }
+            ]
         }));
 
         const order = ["Solana", "SOL2XOPT", "SOL3XOPT", "SOL1L", "SOL2L", "SOL3L", "SOL4L", "SOL5L"];
@@ -383,14 +409,14 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     >
                         <div>
                             <FormControl sx={{m: 1, width: 300}}>
-                                <InputLabel id="demo-multiple-checkbox-label">Coins</InputLabel>
+                                <InputLabel id="demo-multiple-checkbox-label">Coins (Optional)</InputLabel>
                                 <Select
                                     labelId="demo-multiple-checkbox-label"
                                     id="demo-multiple-checkbox"
                                     multiple
                                     value={coinsSelected}
                                     onChange={handleCoinSelectChange}
-                                    input={<OutlinedInput label="Coins to..."/>}
+                                    input={<OutlinedInput label="Coins (Optional)"/>}
                                     renderValue={(selected) => selected.join(', ')}
                                     MenuProps={MenuProps}
                                 >
@@ -534,36 +560,66 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             <h2>Correlations</h2>
 
             {correlations.map((correlation) => (
-                <Grid
-                    container
-                    direction={"row"}
-                    justifyContent={"space-evenly"}
-                >
+                <>
+                    <hr />
+                    <h2>{correlation.coin}</h2>
+
                     <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
+                        container
+                        direction={"row"}
+                        justifyContent={"space-evenly"}
                     >
-                        <DoubleYAxisCryptoChart
-                            dataset1={datasets[0]}
-                            dataset2={correlation.data}
-                            title1="Market Cap"
-                            title2={correlation.coin}
-                            metric="marketcap"
-                        />
-                    </Grid>
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                    >
-                        <h1>{correlation.coin} Correlation Table</h1>
-                        <div style={{height: 400, width: '100%'}}>
-                            <DataGrid
-                                rows={correlation.correlations}
-                                columns={correlationColumns}
+                        <Grid
+                            item
+                            xs={11 / parseFloat(tabValue)}
+                        >
+                            <DoubleYAxisCryptoChart
+                                dataset1={datasets[0]}
+                                dataset2={correlation.data}
+                                title1="Market Cap"
+                                title2={correlation.coin}
+                                metric="marketcap"
                             />
-                        </div>
+                        </Grid>
+                        <Grid
+                            item
+                            xs={11 / parseFloat(tabValue)}
+                        >
+                            <h1>{correlation.coin} Correlation Table</h1>
+                            <div style={{height: 400, width: '100%'}}>
+                                <DataGrid
+                                    rows={correlation.correlations}
+                                    columns={correlationColumns}
+                                />
+                            </div>
+                        </Grid>
                     </Grid>
-                </Grid>
+
+                    <Grid
+                        container
+                        direction={"row"}
+                        justifyContent={"space-evenly"}
+                    >
+                        <Grid
+                            item
+                            xs={11 / parseFloat(tabValue)}
+                        >
+                            <CryptoChart datasets={correlation.combinedData} title="Base indexed" metric="marketcap" showDatesOnly/>
+                        </Grid>
+                        <Grid
+                            item
+                            xs={11 / parseFloat(tabValue)}
+                        >
+                            <h1>{correlation.coin} Base Indexed Correlation Table</h1>
+                            <div style={{height: 400, width: '100%'}}>
+                                <DataGrid
+                                    rows={correlation.correlations_base_indexed}
+                                    columns={correlationColumns}
+                                />
+                            </div>
+                        </Grid>
+                    </Grid>
+                </>
             ))}
 
             <hr style={{"marginTop": "160px"}}/>
