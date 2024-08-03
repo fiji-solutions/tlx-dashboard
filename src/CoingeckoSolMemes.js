@@ -53,6 +53,13 @@ const correlationColumns = [
     { field: 'value', headerName: 'Value', width: undefined }
 ];
 
+const networks = {
+    "OPT": "https://toros.finance/icons/optimism-network.svg",
+    "ARB": "https://toros.finance/icons/arbitrum-network.svg",
+    "POL": "https://toros.finance/icons/polygon-network.svg",
+    "BASE": "https://toros.finance/icons/base-network.svg"
+}
+
 const correlationCoins = [
     {
         "id": "Solana",
@@ -60,11 +67,13 @@ const correlationCoins = [
     },
     {
         "id": "SOL2XOPT",
-        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75"
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
     },
     {
         "id": "SOL3XOPT",
-        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75"
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
     },
     {
         "id": "SOL1L",
@@ -84,6 +93,124 @@ const correlationCoins = [
     },
     {
         "id": "SOL5L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "BTC2XARB",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "ARB"
+    },
+    {
+        "id": "BTC3XARB",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "ARB"
+    },
+    {
+        "id": "BTC2XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
+    },
+    {
+        "id": "BTC3XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
+    },
+    {
+        "id": "BTC4XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
+    },
+    {
+        "id": "BTC3XPOL",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "POL"
+    },
+    {
+        "id": "BTC1L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "BTC2L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "BTC3L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "BTC4L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "BTC5L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "BTC7L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "ETH2XARB",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "ARB"
+    },
+    {
+        "id": "ETH3XARB",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "ARB"
+    },
+    {
+        "id": "ETH2XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
+    },
+    {
+        "id": "ETH3XOPT",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "OPT"
+    },
+    {
+        "id": "ETH3XPOL",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "POL"
+    },
+    {
+        "id": "STETH2X",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "BASE"
+    },
+    {
+        "id": "STETH3X",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "BASE"
+    },
+    {
+        "id": "STETH4X",
+        "image": "https://toros.finance/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fsolbull3x.a8fcc17a.png&w=256&q=75",
+        "network": "BASE"
+    },
+    {
+        "id": "ETH1L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "ETH2L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "ETH3L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "ETH4L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "ETH5L",
+        "image": "https://tlx.fi/favicon.ico"
+    },
+    {
+        "id": "ETH7L",
         "image": "https://tlx.fi/favicon.ico"
     },
 ]
@@ -213,7 +340,7 @@ const CoingeckoSolMemes = () => {
             ]
         }));
 
-        const order = ["Solana", "SOL2XOPT", "SOL3XOPT", "SOL1L", "SOL2L", "SOL3L", "SOL4L", "SOL5L"];
+        const order = ["Solana", "SOL2XOPT", "SOL3XOPT", "SOL1L", "SOL2L", "SOL3L", "SOL4L", "SOL5L", "BTC2XARB", "BTC3XARB", "BTC2XOPT", "BTC3XOPT", "BTC4XOPT", "BTC3XPOL", "BTC1L", "BTC2L", "BTC3L", "BTC4L", "BTC5L", "BTC7L", "ETH2XARB", "ETH3XARB", "ETH2XOPT", "ETH3XOPT", "ETH3XPOL", "STETH2X", "STETH3X", "STETH4X", "ETH1L", "ETH2L", "ETH3L", "ETH4L", "ETH5L", "ETH7L"];
 
         const orderMap = new Map();
         order.forEach((id, index) => {
@@ -293,6 +420,12 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     };
 
     useEffect(() => {
+        // let output = "[";
+        // correlationCoins.map((item) => {
+        //     output += '"' + item.id + '", ';
+        // })
+        // output += "]";
+        // console.log(output);
         fetchData2();
     }, []);
 
@@ -398,7 +531,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         <span>Specify the range of indices to view the coins by market cap.</span>
                         <span>For example:</span>
                         <span>Setting the start index to 1 and the end index to 10 will display the top 10 coins by market cap order.</span>
-                        <span>Setting the start index to 10 and the end index to 20 will display the 10-20 coins by market cap order.</span>
+                        <span>Setting the start index to 10 and the end index to 20 will display the top 10-20 coins by market cap order.</span>
                     </Grid>
 
                     <Grid
@@ -466,8 +599,15 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                     {correlationCoins.map((coin) => (
                                         <MenuItem key={coin.id} value={coin.id}>
                                             <Checkbox checked={correlationsSelected.indexOf(coin.id) > -1}/>
-                                            <img style={{"height": "24px", "marginRight": "8px"}} src={coin.image}
-                                                 alt={coin.id}/>
+                                            <div style={{"position": "relative"}}>
+                                                <img style={{"height": "30px", "marginRight": "4px"}} src={coin.image}
+                                                     alt={coin.id}/>
+                                                {coin.network && (
+                                                    <img style={{"height": "12px", "position": "absolute", "top": 0, "right": 0}}
+                                                         src={networks[coin.network]}
+                                                         alt={coin.network}/>
+                                                )}
+                                            </div>
                                             <ListItemText primary={coin.id}/>
                                         </MenuItem>
                                     ))}
