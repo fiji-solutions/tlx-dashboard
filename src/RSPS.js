@@ -22,10 +22,22 @@ const columns = [
         )
     },
     { field: 'coin', headerName: 'Coin', width: 200 },
-    { field: 'mean', headerName: 'Mean Daily ROC', width: 150 },
-    { field: 'std', headerName: 'Daily ROC Std', width: 150 },
-    { field: 'relative_mean', headerName: 'Mean ROC relative to Total (Memes total)', width: 200 },
-    { field: 'relative_volatility', headerName: 'Relative Volatility to Total (Memes total)', width: 200 },
+    { field: 'mean', headerName: 'Mean Daily ROC', width: 150, type: "number" },
+    { field: 'std', headerName: 'Daily ROC Std', width: 150, type: "number" },
+    { field: 'relative_mean', headerName: 'Mean ROC relative to memes', width: 200, type: "number" },
+    { field: 'relative_volatility', headerName: 'Relative Volatility to memes', width: 200, type: "number" },
+    { field: 'beta_total', headerName: 'beta_total', width: 200, type: "number" },
+    { field: 'beta_others', headerName: 'beta_others', width: 200, type: "number" },
+    { field: 'beta_btc', headerName: 'beta_btc', width: 200, type: "number" },
+    { field: 'beta_eth', headerName: 'beta_eth', width: 200, type: "number" },
+    // { field: 'relative_mean_total', headerName: 'Mean ROC Total', width: 200, type: "number" },
+    // { field: 'relative_volatility_total', headerName: 'Relative Volatility TOTAL', width: 200, type: "number" },
+    // { field: 'relative_mean_others', headerName: 'Mean ROC Others', width: 200, type: "number" },
+    // { field: 'relative_volatility_others', headerName: 'Relative Volatility OTHERS', width: 200, type: "number" },
+    // { field: 'relative_mean_btc', headerName: 'Mean ROC BTC', width: 200, type: "number" },
+    // { field: 'relative_volatility_btc', headerName: 'Relative Volatility BTC', width: 200, type: "number" },
+    // { field: 'relative_mean_eth', headerName: 'Mean ROC ETH', width: 200, type: "number" },
+    // { field: 'relative_volatility_eth', headerName: 'Relative Volatility ETH', width: 200, type: "number" },
 ];
 
 
@@ -58,9 +70,19 @@ const RSPS = () => {
             mean: item.mean,
             std: item.std,
             relative_mean: item.relative_mean,
-            relative_mean_minus_10: item.relative_mean_minus_10,
             relative_volatility: item.relative_volatility,
-            relative_volatility_minus_10: item.relative_volatility_minus_10,
+            beta_total: item.beta_total,
+            beta_others: item.beta_others,
+            beta_btc: item.beta_btc,
+            beta_eth: item.beta_eth,
+            // relative_mean_total: item.relative_mean_total,
+            // relative_mean_others: item.relative_mean_others,
+            // relative_mean_btc: item.relative_mean_btc,
+            // relative_mean_eth: item.relative_mean_eth,
+            // relative_volatility_total: item.relative_volatility_total,
+            // relative_volatility_others: item.relative_volatility_others,
+            // relative_volatility_btc: item.relative_volatility_btc,
+            // relative_volatility_eth: item.relative_volatility_eth,
         }));
 
         setDatasets(tableData);
@@ -90,6 +112,14 @@ const RSPS = () => {
 
     const onCopy = () => {
         navigator.clipboard.writeText(datasets.map((item) => item.coin).join("\n")).then(() => {
+            setOpenSnackbar(true);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    }
+
+    const onCopy2 = () => {
+        navigator.clipboard.writeText(datasets.map((item) => item.beta_total + "\t" + item.beta_others + "\t" + item.beta_btc + "\t" + item.beta_eth).join("\n")).then(() => {
             setOpenSnackbar(true);
         }).catch(err => {
             console.error('Could not copy text: ', err);
@@ -299,6 +329,14 @@ const RSPS = () => {
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
                     "Copy names column"
+                )}
+            </Button>
+
+            <Button style={{"marginLeft": "8px"}} onClick={onCopy2} variant="contained" disabled={loading}>
+                {loading ? (
+                    <CircularProgress size={25} color={"grey"}/>
+                ) : (
+                    "Copy Beta"
                 )}
             </Button>
 
