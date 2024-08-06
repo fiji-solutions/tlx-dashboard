@@ -42,8 +42,8 @@ const RSPS = () => {
     const [topResults, setTopResults] = useState(15);
     const [excludedCoins, setExcludedCoins] = useState("wownero,harrypottertrumphomersimpson777inu,cake-monster,curve-inu,robo-inu-finance,pepe-token");
 
-    // const domain = "https://api.fijisolutions.net";
-    const domain = "http://127.0.0.1:8000";
+    const domain = "https://api.fijisolutions.net";
+    // const domain = "http://127.0.0.1:8000";
 
     const fetchData = async () => {
         setLoading(true);
