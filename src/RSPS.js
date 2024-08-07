@@ -49,10 +49,14 @@ const RSPS = () => {
     const [loading, setLoading] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    const [minMarketCap, setMinMarketCap] = useState(250000);
-    const [maxMarketCap, setMaxMarketCap] = useState(500000000);
-    const [topResults, setTopResults] = useState(15);
-    const [excludedCoins, setExcludedCoins] = useState("wownero,harrypottertrumphomersimpson777inu,cake-monster,curve-inu,robo-inu-finance,pepe-token");
+    // const [minMarketCap, setMinMarketCap] = useState(250000);
+    const [minMarketCap, setMinMarketCap] = useState(1);
+    // const [maxMarketCap, setMaxMarketCap] = useState(500000000);
+    const [maxMarketCap, setMaxMarketCap] = useState(5000000000000);
+    // const [topResults, setTopResults] = useState(15);
+    const [topResults, setTopResults] = useState(50);
+    // const [excludedCoins, setExcludedCoins] = useState("wownero,harrypottertrumphomersimpson777inu,cake-monster,curve-inu,robo-inu-finance,pepe-token");
+    const [excludedCoins, setExcludedCoins] = useState("");
 
     const domain = "https://api.fijisolutions.net";
     // const domain = "http://127.0.0.1:8000";
