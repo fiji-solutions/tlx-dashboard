@@ -44,8 +44,10 @@ const columns = [
 const RSPS = () => {
     const [datasets, setDatasets] = useState([]);
     const [datasets2, setDatasets2] = useState([]);
-    const [fromDate, setFromDate] = useState(dayjs("2023-09-20"));
-    const [toDate, setToDate] = useState(dayjs("2023-10-20"));
+    // const [fromDate, setFromDate] = useState(dayjs("2023-09-20"));
+    const [fromDate, setFromDate] = useState(dayjs().add(-30, "days"));
+    // const [toDate, setToDate] = useState(dayjs("2023-10-20"));
+    const [toDate, setToDate] = useState(dayjs());
     const [loading, setLoading] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
