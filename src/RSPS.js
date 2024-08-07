@@ -160,7 +160,7 @@ const RSPS = () => {
                     spacing={1}
                     justifyContent={"center"}
                 >
-                    <span>Time range to perform the analysis</span>
+                    <span>Time range to perform the analysis. My data stop at 1st of August, so this is the furthest you can go for now.</span>
                     <Grid
                         item
                         container
