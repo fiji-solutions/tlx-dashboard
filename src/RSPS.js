@@ -47,7 +47,7 @@ const RSPS = () => {
     // const [fromDate, setFromDate] = useState(dayjs("2023-09-20"));
     const [fromDate, setFromDate] = useState(dayjs().add(-30, "days"));
     // const [toDate, setToDate] = useState(dayjs("2023-10-20"));
-    const [toDate, setToDate] = useState(dayjs());
+    const [toDate, setToDate] = useState(dayjs("2024-08-01"));
     const [loading, setLoading] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -198,6 +198,7 @@ const RSPS = () => {
                                 onChange={(newValue) => setToDate(newValue)}
                                 disabled={loading}
                                 minDate={fromDate}
+                                maxDate={dayjs("2024-08-01")}
                             />
                         </LocalizationProvider>
                     </Grid>
