@@ -361,10 +361,15 @@ const TGA1 = () => {
         const startTimestamp = startDate.valueOf();
         const endTimestamp = endDate.valueOf();
 
-        // If rrpData is an array containing another array, we need to first access the inner array
+        // Flatten the nested array to work with timestamp-value pairs
         const flatData = data.flat();
 
-        return flatData.filter(([timestamp]) => timestamp >= startTimestamp && timestamp <= endTimestamp);
+        const filtered = flatData.filter(([timestamp]) => {
+            return timestamp >= startTimestamp && timestamp <= endTimestamp;
+        });
+
+        console.log('Filtered Data:', filtered);
+        return filtered;
     };
 
     const processTgaChartData = () => {
@@ -400,21 +405,43 @@ const TGA1 = () => {
 
     const processRrpChartData = () => {
         const filteredData = filterDataByDate(rrpData, startDate, endDate);
-        console.log(rrpData);
-        console.log(filteredData);
+        console.log('Original RRP Data:', rrpData);
+        console.log('Filtered RRP Data:', filteredData);
+
+        if (filteredData.length === 0) {
+            return {
+                labels: [],
+                datasets: [
+                    {
+                        label: 'RRPONTSYD',
+                        data: [],
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: false,
+                    },
+                ],
+            };
+        }
 
         const labels = filteredData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
         const rrpValues = filteredData.map(([, value]) => value);
 
-        const minRrpValue = Math.min(...rrpValues);
-        const maxRrpValue = Math.max(...rrpValues);
+        // Filter out null values for min/max calculation
+        const validRrpValues = rrpValues.filter(value => value !== null);
+
+        // Calculate min and max values, ignoring nulls
+        const minRrpValue = validRrpValues.length > 0 ? Math.min(...validRrpValues) : 0;
+        const maxRrpValue = validRrpValues.length > 0 ? Math.max(...validRrpValues) : 0;
+
+        console.log('Min RRP Value:', minRrpValue);
+        console.log('Max RRP Value:', maxRrpValue);
 
         return {
             labels,
             datasets: [
                 {
                     label: 'RRPONTSYD',
-                    data: rrpValues,
+                    data: rrpValues, // Keep null values in the dataset
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     fill: false,
@@ -519,9 +546,9 @@ const TGA1 = () => {
                                             },
                                         },
                                         y: {
-                                            beginAtZero: true,
-                                            min: Math.min(...processRrpChartData().datasets[0].data) - 1,
-                                            max: Math.max(...processRrpChartData().datasets[0].data) + 1,
+                                            beginAtZero: false,
+                                            min: processRrpChartData().minValue - 1,
+                                            max: processRrpChartData().maxValue + 1,
                                         },
                                     },
                                 }}
