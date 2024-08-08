@@ -329,7 +329,7 @@ const CoingeckoSolMemes = () => {
                     backgroundColor: key === "Solana" ? 'rgba(220, 31, 255, 0.2)' : (key.endsWith("OPT") ? 'rgba(115, 211, 147, 0.2)' : 'rgba(237, 140, 178, 0.2)'),
                 },
                 {
-                    label: 'Market Cap',
+                    label: 'Market Cap, Index ' + startIndex + ' - ' + endIndex,
                     data: Object.keys(result["market_cap_sums_base_indexed"]).map(date => ({
                         timestamp: date,
                         marketcap: result["market_cap_sums_base_indexed"][date]
