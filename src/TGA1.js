@@ -13,7 +13,7 @@ const TGA1 = () => {
     const [tgaData, setTgaData] = useState([]);
     const [rrpData, setRrpData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [startDate, setStartDate] = useState(dayjs().add(-1, "M"));
+    const [startDate, setStartDate] = useState(dayjs("2024-01-01"));
     const [endDate, setEndDate] = useState(dayjs());
 
     useEffect(() => {
@@ -368,20 +368,36 @@ const TGA1 = () => {
             return timestamp >= startTimestamp && timestamp <= endTimestamp;
         });
 
-        console.log('Filtered Data:', filtered);
         return filtered;
     };
 
     const processTgaChartData = () => {
-        const validData = tgaData
-            .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
-            .sort((a, b) => new Date(a.record_date) - new Date(b.record_date));
+        // Create a map of all dates within the selected range
+        const dateMap = {};
+        let currentDate = startDate.clone();
+        const end = endDate.clone();
 
-        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
-        const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
+        while (currentDate.isBefore(end) || currentDate.isSame(end)) {
+            dateMap[currentDate.format('YYYY-MM-DD')] = null;
+            currentDate = currentDate.add(1, 'day');
+        }
 
-        const minBalance = Math.min(...openTodayBalances);
-        const maxBalance = Math.max(...openTodayBalances);
+        // Map the existing data into this dateMap
+        tgaData.forEach(item => {
+            const dateStr = dayjs(item.record_date).format('YYYY-MM-DD');
+            if (dateMap[dateStr] !== undefined) {
+                dateMap[dateStr] = parseFloat(item.open_today_bal);
+            }
+        });
+
+        // Convert the dateMap back into an array for Chart.js
+        const labels = Object.keys(dateMap);
+        const openTodayBalances = Object.values(dateMap);
+
+        // Filter out null values when calculating min and max
+        const validBalances = openTodayBalances.filter(value => value !== null);
+        const minValue = validBalances.length > 0 ? Math.min(...validBalances) : 0;
+        const maxValue = validBalances.length > 0 ? Math.max(...validBalances) : 1;
 
         return {
             labels,
@@ -394,19 +410,13 @@ const TGA1 = () => {
                     fill: false,
                 },
             ],
-            scales: {
-                y: {
-                    min: minBalance - 100,
-                    max: maxBalance + 100,
-                },
-            },
+            minValue, // Return minValue
+            maxValue, // Return maxValue
         };
     };
 
     const processRrpChartData = () => {
         const filteredData = filterDataByDate(rrpData, startDate, endDate);
-        console.log('Original RRP Data:', rrpData);
-        console.log('Filtered RRP Data:', filteredData);
 
         if (filteredData.length === 0) {
             return {
@@ -432,9 +442,6 @@ const TGA1 = () => {
         // Calculate min and max values, ignoring nulls
         const minRrpValue = validRrpValues.length > 0 ? Math.min(...validRrpValues) : 0;
         const maxRrpValue = validRrpValues.length > 0 ? Math.max(...validRrpValues) : 0;
-
-        console.log('Min RRP Value:', minRrpValue);
-        console.log('Max RRP Value:', maxRrpValue);
 
         return {
             labels,
@@ -514,8 +521,8 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: true,
-                                            min: Math.min(...processTgaChartData().datasets[0].data) - 100,
-                                            max: Math.max(...processTgaChartData().datasets[0].data) + 100,
+                                            min: processTgaChartData().minValue - 1,
+                                            max: processTgaChartData().maxValue + 1,
                                         },
                                     },
                                 }}
