@@ -48,7 +48,7 @@ const TGA1 = () => {
             labels,
             datasets: [
                 {
-                    label: 'Open Today Balance',
+                    label: 'Closing Balance',
                     data: openTodayBalances,
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
@@ -66,7 +66,7 @@ const TGA1 = () => {
 
     return (
         <div className="App">
-            <h1>Treasury General Account (TGA) Open Today Balance</h1>
+            <h1>Treasury General Account (TGA) Closing Balance</h1>
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -104,7 +104,7 @@ const TGA1 = () => {
                                     },
                                     title: {
                                         display: true,
-                                        text: 'TGA Open Today Balance Over Time',
+                                        text: 'TGA Closing Balance Over Time',
                                     },
                                 },
                                 scales: {
