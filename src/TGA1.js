@@ -5,9 +5,9 @@ import {
     Grid,
     TextField
 } from '@mui/material';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 
 const TGA1 = () => {
     const [data, setData] = useState([]);
@@ -33,8 +33,16 @@ const TGA1 = () => {
     };
 
     const processChartData = () => {
-        const labels = data.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
-        const openTodayBalances = data.map(item => parseFloat(item.open_today_bal));
+        // Filter out invalid data points and sort by record_date
+        const validData = data
+            .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
+            .sort((a, b) => new Date(a.record_date) - new Date(b.record_date));
+
+        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
+        const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
+
+        const minBalance = Math.min(...openTodayBalances);
+        const maxBalance = Math.max(...openTodayBalances);
 
         return {
             labels,
@@ -47,17 +55,14 @@ const TGA1 = () => {
                     fill: false,
                 },
             ],
+            scales: {
+                y: {
+                    min: minBalance - 5000,
+                    max: maxBalance + 5000,
+                },
+            },
         };
     };
-
-    const getMinMax = () => {
-        const openTodayBalances = data.map(item => parseFloat(item.open_today_bal));
-        const min = Math.min(...openTodayBalances) - 5000;
-        const max = Math.max(...openTodayBalances) + 5000;
-        return { min, max };
-    };
-
-    const { min, max } = getMinMax();
 
     return (
         <div className="App">
@@ -112,8 +117,8 @@ const TGA1 = () => {
                                     },
                                     y: {
                                         beginAtZero: false,
-                                        min: min,
-                                        max: max,
+                                        min: Math.min(...processChartData().datasets[0].data) - 5000,
+                                        max: Math.max(...processChartData().datasets[0].data) + 5000,
                                     },
                                 },
                             }}
