@@ -1499,6 +1499,59 @@ const TGA1 = () => {
         };
     };
 
+    const processCombinedChartData = () => {
+        // Convert start and end dates to timestamps
+        const startTimestamp = startDate.valueOf();
+        const endTimestamp = endDate.valueOf();
+
+        // Synchronize the dates and filter based on start and end dates
+        const dates = Array.from(new Set([
+            ...walData.map(([timestamp]) => timestamp),
+            ...tgaData.map(item => new Date(item.record_date).getTime()),
+            ...rrpData.map(([timestamp]) => timestamp),
+            ...h4Data.map(([timestamp]) => timestamp),
+            ...wlcData.map(([timestamp]) => timestamp),
+        ])).filter(timestamp => timestamp >= startTimestamp && timestamp <= endTimestamp)
+            .sort((a, b) => a - b);
+
+        const combinedData = dates.map(date => {
+            const walValue = walData.find(([timestamp]) => timestamp === date)?.[1] || 0;
+            const tgaValue = tgaData.find(item => new Date(item.record_date).getTime() === date)?.open_today_bal || 0;
+            const rrpValue = rrpData.find(([timestamp]) => timestamp === date)?.[1] || 0;
+            const h4Value = h4Data.find(([timestamp]) => timestamp === date)?.[1] || 0;
+            const wlcValue = wlcData.find(([timestamp]) => timestamp === date)?.[1] || 0;
+
+            // Apply the formula
+            return walValue - tgaValue - rrpValue + h4Value + wlcValue;
+        });
+
+        const labels = dates.map(timestamp => dayjs(timestamp).format('YYYY-MM-DD'));
+
+        // Filter out null values for min/max calculation
+        const validCombinedData = combinedData.filter(value => value !== null);
+
+        const minValue = validCombinedData.length > 0 ? Math.min(...validCombinedData) : 0;
+        const maxValue = validCombinedData.length > 0 ? Math.max(...validCombinedData) : 0;
+
+        const latestDate = labels[labels.length - 1] || "N/A";
+
+        return {
+            labels,
+            datasets: [
+                {
+                    label: 'Combined Data',
+                    data: combinedData,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: false,
+                },
+            ],
+            minValue,
+            maxValue,
+            latestDate,
+        };
+    };
+
     return (
         <div className="App">
             <h1>Treasury General Account (TGA) Closing Balance</h1>
@@ -1725,6 +1778,44 @@ const TGA1 = () => {
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processWalChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    <h1>Tomas' Formula</h1>
+                    <Grid container justifyContent="center">
+                        <Grid item xs={12} md={8}>
+                            <Line
+                                data={processCombinedChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processCombinedChartData().minValue - 5,
+                                            max: processCombinedChartData().maxValue + 5,
+                                        },
+                                    },
+                                }}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processCombinedChartData().latestDate}
                             </Typography>
                         </Grid>
                     </Grid>
