@@ -1644,6 +1644,44 @@ const TGA1 = () => {
                         </Grid>
                     </Grid>
 
+                    <h1>Tomas' Formula</h1>
+                    <Grid container justifyContent="center">
+                        <Grid item xs={12} md={8}>
+                            <Line
+                                data={processCombinedChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processCombinedChartData().minValue - 5,
+                                            max: processCombinedChartData().maxValue + 5,
+                                        },
+                                    },
+                                }}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processCombinedChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
                     <h1>Overnight Reverse Repurchase Agreements:</h1>
                     <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
 
@@ -1800,44 +1838,6 @@ const TGA1 = () => {
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processWalChartData().latestDate}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-                    <h1>Tomas' Formula</h1>
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
-                            <Line
-                                data={processCombinedChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData().minValue - 5,
-                                            max: processCombinedChartData().maxValue + 5,
-                                        },
-                                    },
-                                }}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData().latestDate}
                             </Typography>
                         </Grid>
                     </Grid>
