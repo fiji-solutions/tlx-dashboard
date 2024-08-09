@@ -380,8 +380,8 @@ const TGA1 = () => {
         const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
         const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
 
-        const minValue = openTodayBalances.length > 0 ? Math.min(...openTodayBalances) : 0;
-        const maxValue = openTodayBalances.length > 0 ? Math.max(...openTodayBalances) : 1;
+        const minValue = Math.min(...openTodayBalances);
+        const maxValue = Math.max(...openTodayBalances);
 
         const latestDate = labels[labels.length - 1] || "N/A";
 
