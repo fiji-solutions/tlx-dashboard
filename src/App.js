@@ -50,6 +50,9 @@ const App = () => {
     const [doge2l, setDoge2l] = useState(false);
     const [doge5l, setDoge5l] = useState(false);
 
+    const [ethbtc2l, setEthbtc2l] = useState(false);
+    const [ethbtc5l, setEthbtc5l] = useState(false);
+
     const [btc3xpol, setBtc3xpol] = useState(false);
     const [btc2xopt, setBtc2xopt] = useState(false);
     const [btc3xopt, setBtc3xopt] = useState(false);
@@ -168,6 +171,16 @@ const App = () => {
                 boolValue = !doge5l;
                 setDoge5l(!doge5l);
                 break;
+
+            case "ETHBTC2L":
+                boolValue = !ethbtc2l;
+                setEthbtc2l(!ethbtc2l);
+                break;
+
+            case "ETHBTC5L":
+                boolValue = !ethbtc5l;
+                setEthbtc5l(!ethbtc5l);
+                break;
             default:
                 break;
         }
@@ -277,6 +290,8 @@ const App = () => {
         "SOL5L": "2024-05-14",
         "DOGE2L": "2024-06-13",
         "DOGE5L": "2024-06-13",
+        "ETHBTC2L": "2024-07-30",
+        "ETHBTC5L": "2024-07-30",
         "BTC2XOPT": "2023-10-10",
         "BTC3XOPT": "2024-03-13",
         "BTC4XOPT": "2024-06-05",
@@ -756,6 +771,29 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>DOGE5L</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={ethbtc2l}
+                            onChange={() => checkboxClick("ETHBTC2L")}
+                            disabled={loading}
+                        />
+                        <span>ETHBTC2L</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={ethbtc5l}
+                            onChange={() => checkboxClick("ETHBTC5L")}
+                            disabled={loading}
+                        />
+                        <span>ETHBTC5L</span>
                     </Grid>
                 </Grid>
                 <Grid
