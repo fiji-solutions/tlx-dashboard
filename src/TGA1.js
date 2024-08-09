@@ -1665,7 +1665,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL',
+                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
@@ -1703,7 +1703,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'TGA Closing Balance Over Time',
+                                            text: 'TGA Closing Balance Over Time (Millions)',
                                         },
                                     },
                                     scales: {
@@ -1744,7 +1744,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'RRPONTSYD',
+                                            text: 'RRPONTSYD (Billions)',
                                         },
                                     },
                                     scales: {
@@ -1784,7 +1784,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'WLCFLPCL',
+                                            text: 'WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
@@ -1824,7 +1824,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'H41RESPPALDKNWW',
+                                            text: 'H41RESPPALDKNWW (Millions)',
                                         },
                                     },
                                     scales: {
@@ -1864,7 +1864,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'WALCL',
+                                            text: 'WALCL (Millions)',
                                         },
                                     },
                                     scales: {
