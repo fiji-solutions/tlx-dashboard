@@ -1,14 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
-import {
-    CircularProgress,
-    Grid,
-    TextField,
-    Typography,
-} from '@mui/material';
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import React, {useEffect, useState} from 'react';
+import {Line} from 'react-chartjs-2';
+import {CircularProgress, Grid, TextField, Typography,} from '@mui/material';
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 
 const TGA1 = () => {
     const [tgaData, setTgaData] = useState([]);
@@ -365,11 +360,9 @@ const TGA1 = () => {
         // Flatten the nested array to work with timestamp-value pairs
         const flatData = data.flat();
 
-        const filtered = flatData.filter(([timestamp]) => {
+        return flatData.filter(([timestamp]) => {
             return timestamp >= startTimestamp && timestamp <= endTimestamp;
         });
-
-        return filtered;
     };
 
     const processTgaChartData = () => {
@@ -511,7 +504,7 @@ const TGA1 = () => {
                                     },
                                 }}
                             />
-                            <Typography variant="body2" align="center">
+                            <Typography variant="body1" align="center">
                                 Latest Date: {processTgaChartData().latestDate}
                             </Typography>
                         </Grid>
@@ -551,7 +544,7 @@ const TGA1 = () => {
                                     },
                                 }}
                             />
-                            <Typography variant="body2" align="center">
+                            <Typography variant="body1" align="center">
                                 Latest Date: {processRrpChartData().latestDate}
                             </Typography>
                         </Grid>
