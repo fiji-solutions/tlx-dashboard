@@ -3,7 +3,8 @@ import { Line } from 'react-chartjs-2';
 import {
     CircularProgress,
     Grid,
-    TextField
+    TextField,
+    Typography,
 } from '@mui/material';
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
@@ -372,18 +373,17 @@ const TGA1 = () => {
     };
 
     const processTgaChartData = () => {
-        // Filter out null values and sort the data by date
         const validData = tgaData
             .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
             .sort((a, b) => new Date(a.record_date) - new Date(b.record_date));
 
-        // Extract labels and balances from the valid data
         const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
         const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
 
-        // Calculate the minimum and maximum values
         const minValue = openTodayBalances.length > 0 ? Math.min(...openTodayBalances) : 0;
         const maxValue = openTodayBalances.length > 0 ? Math.max(...openTodayBalances) : 1;
+
+        const latestDate = labels[labels.length - 1] || "N/A";
 
         return {
             labels,
@@ -398,13 +398,13 @@ const TGA1 = () => {
             ],
             minValue, // Return minValue
             maxValue, // Return maxValue
+            latestDate, // Return latest date
         };
     };
 
     const processRrpChartData = () => {
         const filteredData = filterDataByDate(rrpData, startDate, endDate);
 
-        // Filter out any data points where the value is null
         const validData = filteredData.filter(([, value]) => value !== null);
 
         if (validData.length === 0) {
@@ -425,9 +425,10 @@ const TGA1 = () => {
         const labels = validData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
         const rrpValues = validData.map(([, value]) => value);
 
-        // Calculate min and max values, ignoring nulls
         const minRrpValue = Math.min(...rrpValues);
         const maxRrpValue = Math.max(...rrpValues);
+
+        const latestDate = labels[labels.length - 1] || "N/A";
 
         return {
             labels,
@@ -442,6 +443,7 @@ const TGA1 = () => {
             ],
             minValue: minRrpValue,
             maxValue: maxRrpValue,
+            latestDate, // Return latest date
         };
     };
 
@@ -503,12 +505,15 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: true,
-                                            min: processTgaChartData().minValue - 1,
-                                            max: processTgaChartData().maxValue + 1,
+                                            min: processTgaChartData().minValue - 5000,
+                                            max: processTgaChartData().maxValue + 5000,
                                         },
                                     },
                                 }}
                             />
+                            <Typography variant="body2" align="center">
+                                Latest Date: {processTgaChartData().latestDate}
+                            </Typography>
                         </Grid>
                     </Grid>
 
@@ -540,12 +545,15 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processRrpChartData().minValue - 1,
-                                            max: processRrpChartData().maxValue + 1,
+                                            min: processRrpChartData().minValue - 5,
+                                            max: processRrpChartData().maxValue + 5,
                                         },
                                     },
                                 }}
                             />
+                            <Typography variant="body2" align="center">
+                                Latest Date: {processRrpChartData().latestDate}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </>
