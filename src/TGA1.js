@@ -372,32 +372,18 @@ const TGA1 = () => {
     };
 
     const processTgaChartData = () => {
-        // Create a map of all dates within the selected range
-        const dateMap = {};
-        let currentDate = startDate.clone();
-        const end = endDate.clone();
+        // Filter out null values and sort the data by date
+        const validData = tgaData
+            .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
+            .sort((a, b) => new Date(a.record_date) - new Date(b.record_date));
 
-        while (currentDate.isBefore(end) || currentDate.isSame(end)) {
-            dateMap[currentDate.format('YYYY-MM-DD')] = null;
-            currentDate = currentDate.add(1, 'day');
-        }
+        // Extract labels and balances from the valid data
+        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
+        const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
 
-        // Map the existing data into this dateMap
-        tgaData.forEach(item => {
-            const dateStr = dayjs(item.record_date).format('YYYY-MM-DD');
-            if (dateMap[dateStr] !== undefined) {
-                dateMap[dateStr] = parseFloat(item.open_today_bal);
-            }
-        });
-
-        // Convert the dateMap back into an array for Chart.js
-        const labels = Object.keys(dateMap);
-        const openTodayBalances = Object.values(dateMap);
-
-        // Filter out null values when calculating min and max
-        const validBalances = openTodayBalances.filter(value => value !== null);
-        const minValue = validBalances.length > 0 ? Math.min(...validBalances) : 0;
-        const maxValue = validBalances.length > 0 ? Math.max(...validBalances) : 1;
+        // Calculate the minimum and maximum values
+        const minValue = openTodayBalances.length > 0 ? Math.min(...openTodayBalances) : 0;
+        const maxValue = openTodayBalances.length > 0 ? Math.max(...openTodayBalances) : 1;
 
         return {
             labels,
@@ -418,7 +404,10 @@ const TGA1 = () => {
     const processRrpChartData = () => {
         const filteredData = filterDataByDate(rrpData, startDate, endDate);
 
-        if (filteredData.length === 0) {
+        // Filter out any data points where the value is null
+        const validData = filteredData.filter(([, value]) => value !== null);
+
+        if (validData.length === 0) {
             return {
                 labels: [],
                 datasets: [
@@ -433,33 +422,26 @@ const TGA1 = () => {
             };
         }
 
-        const labels = filteredData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
-        const rrpValues = filteredData.map(([, value]) => value);
-
-        // Filter out null values for min/max calculation
-        const validRrpValues = rrpValues.filter(value => value !== null);
+        const labels = validData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
+        const rrpValues = validData.map(([, value]) => value);
 
         // Calculate min and max values, ignoring nulls
-        const minRrpValue = validRrpValues.length > 0 ? Math.min(...validRrpValues) : 0;
-        const maxRrpValue = validRrpValues.length > 0 ? Math.max(...validRrpValues) : 0;
+        const minRrpValue = Math.min(...rrpValues);
+        const maxRrpValue = Math.max(...rrpValues);
 
         return {
             labels,
             datasets: [
                 {
                     label: 'RRPONTSYD',
-                    data: rrpValues, // Keep null values in the dataset
+                    data: rrpValues,
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     fill: false,
                 },
             ],
-            scales: {
-                y: {
-                    min: minRrpValue - 1,
-                    max: maxRrpValue + 1,
-                },
-            },
+            minValue: minRrpValue,
+            maxValue: maxRrpValue,
         };
     };
 
