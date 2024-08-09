@@ -29,7 +29,15 @@ const TGA1 = () => {
         try {
             const response = await fetch(`https://api.fijisolutions.net/tga1?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`);
             const result = await response.json();
-            setTgaData(result);
+
+            const normalizedData = result.map(item => {
+                const normalizedDate = dayjs(item.record_date).format('YYYY-MM-DD');
+                return {
+                    ...item,
+                    record_date: normalizedDate
+                };
+            });
+            setTgaData(normalizedData);
         } catch (error) {
             console.error('Error fetching TGA data:', error);
         }
@@ -1522,32 +1530,33 @@ const TGA1 = () => {
     };
 
     const processCombinedChartData = () => {
-        // Convert start and end dates to timestamps
-        const startTimestamp = startDate.valueOf();
-        const endTimestamp = endDate.valueOf();
+        // Convert start and end dates to strings in YYYY-MM-DD format
+        const startString = startDate.format('YYYY-MM-DD');
+        const endString = endDate.format('YYYY-MM-DD');
 
         // Synchronize the dates and filter based on start and end dates
         const dates = Array.from(new Set([
-            ...walData.map(([timestamp]) => timestamp),
-            ...tgaData.map(item => new Date(item.record_date).getTime()),
-            ...rrpData.map(([timestamp]) => timestamp),
-            ...h4Data.map(([timestamp]) => timestamp),
-            ...wlcData.map(([timestamp]) => timestamp),
-        ])).filter(timestamp => timestamp >= startTimestamp && timestamp <= endTimestamp)
-            .sort((a, b) => a - b);
+            ...walData.map(([date]) => date),
+            ...tgaData.map(item => item.record_date),
+            ...rrpData.map(([date]) => date),
+            ...h4Data.map(([date]) => date),
+            ...wlcData.map(([date]) => date),
+        ])).filter(date => date >= startString && date <= endString)
+            .sort((a, b) => new Date(a) - new Date(b));
 
         const combinedData = dates.map(date => {
-            const walValue = walData.find(([timestamp]) => timestamp === date)?.[1] || 0;
-            const tgaValue = tgaData.find(item => new Date(item.record_date).getTime() === date)?.open_today_bal || 0;
-            const rrpValue = rrpData.find(([timestamp]) => timestamp === date)?.[1] || 0;
-            const h4Value = h4Data.find(([timestamp]) => timestamp === date)?.[1] || 0;
-            const wlcValue = wlcData.find(([timestamp]) => timestamp === date)?.[1] || 0;
+            const walValue = walData.find(([d]) => d === date)?.[1] || 0;
+            const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || 0;
+            const rrpValue = rrpData.find(([d]) => d === date)?.[1] || 0;
+            const h4Value = h4Data.find(([d]) => d === date)?.[1] || 0;
+            const wlcValue = wlcData.find(([d]) => d === date)?.[1] || 0;
 
             // Apply the formula
-            return walValue - tgaValue - rrpValue + h4Value + wlcValue;
+            return walValue - tgaValue - (rrpValue * 1000) + h4Value + wlcValue;
         });
 
-        const labels = dates.map(timestamp => dayjs(timestamp).format('YYYY-MM-DD'));
+        // Use the dates directly as labels (they are already in YYYY-MM-DD format)
+        const labels = dates;
 
         // Filter out null values for min/max calculation
         const validCombinedData = combinedData.filter(value => value !== null);
@@ -1576,7 +1585,7 @@ const TGA1 = () => {
 
     return (
         <div className="App">
-            <h1>Treasury General Account (TGA) Closing Balance</h1>
+            <h1>Tomas' Formula</h1>
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -1604,9 +1613,47 @@ const TGA1 = () => {
                 </Grid>
             </Grid>
             {loading ? (
-                <CircularProgress />
+                <CircularProgress/>
             ) : (
                 <>
+                    <Grid container justifyContent="center">
+                        <Grid item xs={12} md={8}>
+                            <Line
+                                data={processCombinedChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processCombinedChartData().minValue - 5,
+                                            max: processCombinedChartData().maxValue + 5,
+                                        },
+                                    },
+                                }}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processCombinedChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    <h1>Treasury General Account (TGA) Closing Balance</h1>
                     <Grid container justifyContent="center">
                         <Grid item xs={12} md={8}>
                             <Line
@@ -1644,43 +1691,6 @@ const TGA1 = () => {
                         </Grid>
                     </Grid>
 
-                    <h1>Tomas' Formula</h1>
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
-                            <Line
-                                data={processCombinedChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData().minValue - 5,
-                                            max: processCombinedChartData().maxValue + 5,
-                                        },
-                                    },
-                                }}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData().latestDate}
-                            </Typography>
-                        </Grid>
-                    </Grid>
 
                     <h1>Overnight Reverse Repurchase Agreements:</h1>
                     <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
