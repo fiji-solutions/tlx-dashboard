@@ -1544,12 +1544,25 @@ const TGA1 = () => {
         ])).filter(date => date >= startString && date <= endString)
             .sort((a, b) => new Date(a) - new Date(b));
 
+        let lastWalValue = 0;
+        let lastTgaValue = 0;
+        let lastRrpValue = 0;
+        let lastH4Value = 0;
+        let lastWlcValue = 0;
+
         const combinedData = dates.map(date => {
-            const walValue = walData.find(([d]) => d === date)?.[1] || 0;
-            const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || 0;
-            const rrpValue = rrpData.find(([d]) => d === date)?.[1] || 0;
-            const h4Value = h4Data.find(([d]) => d === date)?.[1] || 0;
-            const wlcValue = wlcData.find(([d]) => d === date)?.[1] || 0;
+            const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
+            const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
+            const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
+            const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
+            const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
+
+            // Update the last known values
+            lastWalValue = walValue;
+            lastTgaValue = tgaValue;
+            lastRrpValue = rrpValue;
+            lastH4Value = h4Value;
+            lastWlcValue = wlcValue;
 
             // Apply the formula
             return walValue - tgaValue - (rrpValue * 1000) + h4Value + wlcValue;
@@ -1641,8 +1654,8 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processCombinedChartData().minValue - 5,
-                                            max: processCombinedChartData().maxValue + 5,
+                                            min: processCombinedChartData().minValue - 10000,
+                                            max: processCombinedChartData().maxValue + 10000,
                                         },
                                     },
                                 }}
