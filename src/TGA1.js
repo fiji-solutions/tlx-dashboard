@@ -1531,8 +1531,32 @@ const TGA1 = () => {
 
     const processCombinedChartData = () => {
         // Convert start and end dates to strings in YYYY-MM-DD format
-        const startString = startDate.format('YYYY-MM-DD');
+        let startString = startDate.format('YYYY-MM-DD');
         const endString = endDate.format('YYYY-MM-DD');
+
+        // Extract all dates from each dataset and convert them to timestamps
+        const walDates = walData.map(([date]) => new Date(date).getTime());
+        const tgaDates = tgaData.map(item => new Date(item.record_date).getTime());
+        const rrpDates = rrpData.map(([date]) => new Date(date).getTime());
+        const h4Dates = h4Data.map(([date]) => new Date(date).getTime());
+        const wlcDates = wlcData.map(([date]) => new Date(date).getTime());
+
+        // Convert start and end strings to timestamps
+        const startTimestamp = new Date(startString).getTime();
+        const endTimestamp = new Date(endString).getTime();
+
+        // Find the latest common start date across all datasets
+        const latestCommonStartDateTimestamp = Math.max(
+            Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
+        );
+
+        // Convert the timestamp back to a date string
+        // Update startString to this latest common start date
+        startString = dayjs(latestCommonStartDateTimestamp).format('YYYY-MM-DD');
 
         // Synchronize the dates and filter based on start and end dates
         const dates = Array.from(new Set([
@@ -1773,8 +1797,8 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processWlcChartData().minValue - 5,
-                                            max: processWlcChartData().maxValue + 5,
+                                            min: processWlcChartData().minValue - 500,
+                                            max: processWlcChartData().maxValue + 500,
                                         },
                                     },
                                 }}
@@ -1813,8 +1837,8 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processH4ChartData().minValue - 5,
-                                            max: processH4ChartData().maxValue + 5,
+                                            min: processH4ChartData().minValue - 200,
+                                            max: processH4ChartData().maxValue + 200,
                                         },
                                     },
                                 }}
@@ -1853,8 +1877,8 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processWalChartData().minValue - 5,
-                                            max: processWalChartData().maxValue + 5,
+                                            min: processWalChartData().minValue - 3000,
+                                            max: processWalChartData().maxValue + 3000,
                                         },
                                     },
                                 }}
