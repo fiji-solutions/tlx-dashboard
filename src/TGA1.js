@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Line} from 'react-chartjs-2';
-import {CircularProgress, Grid, TextField, Typography,} from '@mui/material';
+import {CircularProgress, Grid, Tab, Tabs, TextField, Typography,} from '@mui/material';
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
+import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
+import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
+import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 
 const TGA1 = () => {
     const [tgaData, setTgaData] = useState([]);
@@ -14,6 +17,7 @@ const TGA1 = () => {
     const [loading, setLoading] = useState(true);
     const [startDate, setStartDate] = useState(dayjs("2024-01-01"));
     const [endDate, setEndDate] = useState(dayjs());
+    const [tabValue, setTabValue] = useState('1.3');
 
     useEffect(() => {
         fetchTgaData();
@@ -1620,6 +1624,10 @@ const TGA1 = () => {
         };
     };
 
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
+    };
+
     return (
         <div className="App">
             <h1>Tomas' Formula</h1>
@@ -1648,13 +1656,40 @@ const TGA1 = () => {
                         />
                     </LocalizationProvider>
                 </Grid>
+
+                <Grid
+                    container
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    direction={"column"}
+                >
+                    <Grid item>
+                        <h4>Change charts size</h4>
+                    </Grid>
+
+                    <Grid item>
+                        <Tabs value={tabValue} onChange={handleTabChange}>
+                            <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
+                            <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
+                            <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
+                        </Tabs>
+                    </Grid>
+                </Grid>
             </Grid>
             {loading ? (
                 <CircularProgress/>
             ) : (
-                <>
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
+                <Grid
+                    container
+                    direction={"row"}
+                    justifyContent={"space-evenly"}
+                >
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <Grid item xs={12}>
                             <Line
                                 data={processCombinedChartData()}
                                 options={{
@@ -1690,9 +1725,13 @@ const TGA1 = () => {
                         </Grid>
                     </Grid>
 
-                    <h1>Treasury General Account (TGA) Closing Balance</h1>
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Treasury General Account (TGA) Closing Balance</h1>
+                        <Grid item xs={12}>
                             <Line
                                 data={processTgaChartData()}
                                 options={{
@@ -1729,11 +1768,14 @@ const TGA1 = () => {
                     </Grid>
 
 
-                    <h1>Overnight Reverse Repurchase Agreements:</h1>
-                    <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
-
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Overnight Reverse Repurchase Agreements:</h1>
+                        <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
+                        <Grid item xs={12}>
                             <Line
                                 data={processRrpChartData()}
                                 options={{
@@ -1769,11 +1811,15 @@ const TGA1 = () => {
                         </Grid>
                     </Grid>
 
-                    <h1>Assets: Liquidity and Credit Facilities:</h1>
-                    <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
 
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Assets: Liquidity and Credit Facilities:</h1>
+                        <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
+                        <Grid item xs={12}>
                             <Line
                                 data={processWlcChartData()}
                                 options={{
@@ -1809,11 +1855,15 @@ const TGA1 = () => {
                         </Grid>
                     </Grid>
 
-                    <h1>Factors Affecting Reserve Balances: Reserve Bank Credit:</h1>
-                    <h1>Liquidity and Credit Facilities: Loans on Wednesdays (H41RESPPALDKNWW)</h1>
 
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Factors Affecting Reserve Balances: Reserve Bank Credit:</h1>
+                        <h1>Liquidity and Credit Facilities: Loans on Wednesdays (H41RESPPALDKNWW)</h1>
+                        <Grid item xs={12}>
                             <Line
                                 data={processH4ChartData()}
                                 options={{
@@ -1849,11 +1899,15 @@ const TGA1 = () => {
                         </Grid>
                     </Grid>
 
-                    <h1>Factors Affecting Reserve Balances:</h1>
-                    <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
 
-                    <Grid container justifyContent="center">
-                        <Grid item xs={12} md={8}>
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Factors Affecting Reserve Balances:</h1>
+                        <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
+                        <Grid item xs={12}>
                             <Line
                                 data={processWalChartData()}
                                 options={{
@@ -1888,7 +1942,7 @@ const TGA1 = () => {
                             </Typography>
                         </Grid>
                     </Grid>
-                </>
+                </Grid>
             )}
         </div>
     );
