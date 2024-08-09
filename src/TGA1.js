@@ -1241,7 +1241,13 @@ const TGA1 = () => {
                 body: JSON.stringify(rrpBody),
             });
             const result1 = await response1.json();
-            setRrpData(result1.observations);
+
+            // Normalize timestamp to YYYY-MM-DD
+            const normalizedData1 = result1.observations[0].map(([timestamp, value]) => {
+                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                return [date, value];
+            });
+            setRrpData(normalizedData1);
 
             const response2 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
                 method: "POST",
@@ -1251,7 +1257,13 @@ const TGA1 = () => {
                 body: JSON.stringify(wlcBody),
             });
             const result2 = await response2.json();
-            setWlcData(result2.observations);
+
+            // Normalize timestamp to YYYY-MM-DD
+            const normalizedData2 = result2.observations[0].map(([timestamp, value]) => {
+                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                return [date, value];
+            });
+            setWlcData(normalizedData2);
 
             const response3 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
                 method: "POST",
@@ -1261,7 +1273,13 @@ const TGA1 = () => {
                 body: JSON.stringify(h4Body),
             });
             const result3 = await response3.json();
-            setH4Data(result3.observations);
+
+            // Normalize timestamp to YYYY-MM-DD
+            const normalizedData3 = result3.observations[0].map(([timestamp, value]) => {
+                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                return [date, value];
+            });
+            setH4Data(normalizedData3);
 
             const response4 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
                 method: "POST",
@@ -1271,9 +1289,15 @@ const TGA1 = () => {
                 body: JSON.stringify(walBody),
             });
             const result4 = await response4.json();
-            setWalData(result4.observations);
+
+            // Normalize timestamp to YYYY-MM-DD
+            const normalizedData4 = result4.observations[0].map(([timestamp, value]) => {
+                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                return [date, value];
+            });
+            setWalData(normalizedData4);
         } catch (error) {
-            console.error('Error fetching RRP data:', error);
+            console.error('Error fetching data:', error);
         }
     };
 
@@ -1281,10 +1305,8 @@ const TGA1 = () => {
         const startTimestamp = startDate.valueOf();
         const endTimestamp = endDate.valueOf();
 
-        // Flatten the nested array to work with timestamp-value pairs
-        const flatData = data.flat();
-
-        return flatData.filter(([timestamp]) => {
+        return data.filter(([dateString]) => {
+            const timestamp = dayjs(dateString).valueOf(); // Convert date string back to timestamp
             return timestamp >= startTimestamp && timestamp <= endTimestamp;
         });
     };
@@ -1339,7 +1361,7 @@ const TGA1 = () => {
             };
         }
 
-        const labels = validData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
+        const labels = validData.map(([date]) => date);
         const rrpValues = validData.map(([, value]) => value);
 
         const minRrpValue = Math.min(...rrpValues);
@@ -1384,7 +1406,7 @@ const TGA1 = () => {
             };
         }
 
-        const labels = validData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
+        const labels = validData.map(([date]) => date);
         const rrpValues = validData.map(([, value]) => value);
 
         const minRrpValue = Math.min(...rrpValues);
@@ -1429,7 +1451,7 @@ const TGA1 = () => {
             };
         }
 
-        const labels = validData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
+        const labels = validData.map(([date]) => date);
         const rrpValues = validData.map(([, value]) => value);
 
         const minRrpValue = Math.min(...rrpValues);
@@ -1474,7 +1496,7 @@ const TGA1 = () => {
             };
         }
 
-        const labels = validData.map(([timestamp]) => dayjs(timestamp).format('YYYY-MM-DD'));
+        const labels = validData.map(([date]) => date);
         const rrpValues = validData.map(([, value]) => value);
 
         const minRrpValue = Math.min(...rrpValues);
