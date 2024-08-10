@@ -28,7 +28,7 @@ root.render(
             <hr/>
 
             <p style={{marginLeft: "8px"}}>Huge thanks to everyone who helped make this website happen:
-                Professor Adam, JayWolf, Cryptosaurus Max ₿, Calypso, Cedric, OG_Simba
+                Professor Adam, JayWolf, Cedric, Calypso, Cryptosaurus Max ₿, OG_Simba
                 — </p>
             <p style={{marginLeft: "8px"}}>If you have any feedback or ideas on how to extend the website, tag me in TRW:
                 @01HK0BGJQMWXQC26SRG2W46TET</p>
