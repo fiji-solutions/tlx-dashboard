@@ -1641,6 +1641,8 @@ const TGA1 = () => {
                                 setStartDate(newValue);
                             }}
                             renderInput={(params) => <TextField {...params} />}
+                            minDate={dayjs("2023-03-15")}
+                            maxDate={endDate}
                         />
                     </LocalizationProvider>
                 </Grid>
@@ -1653,6 +1655,8 @@ const TGA1 = () => {
                                 setEndDate(newValue);
                             }}
                             renderInput={(params) => <TextField {...params} />}
+                            minDate={startDate}
+                            maxDate={dayjs()}
                         />
                     </LocalizationProvider>
                 </Grid>
