@@ -1611,7 +1611,7 @@ const TGA1 = () => {
             labels,
             datasets: [
                 {
-                    label: 'Combined Data',
+                    label: 'Tomas\' Formula',
                     data: combinedData,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
