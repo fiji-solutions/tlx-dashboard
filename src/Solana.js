@@ -729,8 +729,6 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             <p><a
                 href="https://github.com/fiji-solutions/tlx/blob/main/solindex_cron/app.py">https://github.com/fiji-solutions/tlx/blob/main/solindex_cron/app.py</a>
             </p>
-            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
-                @01HK0BGJQMWXQC26SRG2W46TET</p>
 
             <Snackbar
                 open={openSnackbar}

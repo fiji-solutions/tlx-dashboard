@@ -419,8 +419,6 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             <p>This is because I did not find a way to view the Market Cap order history for the past.</p>
             <p>If I find a way to do so in the future, the data will be corrected and this disclaimer will be
                 removed.</p>
-            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
-                @01HK0BGJQMWXQC26SRG2W46TET</p>
 
             <Snackbar
                 open={openSnackbar}

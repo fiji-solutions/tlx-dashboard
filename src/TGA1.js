@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Line} from 'react-chartjs-2';
-import {CircularProgress, Grid, Tab, Tabs, TextField, Typography,} from '@mui/material';
+import {Button, CircularProgress, Grid, Snackbar, Tab, Tabs, TextField, Typography,} from '@mui/material';
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
@@ -18,6 +18,7 @@ const TGA1 = () => {
     const [startDate, setStartDate] = useState(dayjs("2024-01-01"));
     const [endDate, setEndDate] = useState(dayjs());
     const [tabValue, setTabValue] = useState('1.3');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
     useEffect(() => {
         fetchTgaData();
@@ -1628,6 +1629,74 @@ const TGA1 = () => {
         setTabValue(newValue);
     };
 
+    const generatePineScript = () => {
+        const values = processCombinedChartData().datasets[0].data;
+        const dates = processCombinedChartData().labels;
+
+        const filledDates = [];
+        const filledValues = [];
+
+        let lastKnownValue = null;
+
+        let currentIndex = 0;
+        for (let d = new Date(dates[0]); d <= new Date(dates[dates.length - 1]); d.setDate(d.getDate() + 1)) {
+            const currentDateString = d.toISOString().split('T')[0];
+
+            if (dates[currentIndex] === currentDateString) {
+                lastKnownValue = values[currentIndex];
+                filledDates.push(currentDateString);
+                filledValues.push(lastKnownValue);
+                currentIndex++;
+            } else {
+                filledDates.push(currentDateString);
+                filledValues.push(lastKnownValue);
+            }
+        }
+
+        filledDates.reverse();
+        filledValues.reverse();
+
+        const mostRecentDate = filledDates[filledDates.length - 1];
+
+        let pineScript = `//@version=5
+indicator("${processCombinedChartData().datasets[0].label} Data Plot", overlay=true)
+
+var customValues = array.new_float()
+bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
+date = input.time(timestamp("${mostRecentDate} 00:00 +0000"), "Shift Origin To", tooltip = 'When enabled use this offset for origin bar of data range.', inline = '1')
+
+indx = not bump ? 0 : ta.valuewhen(time == date, bar_index, 0) // Origin bar index.
+
+if bar_index == indx
+    customValues := array.from(
+     `;
+
+        for (let i = 0; i < filledDates.length; i++) {
+            pineScript += `${filledValues[i]}${i < filledValues.length - 1 ? ', ' : `
+ `}`;
+        }
+
+        pineScript += `    )`;
+
+        pineScript += `
+
+plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00) // Plot and shrink dataset for bars within data range.
+`;
+
+        navigator.clipboard.writeText(pineScript).then(() => {
+            setOpenSnackbar(true);
+        }).catch(err => {
+            console.error('Could not copy text: ', err);
+        });
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
+    };
+
     return (
         <div className="App">
             <h1>Tomas' Formula</h1>
@@ -1659,6 +1728,17 @@ const TGA1 = () => {
                             maxDate={dayjs()}
                         />
                     </LocalizationProvider>
+                </Grid>
+
+                <Grid item>
+                    <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript()} variant="contained"
+                            disabled={loading}>
+                        {loading ? (
+                            <CircularProgress size={25} color={"grey"}/>
+                        ) : (
+                            "Copy Pine Script"
+                        )}
+                    </Button>
                 </Grid>
 
                 <Grid
@@ -1948,6 +2028,13 @@ const TGA1 = () => {
                     </Grid>
                 </Grid>
             )}
+
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message="Pine Script copied to clipboard!"
+            />
         </div>
     );
 };

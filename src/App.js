@@ -1071,8 +1071,6 @@ const App = () => {
             <p><a
                 href="https://github.com/fiji-solutions/tlx/blob/main/hello_world/app.py">https://github.com/fiji-solutions/tlx/blob/main/hello_world/app.py</a>
             </p>
-            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
-                @01HK0BGJQMWXQC26SRG2W46TET</p>
         </div>
     );
 };

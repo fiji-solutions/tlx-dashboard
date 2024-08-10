@@ -368,10 +368,6 @@ const RSPS = () => {
                 </Grid>
             </Grid>
 
-            <hr style={{"marginTop": "160px"}}/>
-            <p>If you have any feedback or ideas on how to extend the website, tag me in TRW:
-                @01HK0BGJQMWXQC26SRG2W46TET</p>
-
             <Snackbar
                 open={openSnackbar}
                 autoHideDuration={6000}
