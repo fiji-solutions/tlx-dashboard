@@ -10,6 +10,7 @@ import NavTabs from './components/NavTabs';
 import CoingeckoSolMemes from "./CoingeckoSolMemes";
 import RSPS from "./RSPS";
 import TGA1 from "./TGA1";
+import TGA2 from "./TGA2";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -23,6 +24,7 @@ root.render(
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes />} />
                 <Route path="/rsps" element={<RSPS />} />
                 <Route path="/liquidity" element={<TGA1 />} />
+                <Route path="/liquidity-new" element={<TGA2 />} />
             </Routes>
         </Router>
     </React.StrictMode>
