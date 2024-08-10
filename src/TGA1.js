@@ -1256,8 +1256,8 @@ const TGA1 = () => {
 
             // Normalize timestamp to YYYY-MM-DD
             const normalizedData1 = result1.observations[0].map(([timestamp, value]) => {
-                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
-                return [date, value];
+                const date = dayjs(timestamp).format('YYYY-MM-DD');
+                return [date, value ? value * 1000 : value];
             });
             setRrpData(normalizedData1);
 
@@ -1593,7 +1593,7 @@ const TGA1 = () => {
             lastWlcValue = wlcValue;
 
             // Apply the formula
-            return walValue - tgaValue - (rrpValue * 1000) + h4Value + wlcValue;
+            return walValue - tgaValue - rrpValue + h4Value + wlcValue;
         });
 
         // Use the dates directly as labels (they are already in YYYY-MM-DD format)
@@ -1786,7 +1786,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'RRPONTSYD (Billions)',
+                                            text: 'RRPONTSYD (Millions)',
                                         },
                                     },
                                     scales: {
@@ -1799,8 +1799,8 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processRrpChartData().minValue - 5,
-                                            max: processRrpChartData().maxValue + 5,
+                                            min: processRrpChartData().minValue - 10000,
+                                            max: processRrpChartData().maxValue + 10000,
                                         },
                                     },
                                 }}
