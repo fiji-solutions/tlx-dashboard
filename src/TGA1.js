@@ -1600,7 +1600,7 @@ const TGA1 = () => {
         const labels = dates;
 
         // Filter out null values for min/max calculation
-        const validCombinedData = combinedData.filter(value => value !== null);
+        const validCombinedData = combinedData.filter(value => value !== null && value >= 0);
 
         const minValue = validCombinedData.length > 0 ? Math.min(...validCombinedData) : 0;
         const maxValue = validCombinedData.length > 0 ? Math.max(...validCombinedData) : 0;
@@ -1612,7 +1612,7 @@ const TGA1 = () => {
             datasets: [
                 {
                     label: 'Tomas\' Formula',
-                    data: combinedData,
+                    data: validCombinedData,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     fill: false,
