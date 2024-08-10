@@ -1773,6 +1773,50 @@ const TGA1 = () => {
                         xs={11 / parseFloat(tabValue)}
                         justifyContent="center"
                     >
+                        <h1>Factors Affecting Reserve Balances:</h1>
+                        <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processWalChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'WALCL (Millions)',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processWalChartData().minValue - 3000,
+                                            max: processWalChartData().maxValue + 3000,
+                                        },
+                                    },
+                                }}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processWalChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
                         <h1>Overnight Reverse Repurchase Agreements:</h1>
                         <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
                         <Grid item xs={12}>
@@ -1807,50 +1851,6 @@ const TGA1 = () => {
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processRrpChartData().latestDate}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Assets: Liquidity and Credit Facilities:</h1>
-                        <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processWlcChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processWlcChartData().minValue - 500,
-                                            max: processWlcChartData().maxValue + 500,
-                                        },
-                                    },
-                                }}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processWlcChartData().latestDate}
                             </Typography>
                         </Grid>
                     </Grid>
@@ -1905,11 +1905,11 @@ const TGA1 = () => {
                         xs={11 / parseFloat(tabValue)}
                         justifyContent="center"
                     >
-                        <h1>Factors Affecting Reserve Balances:</h1>
-                        <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
+                        <h1>Assets: Liquidity and Credit Facilities:</h1>
+                        <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
                         <Grid item xs={12}>
                             <Line
-                                data={processWalChartData()}
+                                data={processWlcChartData()}
                                 options={{
                                     responsive: true,
                                     plugins: {
@@ -1918,7 +1918,7 @@ const TGA1 = () => {
                                         },
                                         title: {
                                             display: true,
-                                            text: 'WALCL (Millions)',
+                                            text: 'WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
@@ -1931,14 +1931,14 @@ const TGA1 = () => {
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processWalChartData().minValue - 3000,
-                                            max: processWalChartData().maxValue + 3000,
+                                            min: processWlcChartData().minValue - 500,
+                                            max: processWlcChartData().maxValue + 500,
                                         },
                                     },
                                 }}
                             />
                             <Typography variant="body1" align="center">
-                                Latest Date: {processWalChartData().latestDate}
+                                Latest Date: {processWlcChartData().latestDate}
                             </Typography>
                         </Grid>
                     </Grid>
