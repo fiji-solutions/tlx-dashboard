@@ -1733,8 +1733,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 <Grid container item justifyContent="center">
                     <Grid item>
                         <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript()} variant="contained"
-                                disabled={loading}>
-                            {loading ? (
+                                disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>
+                            {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
                                 <CircularProgress size={25} color={"grey"}/>
                             ) : (
                                 "Copy Pine Script"
