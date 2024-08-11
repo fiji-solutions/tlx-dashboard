@@ -1672,7 +1672,7 @@ if bar_index == indx
      `;
 
         for (let i = 0; i < filledDates.length; i++) {
-            pineScript += `${filledValues[i]}${i < filledValues.length - 1 ? ', ' : `
+            pineScript += `${filledValues[i] * 1000000}${i < filledValues.length - 1 ? ', ' : `
  `}`;
         }
 
