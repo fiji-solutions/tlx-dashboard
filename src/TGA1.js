@@ -15,7 +15,7 @@ const TGA1 = () => {
     const [h4Data, setH4Data] = useState([]);
     const [walData, setWalData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [startDate, setStartDate] = useState(dayjs("2024-01-01"));
+    const [startDate, setStartDate] = useState(dayjs().add(-2, "M"));
     const [endDate, setEndDate] = useState(dayjs());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
