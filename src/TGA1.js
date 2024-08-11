@@ -3,10 +3,14 @@ import {Line} from 'react-chartjs-2';
 import {Button, CircularProgress, Grid, Snackbar, Tab, Tabs, TextField, Typography,} from '@mui/material';
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
 import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+
+// Apply UTC plugin to dayjs
+dayjs.extend(utc);
 
 const TGA1 = () => {
     const [tgaData, setTgaData] = useState([]);
@@ -15,8 +19,8 @@ const TGA1 = () => {
     const [h4Data, setH4Data] = useState([]);
     const [walData, setWalData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [startDate, setStartDate] = useState(dayjs().add(-2, "M"));
-    const [endDate, setEndDate] = useState(dayjs());
+    const [startDate, setStartDate] = useState(dayjs().utc().add(-2, "M"));
+    const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
@@ -36,7 +40,7 @@ const TGA1 = () => {
             const result = await response.json();
 
             const normalizedData = result.map(item => {
-                const normalizedDate = dayjs(item.record_date).format('YYYY-MM-DD');
+                const normalizedDate = dayjs(item.record_date).utc().format('YYYY-MM-DD');
                 return {
                     ...item,
                     record_date: normalizedDate
@@ -1257,7 +1261,7 @@ const TGA1 = () => {
 
             // Normalize timestamp to YYYY-MM-DD
             const normalizedData1 = result1.observations[0].map(([timestamp, value]) => {
-                const date = dayjs(timestamp).format('YYYY-MM-DD');
+                const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value ? value * 1000 : value];
             });
             setRrpData(normalizedData1);
@@ -1273,7 +1277,7 @@ const TGA1 = () => {
 
             // Normalize timestamp to YYYY-MM-DD
             const normalizedData2 = result2.observations[0].map(([timestamp, value]) => {
-                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value];
             });
             setWlcData(normalizedData2);
@@ -1289,7 +1293,7 @@ const TGA1 = () => {
 
             // Normalize timestamp to YYYY-MM-DD
             const normalizedData3 = result3.observations[0].map(([timestamp, value]) => {
-                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value];
             });
             setH4Data(normalizedData3);
@@ -1305,7 +1309,7 @@ const TGA1 = () => {
 
             // Normalize timestamp to YYYY-MM-DD
             const normalizedData4 = result4.observations[0].map(([timestamp, value]) => {
-                const date = dayjs(timestamp).format('YYYY-MM-DD'); // Multiply by 1000 to convert to milliseconds
+                const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value];
             });
             setWalData(normalizedData4);
@@ -1315,11 +1319,11 @@ const TGA1 = () => {
     };
 
     const filterDataByDate = (data, startDate, endDate) => {
-        const startTimestamp = startDate.valueOf();
-        const endTimestamp = endDate.valueOf();
+        const startTimestamp = startDate.utc().valueOf();
+        const endTimestamp = endDate.utc().valueOf();
 
         return data.filter(([dateString]) => {
-            const timestamp = dayjs(dateString).valueOf(); // Convert date string back to timestamp
+            const timestamp = dayjs(dateString).utc().valueOf(); // Convert date string back to timestamp
             return timestamp >= startTimestamp && timestamp <= endTimestamp;
         });
     };
@@ -1327,9 +1331,9 @@ const TGA1 = () => {
     const processTgaChartData = () => {
         const validData = tgaData
             .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
-            .sort((a, b) => new Date(a.record_date) - new Date(b.record_date));
+            .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
 
-        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
+        const labels = validData.map(item => dayjs(item.record_date).utc().format('YYYY-MM-DD'));
         const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
 
         const minValue = Math.min(...openTodayBalances);
@@ -1536,19 +1540,19 @@ const TGA1 = () => {
 
     const processCombinedChartData = () => {
         // Convert start and end dates to strings in YYYY-MM-DD format
-        let startString = startDate.format('YYYY-MM-DD');
-        const endString = endDate.format('YYYY-MM-DD');
+        let startString = startDate.utc().format('YYYY-MM-DD');
+        const endString = endDate.utc().format('YYYY-MM-DD');
 
         // Extract all dates from each dataset and convert them to timestamps
-        const walDates = walData.map(([date]) => new Date(date).getTime());
-        const tgaDates = tgaData.map(item => new Date(item.record_date).getTime());
-        const rrpDates = rrpData.map(([date]) => new Date(date).getTime());
-        const h4Dates = h4Data.map(([date]) => new Date(date).getTime());
-        const wlcDates = wlcData.map(([date]) => new Date(date).getTime());
+        const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
+        const tgaDates = tgaData.map(item => dayjs(item.record_date).utc().toDate().getTime());
+        const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
+        const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
+        const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
 
         // Convert start and end strings to timestamps
-        const startTimestamp = new Date(startString).getTime();
-        const endTimestamp = new Date(endString).getTime();
+        const startTimestamp = dayjs(startString).utc().toDate().getTime();
+        const endTimestamp = dayjs(endString).utc().toDate().getTime();
 
         // Find the latest common start date across all datasets
         const latestCommonStartDateTimestamp = Math.max(
@@ -1561,7 +1565,7 @@ const TGA1 = () => {
 
         // Convert the timestamp back to a date string
         // Update startString to this latest common start date
-        startString = dayjs(latestCommonStartDateTimestamp).format('YYYY-MM-DD');
+        startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
 
         // Synchronize the dates and filter based on start and end dates
         const dates = Array.from(new Set([
@@ -1571,7 +1575,7 @@ const TGA1 = () => {
             ...h4Data.map(([date]) => date),
             ...wlcData.map(([date]) => date),
         ])).filter(date => date >= startString && date <= endString)
-            .sort((a, b) => new Date(a) - new Date(b));
+            .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
 
         let lastWalValue = 0;
         let lastTgaValue = 0;
@@ -1593,18 +1597,29 @@ const TGA1 = () => {
             lastH4Value = h4Value;
             lastWlcValue = wlcValue;
 
+            if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
+                return 0;
+            }
+
             // Apply the formula
             return walValue - tgaValue - rrpValue + h4Value + wlcValue;
         });
 
+        const filteredData = [];
+        const filteredDates = [];
+
+        for (let i = 0; i < combinedData.length; i++) {
+            if (combinedData[i] !== 0) {
+                filteredData.push(combinedData[i]);
+                filteredDates.push(dates[i]);
+            }
+        }
+
         // Use the dates directly as labels (they are already in YYYY-MM-DD format)
-        const labels = dates;
+        const labels = filteredDates;
 
-        // Filter out null values for min/max calculation
-        const validCombinedData = combinedData.filter(value => value !== null && value >= 0);
-
-        const minValue = validCombinedData.length > 0 ? Math.min(...validCombinedData) : 0;
-        const maxValue = validCombinedData.length > 0 ? Math.max(...validCombinedData) : 0;
+        const minValue = filteredData.length > 0 ? Math.min(...filteredData) : 0;
+        const maxValue = filteredData.length > 0 ? Math.max(...filteredData) : 0;
 
         const latestDate = labels[labels.length - 1] || "N/A";
 
@@ -1613,7 +1628,7 @@ const TGA1 = () => {
             datasets: [
                 {
                     label: 'Tomas\' Formula',
-                    data: validCombinedData,
+                    data: filteredData,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     fill: false,
@@ -1707,10 +1722,10 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             label="Start Date"
                             value={startDate}
                             onChange={(newValue) => {
-                                setStartDate(newValue);
+                                setStartDate(dayjs(newValue).utc());
                             }}
                             renderInput={(params) => <TextField {...params} />}
-                            minDate={dayjs("2023-03-15")}
+                            minDate={dayjs("2023-03-16").utc()}
                             maxDate={endDate}
                         />
                     </LocalizationProvider>
@@ -1721,11 +1736,11 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             label="End Date"
                             value={endDate}
                             onChange={(newValue) => {
-                                setEndDate(newValue);
+                                setEndDate(dayjs(newValue).utc());
                             }}
                             renderInput={(params) => <TextField {...params} />}
                             minDate={startDate}
-                            maxDate={dayjs()}
+                            maxDate={dayjs().utc()}
                         />
                     </LocalizationProvider>
                 </Grid>
