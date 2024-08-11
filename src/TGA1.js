@@ -1333,7 +1333,7 @@ const TGA1 = () => {
             .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
             .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
 
-        const labels = validData.map(item => dayjs(item.record_date).utc().format('YYYY-MM-DD'));
+        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
         const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
 
         const minValue = Math.min(...openTodayBalances);
