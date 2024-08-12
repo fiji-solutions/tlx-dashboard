@@ -27,6 +27,8 @@ const columns = [
     { field: 'relative_mean', headerName: 'Mean ROC relative to memes', width: 200, type: "number" },
     { field: 'relative_volatility', headerName: 'Relative Volatility to memes', width: 200, type: "number" },
     { field: 'beta_total', headerName: 'beta_total', width: 200, type: "number" },
+    { field: 'beta_total2', headerName: 'beta_total2', width: 200, type: "number" },
+    { field: 'beta_total3', headerName: 'beta_total3', width: 200, type: "number" },
     { field: 'beta_others', headerName: 'beta_others', width: 200, type: "number" },
     { field: 'beta_btc', headerName: 'beta_btc', width: 200, type: "number" },
     { field: 'beta_eth', headerName: 'beta_eth', width: 200, type: "number" },
@@ -78,6 +80,8 @@ const RSPS = () => {
             relative_mean: item.relative_mean,
             relative_volatility: item.relative_volatility,
             beta_total: item.beta_total,
+            beta_total2: item.beta_total2,
+            beta_total3: item.beta_total3,
             beta_others: item.beta_others,
             beta_btc: item.beta_btc,
             beta_eth: item.beta_eth,
@@ -125,7 +129,7 @@ const RSPS = () => {
     }
 
     const onCopy2 = () => {
-        navigator.clipboard.writeText(datasets.map((item) => item.beta_total + "\t" + item.beta_others + "\t" + item.beta_btc + "\t" + item.beta_eth).join("\n")).then(() => {
+        navigator.clipboard.writeText(datasets.map((item) => item.beta_total + "\t" + item.beta_total2 + "\t" + item.beta_total3 + "\t" + item.beta_others + "\t" + item.beta_btc + "\t" + item.beta_eth).join("\n")).then(() => {
             setOpenSnackbar(true);
         }).catch(err => {
             console.error('Could not copy text: ', err);
