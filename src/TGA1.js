@@ -19,6 +19,7 @@ const TGA1 = () => {
     const [h4Data, setH4Data] = useState([]);
     const [walData, setWalData] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
     const [startDate, setStartDate] = useState(dayjs().utc().add(-2, "M"));
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
@@ -34,6 +35,7 @@ const TGA1 = () => {
     }, []);
 
     const fetchTgaData = async () => {
+        setError(false);
         setLoading(true);
         try {
             const response = await fetch(`https://api.fijisolutions.net/tga1?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`);
@@ -49,6 +51,7 @@ const TGA1 = () => {
             setTgaData(normalizedData);
         } catch (error) {
             console.error('Error fetching TGA data:', error);
+            setError(true);
         }
         setLoading(false);
     };
@@ -1315,6 +1318,7 @@ const TGA1 = () => {
             setWalData(normalizedData4);
         } catch (error) {
             console.error('Error fetching data:', error);
+            setError(true);
         }
     };
 
@@ -2051,6 +2055,11 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                 autoHideDuration={6000}
                 onClose={handleCloseSnackbar}
                 message="Pine Script copied to clipboard!"
+            />
+
+            <Snackbar
+                open={error}
+                message="Some data did not load, try reloading the page"
             />
         </div>
     );
