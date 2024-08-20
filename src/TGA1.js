@@ -20,6 +20,7 @@ const TGA1 = () => {
     const [walData, setWalData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    const [errorSource, setErrorSource] = useState("");
     const [startDate, setStartDate] = useState(dayjs().utc().add(-2, "M"));
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
@@ -36,6 +37,7 @@ const TGA1 = () => {
 
     const fetchTgaData = async () => {
         setError(false);
+        setErrorSource("");
         setLoading(true);
         try {
             const response = await fetch(`https://api.fijisolutions.net/tga1?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`);
@@ -52,6 +54,7 @@ const TGA1 = () => {
         } catch (error) {
             console.error('Error fetching TGA data:', error);
             setError(true);
+            setErrorSource("TGA");
         }
         setLoading(false);
     };
@@ -1252,6 +1255,7 @@ const TGA1 = () => {
                 "scatter": ""
             }
         };
+        let count = 0;
         try {
             const response1 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=RRPONTSYD`, {
                 method: "POST",
@@ -1268,6 +1272,7 @@ const TGA1 = () => {
                 return [date, value ? value * 1000 : value];
             });
             setRrpData(normalizedData1);
+            count = 1;
 
             const response2 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
                 method: "POST",
@@ -1284,6 +1289,7 @@ const TGA1 = () => {
                 return [date, value];
             });
             setWlcData(normalizedData2);
+            count = 2;
 
             const response3 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
                 method: "POST",
@@ -1300,6 +1306,7 @@ const TGA1 = () => {
                 return [date, value];
             });
             setH4Data(normalizedData3);
+            count = 3;
 
             const response4 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
                 method: "POST",
@@ -1316,9 +1323,11 @@ const TGA1 = () => {
                 return [date, value];
             });
             setWalData(normalizedData4);
+            count = 4;
         } catch (error) {
             console.error('Error fetching data:', error);
             setError(true);
+            setErrorSource(count === 0 ? "RRP" : (count === 1 ? "WLC" : (count === 2 ? "H4" : (count === 3 ? "WAL" : "Exception"))));
         }
     };
 
@@ -2059,7 +2068,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
 
             <Snackbar
                 open={error}
-                message="Some data did not load, try reloading the page"
+                message={`Error on data loading occurred: ${errorSource}, try reloading the page`}
             />
         </div>
     );
