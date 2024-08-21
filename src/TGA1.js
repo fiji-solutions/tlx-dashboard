@@ -2067,8 +2067,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             />
 
             <Snackbar
-                open={true}
-                message={`(Data maintenance, will be up and running soon)`}
+                open={error}
+                message={`Error on data loading occurred: ${errorSource}, try reloading the page`}
             />
         </div>
     );
