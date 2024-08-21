@@ -1640,7 +1640,7 @@ const TGA1 = () => {
             labels,
             datasets: [
                 {
-                    label: 'Tomas\' Formula (Data maintenance, will be up and running soon)',
+                    label: 'Tomas\' Formula',
                     data: filteredData,
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
