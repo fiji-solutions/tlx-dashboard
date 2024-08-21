@@ -19,7 +19,9 @@ const TGA1 = () => {
     const [h4Data, setH4Data] = useState([]);
     const [walData, setWalData] = useState([]);
     const [loading, setLoading] = useState(true);
+    // eslint-disable-next-line
     const [error, setError] = useState(false);
+    // eslint-disable-next-line
     const [errorSource, setErrorSource] = useState("");
     const [startDate, setStartDate] = useState(dayjs().utc().add(-2, "M"));
     const [endDate, setEndDate] = useState(dayjs().utc());
