@@ -21,7 +21,7 @@ const TGA1 = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errorSource, setErrorSource] = useState("");
-    const [startDate, setStartDate] = useState(dayjs().utc().add(-2, "M"));
+    const [startDate, setStartDate] = useState(dayjs("2000-01-01"));
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
