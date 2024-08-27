@@ -18,6 +18,7 @@ const TGA1 = () => {
     const [wlcData, setWlcData] = useState([]);
     const [h4Data, setH4Data] = useState([]);
     const [walData, setWalData] = useState([]);
+    const [csv, setCsv] = useState(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errorSource, setErrorSource] = useState("");
@@ -34,6 +35,11 @@ const TGA1 = () => {
     useEffect(() => {
         fetchRrpData();
     }, []);
+
+    useEffect(() => {
+        processCombinedChartData2();
+        // eslint-disable-next-line
+    }, [tgaData, rrpData, wlcData, h4Data, walData]);
 
     const fetchTgaData = async () => {
         setError(false);
@@ -1653,6 +1659,86 @@ const TGA1 = () => {
         };
     };
 
+    const processCombinedChartData2 = () => {
+        // Convert start and end dates to strings in YYYY-MM-DD format
+        let startString = startDate.utc().format('YYYY-MM-DD');
+        const endString = endDate.utc().format('YYYY-MM-DD');
+
+        // Extract all dates from each dataset and convert them to timestamps
+        const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
+        const tgaDates = tgaData.map(item => dayjs(item.record_date).utc().toDate().getTime());
+        const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
+        const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
+        const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
+
+        // Convert start and end strings to timestamps
+        const startTimestamp = dayjs(startString).utc().toDate().getTime();
+        const endTimestamp = dayjs(endString).utc().toDate().getTime();
+
+        // Find the latest common start date across all datasets
+        const latestCommonStartDateTimestamp = Math.max(
+            Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
+            Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
+        );
+
+        // Convert the timestamp back to a date string
+        // Update startString to this latest common start date
+        startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
+
+        // Synchronize the dates and filter based on start and end dates
+        const dates = Array.from(new Set([
+            ...walData.map(([date]) => date),
+            ...tgaData.map(item => item.record_date),
+            ...rrpData.map(([date]) => date),
+            ...h4Data.map(([date]) => date),
+            ...wlcData.map(([date]) => date),
+        ])).filter(date => date >= startString && date <= endString)
+            .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
+
+        let lastWalValue = 0;
+        let lastTgaValue = 0;
+        let lastRrpValue = 0;
+        let lastH4Value = 0;
+        let lastWlcValue = 0;
+
+        const combinedData = dates.map(date => {
+            const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
+            const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
+            const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
+            const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
+            const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
+
+            // Update the last known values
+            lastWalValue = walValue;
+            lastTgaValue = tgaValue;
+            lastRrpValue = rrpValue;
+            lastH4Value = h4Value;
+            lastWlcValue = wlcValue;
+
+            if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
+                return 0;
+            }
+
+            // Apply the formula
+            return walValue - tgaValue - rrpValue + h4Value + wlcValue;
+        });
+
+        const filteredData = [];
+        const filteredDates = [];
+
+        for (let i = 0; i < combinedData.length; i++) {
+            if (combinedData[i] !== 0) {
+                filteredData.push(combinedData[i]);
+                filteredDates.push(dates[i]);
+            }
+        }
+
+        setCsv(createCSV(filteredDates, filteredData));
+    };
+
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -1725,6 +1811,32 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         setOpenSnackbar(false);
     };
 
+    const generateCsv = () => {
+        downloadCSV(csv, "data.csv");
+    };
+
+    const createCSV = (dates, values) => {
+        let csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "Date,Value\n"; // Add the headers
+
+        dates.forEach((date, index) => {
+            csvContent += `${date},${values[index]}\n`;
+        });
+
+        return csvContent;
+    }
+
+    const downloadCSV = (csvContent, fileName) => {
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", fileName);
+        document.body.appendChild(link); // Required for FF
+
+        link.click();
+        document.body.removeChild(link);
+    }
+
     return (
         <div className="App">
             <h1>NET FED Liquidity Formula</h1>
@@ -1768,6 +1880,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 "Copy Pine Script"
                             )}
                         </Button>
+
+                        <Button style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv()}>Download CSV</Button>
                     </Grid>
                 </Grid>
 
