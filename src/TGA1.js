@@ -1881,7 +1881,13 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             )}
                         </Button>
 
-                        <Button style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv()}>Download CSV</Button>
+                        <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv()}>
+                            {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
+                                <CircularProgress size={25} color={"grey"}/>
+                            ) : (
+                                "Download CSV"
+                            )}
+                        </Button>
                     </Grid>
                 </Grid>
 
