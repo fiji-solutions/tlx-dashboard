@@ -55,7 +55,7 @@ const TGA3 = () => {
                 method: "POST",
                 body: JSON.stringify({
                     liquidity: number ? api : api2,
-                    lag: parseInt(lag),
+                    lag: parseInt(lag) * -1,
                     ma_length: parseInt(maLength)
                 }),
                 headers: {
