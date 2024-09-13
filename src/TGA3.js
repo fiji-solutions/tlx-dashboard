@@ -2087,12 +2087,12 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         document.body.removeChild(link);
     }
 
-    const processCorrelationChartData = () => {
+    const processCorrelationChartData = (power) => {
         if (!apiResponse) return { labels: [], datasets: [] };
 
-        const correlationBTC = apiResponse.correlation_btc.map(item => Object.values(item)[0]);
-        const correlationETH = apiResponse.correlation_eth.map(item => Object.values(item)[0]);
-        const correlationSOL = apiResponse.correlation_sol.map(item => Object.values(item)[0]);
+        const correlationBTC = apiResponse.correlation_btc.map(item => Object.values(item)[0] ** power);
+        const correlationETH = apiResponse.correlation_eth.map(item => Object.values(item)[0] ** power);
+        const correlationSOL = apiResponse.correlation_sol.map(item => Object.values(item)[0] ** power);
         const labels = apiResponse.correlation_btc.map(item => Object.keys(item)[0]);
 
         return {
@@ -2123,12 +2123,12 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         };
     };
 
-    const processCorrelationChartData2 = () => {
+    const processCorrelationChartData2 = (power) => {
         if (!apiResponse2) return { labels: [], datasets: [] };
 
-        const correlationBTC = apiResponse2.correlation_btc.map(item => Object.values(item)[0]);
-        const correlationETH = apiResponse2.correlation_eth.map(item => Object.values(item)[0]);
-        const correlationSOL = apiResponse2.correlation_sol.map(item => Object.values(item)[0]);
+        const correlationBTC = apiResponse2.correlation_btc.map(item => Object.values(item)[0] ** power);
+        const correlationETH = apiResponse2.correlation_eth.map(item => Object.values(item)[0] ** power);
+        const correlationSOL = apiResponse2.correlation_sol.map(item => Object.values(item)[0] ** power);
         const labels = apiResponse2.correlation_btc.map(item => Object.keys(item)[0]);
 
         return {
@@ -2159,12 +2159,12 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         };
     };
 
-    const processCorrelationMAChartData = () => {
+    const processCorrelationMAChartData = (power) => {
         if (!apiResponse) return { labels: [], datasets: [] };
 
-        const correlationBTC = apiResponse.sma_btc.map(item => Object.values(item)[0]);
-        const correlationETH = apiResponse.sma_eth.map(item => Object.values(item)[0]);
-        const correlationSOL = apiResponse.sma_sol.map(item => Object.values(item)[0]);
+        const correlationBTC = apiResponse.sma_btc.map(item => Object.values(item)[0] ** power);
+        const correlationETH = apiResponse.sma_eth.map(item => Object.values(item)[0] ** power);
+        const correlationSOL = apiResponse.sma_sol.map(item => Object.values(item)[0] ** power);
         const labels = apiResponse.sma_btc.map(item => Object.keys(item)[0]);
 
         return {
@@ -2195,12 +2195,12 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         };
     };
 
-    const processCorrelationMAChartData2 = () => {
+    const processCorrelationMAChartData2 = (power) => {
         if (!apiResponse2) return { labels: [], datasets: [] };
 
-        const correlationBTC = apiResponse2.sma_btc.map(item => Object.values(item)[0]);
-        const correlationETH = apiResponse2.sma_eth.map(item => Object.values(item)[0]);
-        const correlationSOL = apiResponse2.sma_sol.map(item => Object.values(item)[0]);
+        const correlationBTC = apiResponse2.sma_btc.map(item => Object.values(item)[0] ** power);
+        const correlationETH = apiResponse2.sma_eth.map(item => Object.values(item)[0] ** power);
+        const correlationSOL = apiResponse2.sma_sol.map(item => Object.values(item)[0] ** power);
         const labels = apiResponse2.sma_btc.map(item => Object.keys(item)[0]);
 
         return {
@@ -2412,7 +2412,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 <Grid item xs={12}>
 
                                     <Line
-                                        data={processCorrelationChartData()}
+                                        data={processCorrelationChartData(1)}
                                         options={{
                                             responsive: true,
                                             plugins: {
@@ -2434,8 +2434,47 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                                 y: {
                                                     beginAtZero: false,
-                                                    min: processCorrelationChartData().minValue - 10,
-                                                    max: processCorrelationChartData().maxValue + 10,
+                                                    min: processCorrelationChartData(1).minValue - 10,
+                                                    max: processCorrelationChartData(1).maxValue + 10,
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                item
+                                xs={11 / parseFloat(tabValue)}
+                                justifyContent="center"
+                            >
+                                <h1>Correlation Data Squared</h1>
+                                <Grid item xs={12}>
+
+                                    <Line
+                                        data={processCorrelationChartData(2)}
+                                        options={{
+                                            responsive: true,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                title: {
+                                                    display: true,
+                                                    text: 'Correlation BTC, ETH, SOL',
+                                                },
+                                            },
+                                            scales: {
+                                                x: {
+                                                    type: 'time',
+                                                    time: {
+                                                        unit: 'day',
+                                                        tooltipFormat: 'MM/dd/yyyy',
+                                                    },
+                                                },
+                                                y: {
+                                                    beginAtZero: false,
+                                                    min: processCorrelationChartData(2).minValue - 10,
+                                                    max: processCorrelationChartData(2).maxValue + 10,
                                                 },
                                             },
                                         }}
@@ -2451,7 +2490,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 <Grid item xs={12}>
 
                                     <Line
-                                        data={processCorrelationMAChartData()}
+                                        data={processCorrelationMAChartData(1)}
                                         options={{
                                             responsive: true,
                                             plugins: {
@@ -2473,8 +2512,47 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                                 y: {
                                                     beginAtZero: false,
-                                                    min: processCorrelationMAChartData().minValue - 10,
-                                                    max: processCorrelationMAChartData().maxValue + 10,
+                                                    min: processCorrelationMAChartData(1).minValue - 10,
+                                                    max: processCorrelationMAChartData(1).maxValue + 10,
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                item
+                                xs={11 / parseFloat(tabValue)}
+                                justifyContent="center"
+                            >
+                                <h1>Correlation Data (MA) Squared</h1>
+                                <Grid item xs={12}>
+
+                                    <Line
+                                        data={processCorrelationMAChartData(2)}
+                                        options={{
+                                            responsive: true,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                title: {
+                                                    display: true,
+                                                    text: 'Correlation BTC, ETH, SOL',
+                                                },
+                                            },
+                                            scales: {
+                                                x: {
+                                                    type: 'time',
+                                                    time: {
+                                                        unit: 'day',
+                                                        tooltipFormat: 'MM/dd/yyyy',
+                                                    },
+                                                },
+                                                y: {
+                                                    beginAtZero: false,
+                                                    min: processCorrelationMAChartData(2).minValue - 10,
+                                                    max: processCorrelationMAChartData(2).maxValue + 10,
                                                 },
                                             },
                                         }}
@@ -2557,7 +2635,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 <Grid item xs={12}>
 
                                     <Line
-                                        data={processCorrelationChartData2()}
+                                        data={processCorrelationChartData2(1)}
                                         options={{
                                             responsive: true,
                                             plugins: {
@@ -2579,8 +2657,47 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                                 y: {
                                                     beginAtZero: false,
-                                                    min: processCorrelationChartData2().minValue - 10,
-                                                    max: processCorrelationChartData2().maxValue + 10,
+                                                    min: processCorrelationChartData2(1).minValue - 10,
+                                                    max: processCorrelationChartData2(1).maxValue + 10,
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                item
+                                xs={11 / parseFloat(tabValue)}
+                                justifyContent="center"
+                            >
+                                <h1>Correlation Data Squared</h1>
+                                <Grid item xs={12}>
+
+                                    <Line
+                                        data={processCorrelationChartData2(2)}
+                                        options={{
+                                            responsive: true,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                title: {
+                                                    display: true,
+                                                    text: 'Correlation BTC, ETH, SOL',
+                                                },
+                                            },
+                                            scales: {
+                                                x: {
+                                                    type: 'time',
+                                                    time: {
+                                                        unit: 'day',
+                                                        tooltipFormat: 'MM/dd/yyyy',
+                                                    },
+                                                },
+                                                y: {
+                                                    beginAtZero: false,
+                                                    min: processCorrelationChartData2(2).minValue - 10,
+                                                    max: processCorrelationChartData2(2).maxValue + 10,
                                                 },
                                             },
                                         }}
@@ -2596,7 +2713,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 <Grid item xs={12}>
 
                                     <Line
-                                        data={processCorrelationMAChartData2()}
+                                        data={processCorrelationMAChartData2(1)}
                                         options={{
                                             responsive: true,
                                             plugins: {
@@ -2618,8 +2735,47 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                                 y: {
                                                     beginAtZero: false,
-                                                    min: processCorrelationMAChartData2().minValue - 10,
-                                                    max: processCorrelationMAChartData2().maxValue + 10,
+                                                    min: processCorrelationMAChartData2(1).minValue - 10,
+                                                    max: processCorrelationMAChartData2(1).maxValue + 10,
+                                                },
+                                            },
+                                        }}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid
+                                item
+                                xs={11 / parseFloat(tabValue)}
+                                justifyContent="center"
+                            >
+                                <h1>Correlation Data (MA) Squared</h1>
+                                <Grid item xs={12}>
+
+                                    <Line
+                                        data={processCorrelationMAChartData2(2)}
+                                        options={{
+                                            responsive: true,
+                                            plugins: {
+                                                legend: {
+                                                    position: 'top',
+                                                },
+                                                title: {
+                                                    display: true,
+                                                    text: 'Correlation BTC, ETH, SOL',
+                                                },
+                                            },
+                                            scales: {
+                                                x: {
+                                                    type: 'time',
+                                                    time: {
+                                                        unit: 'day',
+                                                        tooltipFormat: 'MM/dd/yyyy',
+                                                    },
+                                                },
+                                                y: {
+                                                    beginAtZero: false,
+                                                    min: processCorrelationMAChartData2(2).minValue - 10,
+                                                    max: processCorrelationMAChartData2(2).maxValue + 10,
                                                 },
                                             },
                                         }}
