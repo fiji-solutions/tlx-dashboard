@@ -11,6 +11,7 @@ import CoingeckoSolMemes from "./CoingeckoSolMemes";
 import RSPS from "./RSPS";
 import TGA1 from "./TGA1";
 import TGA2 from "./TGA2";
+import TGA3 from "./TGA3";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
                 <Route path="/rsps" element={<RSPS/>}/>
                 <Route path="/liquidity" element={<TGA1/>}/>
                 <Route path="/liquidity-test" element={<TGA2/>}/>
+                <Route path="/liquidity-correlation" element={<TGA3/>}/>
             </Routes>
 
             <hr/>
