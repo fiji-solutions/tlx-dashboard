@@ -31,6 +31,8 @@ const TGA3 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [lag, setLag] = useState(0);
+    const [maLength, setMaLength] = useState(14);
 
     useEffect(() => {
         fetchTgaData();
@@ -40,14 +42,6 @@ const TGA3 = () => {
     useEffect(() => {
         fetchRrpData();
     }, []);
-
-    useEffect(() => {
-        console.log(apiResponse);
-    }, [apiResponse]);
-
-    useEffect(() => {
-        console.log(apiResponse2);
-    }, [apiResponse2]);
 
     useEffect(() => {
         processCombinedChartDataCSV();
@@ -61,8 +55,8 @@ const TGA3 = () => {
                 method: "POST",
                 body: JSON.stringify({
                     liquidity: number ? api : api2,
-                    lag: 0,
-                    ma_length: 14
+                    lag: parseInt(lag),
+                    ma_length: parseInt(maLength)
                 }),
                 headers: {
                     'Content-Type': 'application/json'
@@ -2270,17 +2264,52 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     </LocalizationProvider>
                 </Grid>
 
-                <Grid item>
-                    <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => {
-                        fetchCorrelation(1);
-                        fetchCorrelation(2);
-                    }}>
-                        {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                            <CircularProgress size={25} color={"grey"}/>
-                        ) : (
-                            "Fetch Correlations"
-                        )}
-                    </Button>
+                <Grid
+                    container
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    direction={"row"}
+                    style={{marginTop: "16px"}}
+                    spacing={1}
+                >
+                    <Grid item>
+                        <TextField
+                            label="Lag"
+                            type="number"
+                            InputProps={{inputProps: {min: 1}}}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={lag}
+                            onChange={(event) => setLag(event.target.value)}
+                            disabled={loading}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <TextField
+                            label="MA Length"
+                            type="number"
+                            InputProps={{inputProps: {min: 1}}}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            value={maLength}
+                            onChange={(event) => setMaLength(event.target.value)}
+                            disabled={loading}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => {
+                            fetchCorrelation(1);
+                            fetchCorrelation(2);
+                        }}>
+                            {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
+                                <CircularProgress size={25} color={"grey"}/>
+                            ) : (
+                                "Fetch Correlations"
+                            )}
+                        </Button>
+                    </Grid>
                 </Grid>
 
                 <Grid
