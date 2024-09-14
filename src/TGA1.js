@@ -8,6 +8,8 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import {CognitoRefreshToken, CognitoUser} from "amazon-cognito-identity-js";
+import {UserPool} from "./UserPool";
 
 // Apply UTC plugin to dayjs
 dayjs.extend(utc);
@@ -27,6 +29,41 @@ const TGA1 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
+
+
+    const navigateToLogin = () => {
+        if (!["/login"].includes(window.location.pathname)) {
+            window.location.href = "/login";
+        }
+    };
+
+    const localStorageTokenListener = () => {
+        const token = localStorage.getItem("cognito-token");
+        if (token) {
+            const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
+
+            const cognitoUser = new CognitoUser({
+                Username: localStorage.getItem("email"),
+                Pool: UserPool,
+            });
+
+            cognitoUser.refreshSession(refreshToken, (err, session) => {
+                if (!err) {
+                    localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
+                } else {
+                    navigateToLogin();
+                }
+            });
+        } else {
+            navigateToLogin();
+        }
+    };
+
+    useEffect(() => {
+        localStorageTokenListener();
+        window.addEventListener("cognito-token-change", localStorageTokenListener);
+        // eslint-disable-next-line
+    }, []);
 
     useEffect(() => {
         fetchTgaData();
