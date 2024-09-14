@@ -10,6 +10,7 @@ import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import {CognitoRefreshToken, CognitoUser} from "amazon-cognito-identity-js";
 import {UserPool} from "./UserPool";
+import {Link} from "react-router-dom";
 
 // Apply UTC plugin to dayjs
 dayjs.extend(utc);
@@ -29,13 +30,7 @@ const TGA1 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
-
-
-    const navigateToLogin = () => {
-        if (!["/login"].includes(window.location.pathname)) {
-            window.location.href = "/login";
-        }
-    };
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const localStorageTokenListener = () => {
         const token = localStorage.getItem("cognito-token");
@@ -50,12 +45,9 @@ const TGA1 = () => {
             cognitoUser.refreshSession(refreshToken, (err, session) => {
                 if (!err) {
                     localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
-                } else {
-                    navigateToLogin();
+                    setIsLoggedIn(true);
                 }
             });
-        } else {
-            navigateToLogin();
         }
     };
 
@@ -68,7 +60,7 @@ const TGA1 = () => {
     useEffect(() => {
         fetchTgaData();
         // eslint-disable-next-line
-    }, [startDate, endDate]);
+    }, [startDate, endDate, isLoggedIn]);
 
     useEffect(() => {
         fetchRrpData();
@@ -86,8 +78,9 @@ const TGA1 = () => {
         setLoading(true);
         try {
             const token = localStorage.getItem("cognito-token");
+            const path = isLoggedIn ? "new-secret-path" : "tga1";
 
-            const response = await fetch(`https://api.fijisolutions.net/new-secret-path?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
+            const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -2095,7 +2088,14 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
 
     return (
         <div className="App">
-            <h1>NET FED Liquidity Formulas</h1>
+            <h1>{"NET FED Liquidity Formulas" + (!isLoggedIn ? " (LAGGING)" : "")}</h1>
+            {!isLoggedIn && (
+                <>
+                    <Typography variant={"body1"} style={{marginBottom: "16px"}}>
+                        The TGA in the data below is lagging by 7 entries. To view up to date data you need to <Link to={"/login"}>login</Link>.
+                    </Typography>
+                </>
+            )}
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
