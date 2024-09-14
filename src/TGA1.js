@@ -85,7 +85,14 @@ const TGA1 = () => {
         setErrorSource("");
         setLoading(true);
         try {
-            const response = await fetch(`https://api.fijisolutions.net/new-secret-path?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`);
+            const token = localStorage.getItem("cognito-token");
+
+            const response = await fetch(`https://api.fijisolutions.net/new-secret-path?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            });
             const result = await response.json();
 
             const normalizedData = result.map(item => {
