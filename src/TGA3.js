@@ -38,6 +38,25 @@ const TGA3 = () => {
     const [maLength, setMaLength] = useState(14);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    const watermarkPlugin = {
+        id: 'watermark',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const width = chart.width;
+            const height = chart.height;
+
+            ctx.save();
+            ctx.font = 'bold 30px Arial';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.translate(width / 2, height / 2);
+            ctx.rotate(-Math.PI / 4);
+            ctx.fillText('WWW.JOINTHEREALWORLD.COM', 0, 0);
+            ctx.restore();
+        },
+    };
+
     const localStorageTokenListener = () => {
         const token = localStorage.getItem("cognito-token");
         if (token) {
@@ -2418,6 +2437,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processCombinedChartData().latestDate}
@@ -2483,6 +2503,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2522,6 +2543,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2561,6 +2583,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2600,6 +2623,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2641,6 +2665,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processCombinedChartData2().latestDate}
@@ -2706,6 +2731,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2745,6 +2771,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2784,6 +2811,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2823,6 +2851,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
+                                        plugins={[watermarkPlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2864,6 +2893,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processTgaChartData().latestDate}
@@ -2908,6 +2938,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processWalChartData().latestDate}
@@ -2952,6 +2983,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processRrpChartData().latestDate}
@@ -2996,6 +3028,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processH4ChartData().latestDate}
@@ -3040,6 +3073,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
+                                plugins={[watermarkPlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processWlcChartData().latestDate}
