@@ -45,6 +45,8 @@ const TGA1 = () => {
             ctx.translate(width / 2, height / 2);
             ctx.rotate(-Math.PI / 4);
             ctx.fillText('WWW.JOINTHEREALWORLD.COM', 0, 0);
+            ctx.fillText('WWW.JOINTHEREALWORLD.COM', -width/5, -height/2.5);
+            ctx.fillText('WWW.JOINTHEREALWORLD.COM', width/5, height/2.5);
             ctx.restore();
         },
     };
