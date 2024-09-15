@@ -59,6 +59,41 @@ const TGA3 = () => {
         },
     };
 
+    const verticalLinePlugin = {
+        id: 'verticalLine',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            const xScale = chart.scales['x']; // Get the x-axis scale
+            const targetDate = new Date(processTgaChartData().latestDate); // Target date for the vertical line
+
+            // Convert the target date to the x-coordinate on the chart
+            const xPosition = xScale.getPixelForValue(targetDate);
+
+            // Draw the vertical line
+            if (xPosition >= chartArea.left && xPosition <= chartArea.right) {
+                ctx.save();
+
+                // Draw the vertical line
+                ctx.beginPath();
+                ctx.moveTo(xPosition, chartArea.top);
+                ctx.lineTo(xPosition, chartArea.bottom);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+                ctx.stroke();
+
+                // Add a label at the top of the vertical line
+                ctx.font = 'bold 12px Arial';
+                ctx.fillStyle = 'rgba(75, 192, 192, 1)';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText('Latest TGA Value' + (!isLoggedIn ? " (Lagging)" : ""), xPosition, chartArea.top - 5);
+
+                ctx.restore();
+            }
+        },
+    };
+
     const localStorageTokenListener = () => {
         const token = localStorage.getItem("cognito-token");
         if (token) {
@@ -2439,7 +2474,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
-                                plugins={[watermarkPlugin]}
+                                plugins={[watermarkPlugin, verticalLinePlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processCombinedChartData().latestDate}
@@ -2505,7 +2540,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2545,7 +2580,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2585,7 +2620,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2625,7 +2660,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2667,7 +2702,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                     },
                                 }}
-                                plugins={[watermarkPlugin]}
+                                plugins={[watermarkPlugin, verticalLinePlugin]}
                             />
                             <Typography variant="body1" align="center">
                                 Latest Date: {processCombinedChartData2().latestDate}
@@ -2733,7 +2768,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2773,7 +2808,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2813,7 +2848,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
@@ -2853,7 +2888,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                 },
                                             },
                                         }}
-                                        plugins={[watermarkPlugin]}
+                                        plugins={[watermarkPlugin, verticalLinePlugin]}
                                     />
                                 </Grid>
                             </Grid>
