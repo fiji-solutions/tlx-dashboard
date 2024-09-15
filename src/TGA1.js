@@ -2148,7 +2148,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             {!isLoggedIn && (
                 <>
                     <Typography variant={"body1"} style={{marginBottom: "16px"}}>
-                        The TGA in the data below is lagging by 7 entries. To view up to date data you need to <Link to={"/login"}>login</Link>.
+                        The TGA data below lags by 7 entries. For the most recent data, join the Crypto Investing Campus and watch the Daily Investing Analysis. Go to <Link to={"/login"}>login</Link>.
                     </Typography>
                 </>
             )}
