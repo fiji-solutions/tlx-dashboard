@@ -66,7 +66,7 @@ const TGA3 = () => {
             const ctx = chart.ctx;
             const chartArea = chart.chartArea;
             const xScale = chart.scales['x']; // Get the x-axis scale
-            const targetDate = new Date(processTgaChartData().latestDate); // Target date for the vertical line
+            const targetDate = dayjs(processTgaChartData().latestDate).utc();
 
             // Convert the target date to the x-coordinate on the chart
             const xPosition = xScale.getPixelForValue(targetDate);
