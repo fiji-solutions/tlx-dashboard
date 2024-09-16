@@ -2928,7 +2928,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'TGA Closing Balance Over Time (Millions)',
+                                            text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Closing Balance Over Time (Millions)',
                                         },
                                     },
                                     scales: {
