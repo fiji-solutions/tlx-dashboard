@@ -37,6 +37,7 @@ const TGA3 = () => {
     const [lag, setLag] = useState(0);
     const [maLength, setMaLength] = useState(14);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [jwtParsed, setJwtParsed] = useState({});
 
     const watermarkPlugin = {
         id: 'watermark',
@@ -97,21 +98,36 @@ const TGA3 = () => {
     const localStorageTokenListener = () => {
         const token = localStorage.getItem("cognito-token");
         if (token) {
-            const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
+            const parsedToken = parseJwt(token);
 
-            const cognitoUser = new CognitoUser({
-                Username: localStorage.getItem("email"),
-                Pool: UserPool,
-            });
+            if (parsedToken?.name) {
+                setJwtParsed(parsedToken);
+                const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
 
-            cognitoUser.refreshSession(refreshToken, (err, session) => {
-                if (!err) {
-                    localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
-                    setIsLoggedIn(true);
-                }
-            });
+                const cognitoUser = new CognitoUser({
+                    Username: localStorage.getItem("email"),
+                    Pool: UserPool,
+                });
+
+                cognitoUser.refreshSession(refreshToken, (err, session) => {
+                    if (!err) {
+                        localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
+                        setIsLoggedIn(true);
+                    }
+                });
+            }
         }
     };
+
+    const parseJwt = (token)  => {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
 
     useEffect(() => {
         localStorageTokenListener();
@@ -2456,7 +2472,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'NET FED Liquidity Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'NET FED Liquidity' + jwtParsed?.name + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
@@ -2684,7 +2700,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'NET FED Liquidity Formula: WALCL - TGA - (RRPONTSYD * 1.5) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'NET FED Liquidity' + jwtParsed?.name + ' Formula: WALCL - TGA - (RRPONTSYD * 1.5) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {

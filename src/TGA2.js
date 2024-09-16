@@ -29,6 +29,7 @@ const TGA1 = () => {
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [jwtParsed, setJwtParsed] = useState({});
 
     const watermarkPlugin = {
         id: 'watermark',
@@ -89,21 +90,36 @@ const TGA1 = () => {
     const localStorageTokenListener = () => {
         const token = localStorage.getItem("cognito-token");
         if (token) {
-            const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
+            const parsedToken = parseJwt(token);
 
-            const cognitoUser = new CognitoUser({
-                Username: localStorage.getItem("email"),
-                Pool: UserPool,
-            });
+            if (parsedToken?.name) {
+                setJwtParsed(parsedToken);
+                const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
 
-            cognitoUser.refreshSession(refreshToken, (err, session) => {
-                if (!err) {
-                    localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
-                    setIsLoggedIn(true);
-                }
-            });
+                const cognitoUser = new CognitoUser({
+                    Username: localStorage.getItem("email"),
+                    Pool: UserPool,
+                });
+
+                cognitoUser.refreshSession(refreshToken, (err, session) => {
+                    if (!err) {
+                        localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
+                        setIsLoggedIn(true);
+                    }
+                });
+            }
         }
     };
+
+    const parseJwt = (token)  => {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+
+        return JSON.parse(jsonPayload);
+    }
 
     useEffect(() => {
         localStorageTokenListener();
@@ -1914,7 +1930,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'Tomas\' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'Tomas\' Formula' + jwtParsed?.name + ': WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
