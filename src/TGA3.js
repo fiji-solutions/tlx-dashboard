@@ -2472,7 +2472,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'NET FED Liquidity' + jwtParsed?.name + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
@@ -2700,7 +2700,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'NET FED Liquidity' + jwtParsed?.name + ' Formula: WALCL - TGA - (RRPONTSYD * 1.5) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.5) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {

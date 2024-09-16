@@ -1930,7 +1930,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'Tomas\' Formula' + jwtParsed?.name + ': WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'Tomas\' Formula' + (jwtParsed?.name ? jwtParsed?.name : "") + ': WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
