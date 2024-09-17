@@ -36,7 +36,7 @@ const TGA3 = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [lag, setLag] = useState(0);
     const [maLength, setMaLength] = useState(14);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined);
     const [jwtParsed, setJwtParsed] = useState({});
 
     const watermarkPlugin = {
@@ -114,8 +114,17 @@ const TGA3 = () => {
                         localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
                         setIsLoggedIn(true);
                     }
+                    else {
+                        setIsLoggedIn(false);
+                    }
                 });
             }
+            else {
+                setIsLoggedIn(false);
+            }
+        }
+        else {
+            setIsLoggedIn(false);
         }
     };
 
@@ -181,6 +190,9 @@ const TGA3 = () => {
     }
 
     const fetchTgaData = async () => {
+        if (isLoggedIn === undefined) {
+            return;
+        }
         setError(false);
         setErrorSource("");
         setLoading(true);

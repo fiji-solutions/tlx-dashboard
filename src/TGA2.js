@@ -28,7 +28,7 @@ const TGA1 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(undefined);
     const [jwtParsed, setJwtParsed] = useState({});
 
     const watermarkPlugin = {
@@ -106,8 +106,17 @@ const TGA1 = () => {
                         localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
                         setIsLoggedIn(true);
                     }
+                    else {
+                        setIsLoggedIn(false);
+                    }
                 });
             }
+            else {
+                setIsLoggedIn(false);
+            }
+        }
+        else {
+            setIsLoggedIn(false);
         }
     };
 
@@ -137,6 +146,9 @@ const TGA1 = () => {
     }, []);
 
     const fetchTgaData = async () => {
+        if (isLoggedIn === undefined) {
+            return;
+        }
         setError(false);
         setErrorSource("");
         setLoading(true);
