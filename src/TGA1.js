@@ -1846,7 +1846,7 @@ const TGA1 = () => {
             }
 
             // Apply the formula
-            return walValue - tgaValue - (rrpValue * 1.5) + h4Value + wlcValue;
+            return walValue - tgaValue - (rrpValue * 1.9) + h4Value + wlcValue;
         });
 
         const filteredData = [];
@@ -2028,7 +2028,7 @@ const TGA1 = () => {
             }
 
             // Apply the formula
-            return walValue - tgaValue - (rrpValue * 1.5) + h4Value + wlcValue;
+            return walValue - tgaValue - (rrpValue * 1.9) + h4Value + wlcValue;
         });
 
         const filteredData = [];
@@ -2304,7 +2304,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         xs={11 / parseFloat(tabValue)}
                         justifyContent="center"
                     >
-                        <h1>Formula #2, weighted RRP</h1>
+                        <h1>Formula #3, weighted RRP</h1>
                         <Grid item xs={12}>
                             <Line
                                 data={processCombinedChartData2()}
@@ -2316,7 +2316,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.5) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
