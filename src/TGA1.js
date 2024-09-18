@@ -2564,7 +2564,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         <h1>Formula #2, TGA Opening Balance</h1>
                         <Grid item xs={12}>
                             <Line
-                                data={processCombinedChartData2()}
+                                data={processCombinedChartData3()}
                                 options={{
                                     responsive: true,
                                     plugins: {
@@ -2586,30 +2586,30 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         y: {
                                             beginAtZero: false,
-                                            min: processCombinedChartData2().minValue - 10000,
-                                            max: processCombinedChartData2().maxValue + 10000,
+                                            min: processCombinedChartData3().minValue - 10000,
+                                            max: processCombinedChartData3().maxValue + 10000,
                                         },
                                     },
                                 }}
                                 plugins={[watermarkPlugin, verticalLinePlugin]}
                             />
                             <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData2().latestDate}
+                                Latest Date: {processCombinedChartData3().latestDate}
                             </Typography>
                         </Grid>
                         <Grid container item justifyContent="center">
                             <Grid item>
                                 <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"
-                                        disabled={loading || processCombinedChartData2().datasets[0].data.length === 0}>
-                                    {loading || processCombinedChartData2().datasets[0].data.length === 0 ? (
+                                        disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>
+                                    {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (
                                         <CircularProgress size={25} color={"grey"}/>
                                     ) : (
                                         "Copy Pine Script"
                                     )}
                                 </Button>
 
-                                <Button disabled={loading || processCombinedChartData2().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>
-                                    {loading || processCombinedChartData2().datasets[0].data.length === 0 ? (
+                                <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>
+                                    {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (
                                         <CircularProgress size={25} color={"grey"}/>
                                     ) : (
                                         "Download CSV"
