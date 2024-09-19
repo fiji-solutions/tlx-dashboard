@@ -3035,7 +3035,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         xs={11 / parseFloat(tabValue)}
                         justifyContent="center"
                     >
-                        <h1>Formula #2, TGA Opening Balance</h1>
+                        <h1>Formula #2, TGA Opening Balance (Unverified)</h1>
                         <Grid item xs={12}>
                             <Line
                                 data={processCombinedChartData3()}
@@ -3263,7 +3263,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         xs={11 / parseFloat(tabValue)}
                         justifyContent="center"
                     >
-                        <h1>Formula #3, weighted RRP</h1>
+                        <h1>Formula #3, weighted RRP (Unverified)</h1>
                         <Grid item xs={12}>
                             <Line
                                 data={processCombinedChartData2()}
