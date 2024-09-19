@@ -52,6 +52,7 @@ const App = () => {
 
     const [ethbtc2l, setEthbtc2l] = useState(false);
     const [ethbtc5l, setEthbtc5l] = useState(false);
+    const [ethbtc10l, setEthbtc10l] = useState(false);
 
     const [btc3xpol, setBtc3xpol] = useState(false);
     const [btc2xopt, setBtc2xopt] = useState(false);
@@ -181,6 +182,11 @@ const App = () => {
                 boolValue = !ethbtc5l;
                 setEthbtc5l(!ethbtc5l);
                 break;
+
+            case "ETHBTC10L":
+                boolValue = !ethbtc10l;
+                setEthbtc10l(!ethbtc10l);
+                break;
             default:
                 break;
         }
@@ -292,6 +298,7 @@ const App = () => {
         "DOGE5L": "2024-06-13",
         "ETHBTC2L": "2024-07-30",
         "ETHBTC5L": "2024-07-30",
+        "ETHBTC10L": "2024-09-18",
         "BTC2XOPT": "2023-10-10",
         "BTC3XOPT": "2024-03-13",
         "BTC4XOPT": "2024-06-05",
@@ -794,6 +801,14 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>ETHBTC5L</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={ethbtc10l}
+                            onChange={() => checkboxClick("ETHBTC10L")}
+                            disabled={loading}
+                        />
+                        <span>ETHBTC10L</span>
                     </Grid>
                 </Grid>
                 <Grid
