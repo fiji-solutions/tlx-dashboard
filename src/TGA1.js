@@ -2556,130 +2556,130 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Formula #2, TGA Opening Balance (Unverified)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processCombinedChartData3()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData3().minValue - 10000,
-                                            max: processCombinedChartData3().maxValue + 10000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin, verticalLinePlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData3().latestDate}
-                            </Typography>
-                        </Grid>
-                        <Grid container item justifyContent="center">
-                            <Grid item>
-                                <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"
-                                        disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>
-                                    {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Copy Pine Script"
-                                    )}
-                                </Button>
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Formula #2, TGA Opening Balance (Unverified)</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processCombinedChartData3()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: false,*/}
+                    {/*                        min: processCombinedChartData3().minValue - 10000,*/}
+                    {/*                        max: processCombinedChartData3().maxValue + 10000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processCombinedChartData3().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*    <Grid container item justifyContent="center">*/}
+                    {/*        <Grid item>*/}
+                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"*/}
+                    {/*                    disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>*/}
+                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Copy Pine Script"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
 
-                                <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>
-                                    {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Download CSV"
-                                    )}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Formula #3, weighted RRP (Unverified)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processCombinedChartData2()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData2().minValue - 10000,
-                                            max: processCombinedChartData2().maxValue + 10000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin, verticalLinePlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData2().latestDate}
-                            </Typography>
-                        </Grid>
-                        <Grid container item justifyContent="center">
-                            <Grid item>
-                                <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"
-                                        disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>
-                                    {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Copy Pine Script"
-                                    )}
-                                </Button>
+                    {/*            <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>*/}
+                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Download CSV"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Formula #3, weighted RRP (Unverified)</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processCombinedChartData2()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: false,*/}
+                    {/*                        min: processCombinedChartData2().minValue - 10000,*/}
+                    {/*                        max: processCombinedChartData2().maxValue + 10000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processCombinedChartData2().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*    <Grid container item justifyContent="center">*/}
+                    {/*        <Grid item>*/}
+                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"*/}
+                    {/*                    disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>*/}
+                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Copy Pine Script"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
 
-                                <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>
-                                    {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Download CSV"
-                                    )}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    {/*            <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>*/}
+                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Download CSV"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
 
                     <Grid
                         item

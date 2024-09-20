@@ -29,8 +29,8 @@ const TGA3 = () => {
     const [api2, setApi2] = useState(undefined);
     const [api3, setApi3] = useState(undefined);
     const [apiResponse, setApiResponse] = useState(undefined);
-    const [apiResponse2, setApiResponse2] = useState(undefined);
-    const [apiResponse3, setApiResponse3] = useState(undefined);
+    // const [apiResponse2, setApiResponse2] = useState(undefined);
+    // const [apiResponse3, setApiResponse3] = useState(undefined);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errorSource, setErrorSource] = useState("");
@@ -184,12 +184,12 @@ const TGA3 = () => {
                 case 1:
                     setApiResponse(result);
                     break;
-                case 2:
-                    setApiResponse2(result);
-                    break;
-                case 3:
-                    setApiResponse3(result);
-                    break;
+                // case 2:
+                //     setApiResponse2(result);
+                //     break;
+                // case 3:
+                //     setApiResponse3(result);
+                //     break;
                 default:
                     break;
             }
@@ -2507,77 +2507,77 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         };
     };
 
-    const processCorrelationChartData3 = (power) => {
-        if (!apiResponse3) return { labels: [], datasets: [] };
+    // const processCorrelationChartData3 = (power) => {
+    //     if (!apiResponse3) return { labels: [], datasets: [] };
+    //
+    //     const correlationBTC = apiResponse3.correlation_btc.map(item => Object.values(item)[0] ** power);
+    //     const correlationETH = apiResponse3.correlation_eth.map(item => Object.values(item)[0] ** power);
+    //     const correlationSOL = apiResponse3.correlation_sol.map(item => Object.values(item)[0] ** power);
+    //     const labels = apiResponse3.correlation_btc.map(item => Object.keys(item)[0]);
+    //
+    //     return {
+    //         labels,
+    //         datasets: [
+    //             {
+    //                 label: 'BTC Correlation',
+    //                 data: correlationBTC,
+    //                 borderColor: 'rgba(255, 99, 132, 1)',
+    //                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'ETH Correlation',
+    //                 data: correlationETH,
+    //                 borderColor: 'rgba(54, 162, 235, 1)',
+    //                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'SOL Correlation',
+    //                 data: correlationSOL,
+    //                 borderColor: 'rgba(75, 192, 192, 1)',
+    //                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //                 fill: false,
+    //             }
+    //         ],
+    //     };
+    // };
 
-        const correlationBTC = apiResponse3.correlation_btc.map(item => Object.values(item)[0] ** power);
-        const correlationETH = apiResponse3.correlation_eth.map(item => Object.values(item)[0] ** power);
-        const correlationSOL = apiResponse3.correlation_sol.map(item => Object.values(item)[0] ** power);
-        const labels = apiResponse3.correlation_btc.map(item => Object.keys(item)[0]);
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'BTC Correlation',
-                    data: correlationBTC,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'ETH Correlation',
-                    data: correlationETH,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'SOL Correlation',
-                    data: correlationSOL,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                }
-            ],
-        };
-    };
-
-    const processCorrelationChartData2 = (power) => {
-        if (!apiResponse2) return { labels: [], datasets: [] };
-
-        const correlationBTC = apiResponse2.correlation_btc.map(item => Object.values(item)[0] ** power);
-        const correlationETH = apiResponse2.correlation_eth.map(item => Object.values(item)[0] ** power);
-        const correlationSOL = apiResponse2.correlation_sol.map(item => Object.values(item)[0] ** power);
-        const labels = apiResponse2.correlation_btc.map(item => Object.keys(item)[0]);
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'BTC Correlation',
-                    data: correlationBTC,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'ETH Correlation',
-                    data: correlationETH,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'SOL Correlation',
-                    data: correlationSOL,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                }
-            ],
-        };
-    };
+    // const processCorrelationChartData2 = (power) => {
+    //     if (!apiResponse2) return { labels: [], datasets: [] };
+    //
+    //     const correlationBTC = apiResponse2.correlation_btc.map(item => Object.values(item)[0] ** power);
+    //     const correlationETH = apiResponse2.correlation_eth.map(item => Object.values(item)[0] ** power);
+    //     const correlationSOL = apiResponse2.correlation_sol.map(item => Object.values(item)[0] ** power);
+    //     const labels = apiResponse2.correlation_btc.map(item => Object.keys(item)[0]);
+    //
+    //     return {
+    //         labels,
+    //         datasets: [
+    //             {
+    //                 label: 'BTC Correlation',
+    //                 data: correlationBTC,
+    //                 borderColor: 'rgba(255, 99, 132, 1)',
+    //                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'ETH Correlation',
+    //                 data: correlationETH,
+    //                 borderColor: 'rgba(54, 162, 235, 1)',
+    //                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'SOL Correlation',
+    //                 data: correlationSOL,
+    //                 borderColor: 'rgba(75, 192, 192, 1)',
+    //                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //                 fill: false,
+    //             }
+    //         ],
+    //     };
+    // };
 
     const processCorrelationMAChartData = (power) => {
         if (!apiResponse) return { labels: [], datasets: [] };
@@ -2615,77 +2615,77 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         };
     };
 
-    const processCorrelationMAChartData3 = (power) => {
-        if (!apiResponse3) return { labels: [], datasets: [] };
+    // const processCorrelationMAChartData3 = (power) => {
+    //     if (!apiResponse3) return { labels: [], datasets: [] };
+    //
+    //     const correlationBTC = apiResponse3.sma_btc.map(item => Object.values(item)[0] ** power);
+    //     const correlationETH = apiResponse3.sma_eth.map(item => Object.values(item)[0] ** power);
+    //     const correlationSOL = apiResponse3.sma_sol.map(item => Object.values(item)[0] ** power);
+    //     const labels = apiResponse3.sma_btc.map(item => Object.keys(item)[0]);
+    //
+    //     return {
+    //         labels,
+    //         datasets: [
+    //             {
+    //                 label: 'BTC Correlation MA',
+    //                 data: correlationBTC,
+    //                 borderColor: 'rgba(255, 99, 132, 1)',
+    //                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'ETH Correlation MA',
+    //                 data: correlationETH,
+    //                 borderColor: 'rgba(54, 162, 235, 1)',
+    //                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'SOL Correlation MA',
+    //                 data: correlationSOL,
+    //                 borderColor: 'rgba(75, 192, 192, 1)',
+    //                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //                 fill: false,
+    //             }
+    //         ],
+    //     };
+    // };
 
-        const correlationBTC = apiResponse3.sma_btc.map(item => Object.values(item)[0] ** power);
-        const correlationETH = apiResponse3.sma_eth.map(item => Object.values(item)[0] ** power);
-        const correlationSOL = apiResponse3.sma_sol.map(item => Object.values(item)[0] ** power);
-        const labels = apiResponse3.sma_btc.map(item => Object.keys(item)[0]);
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'BTC Correlation MA',
-                    data: correlationBTC,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'ETH Correlation MA',
-                    data: correlationETH,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'SOL Correlation MA',
-                    data: correlationSOL,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                }
-            ],
-        };
-    };
-
-    const processCorrelationMAChartData2 = (power) => {
-        if (!apiResponse2) return { labels: [], datasets: [] };
-
-        const correlationBTC = apiResponse2.sma_btc.map(item => Object.values(item)[0] ** power);
-        const correlationETH = apiResponse2.sma_eth.map(item => Object.values(item)[0] ** power);
-        const correlationSOL = apiResponse2.sma_sol.map(item => Object.values(item)[0] ** power);
-        const labels = apiResponse2.sma_btc.map(item => Object.keys(item)[0]);
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'BTC Correlation MA',
-                    data: correlationBTC,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'ETH Correlation MA',
-                    data: correlationETH,
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    fill: false,
-                },
-                {
-                    label: 'SOL Correlation MA',
-                    data: correlationSOL,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                }
-            ],
-        };
-    };
+    // const processCorrelationMAChartData2 = (power) => {
+    //     if (!apiResponse2) return { labels: [], datasets: [] };
+    //
+    //     const correlationBTC = apiResponse2.sma_btc.map(item => Object.values(item)[0] ** power);
+    //     const correlationETH = apiResponse2.sma_eth.map(item => Object.values(item)[0] ** power);
+    //     const correlationSOL = apiResponse2.sma_sol.map(item => Object.values(item)[0] ** power);
+    //     const labels = apiResponse2.sma_btc.map(item => Object.keys(item)[0]);
+    //
+    //     return {
+    //         labels,
+    //         datasets: [
+    //             {
+    //                 label: 'BTC Correlation MA',
+    //                 data: correlationBTC,
+    //                 borderColor: 'rgba(255, 99, 132, 1)',
+    //                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'ETH Correlation MA',
+    //                 data: correlationETH,
+    //                 borderColor: 'rgba(54, 162, 235, 1)',
+    //                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    //                 fill: false,
+    //             },
+    //             {
+    //                 label: 'SOL Correlation MA',
+    //                 data: correlationSOL,
+    //                 borderColor: 'rgba(75, 192, 192, 1)',
+    //                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //                 fill: false,
+    //             }
+    //         ],
+    //     };
+    // };
 
     return (
         <div className="App">
@@ -3030,461 +3030,461 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             </Grid>
                         </>
                     )}
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Formula #2, TGA Opening Balance (Unverified)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processCombinedChartData3()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData3().minValue - 10000,
-                                            max: processCombinedChartData3().maxValue + 10000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin, verticalLinePlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData3().latestDate}
-                            </Typography>
-                        </Grid>
-                        <Grid container item justifyContent="center">
-                            <Grid item>
-                                <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"
-                                        disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>
-                                    {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Copy Pine Script"
-                                    )}
-                                </Button>
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Formula #2, TGA Opening Balance (Unverified)</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processCombinedChartData3()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: false,*/}
+                    {/*                        min: processCombinedChartData3().minValue - 10000,*/}
+                    {/*                        max: processCombinedChartData3().maxValue + 10000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processCombinedChartData3().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*    <Grid container item justifyContent="center">*/}
+                    {/*        <Grid item>*/}
+                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"*/}
+                    {/*                    disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>*/}
+                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Copy Pine Script"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
 
-                                <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>
-                                    {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Download CSV"
-                                    )}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    {/*            <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>*/}
+                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Download CSV"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
 
-                    {apiResponse3 && (
-                        <>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data</h1>
-                                <Grid item xs={12}>
+                    {/*{apiResponse3 && (*/}
+                    {/*    <>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationChartData3(1)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationChartData3(1).minValue - 10,
-                                                    max: processCorrelationChartData3(1).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data Squared</h1>
-                                <Grid item xs={12}>
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationChartData3(1)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationChartData3(1).minValue - 10,*/}
+                    {/*                                max: processCorrelationChartData3(1).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data Squared</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationChartData3(2)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationChartData3(2).minValue - 10,
-                                                    max: processCorrelationChartData3(2).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data (MA)</h1>
-                                <Grid item xs={12}>
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationChartData3(2)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationChartData3(2).minValue - 10,*/}
+                    {/*                                max: processCorrelationChartData3(2).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data (MA)</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationMAChartData3(1)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationMAChartData3(1).minValue - 10,
-                                                    max: processCorrelationMAChartData3(1).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data (MA) Squared</h1>
-                                <Grid item xs={12}>
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationMAChartData3(1)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationMAChartData3(1).minValue - 10,*/}
+                    {/*                                max: processCorrelationMAChartData3(1).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data (MA) Squared</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationMAChartData3(2)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationMAChartData3(2).minValue - 10,
-                                                    max: processCorrelationMAChartData3(2).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </>
-                    )}
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationMAChartData3(2)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationMAChartData3(2).minValue - 10,*/}
+                    {/*                                max: processCorrelationMAChartData3(2).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*    </>*/}
+                    {/*)}*/}
 
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Formula #3, weighted RRP (Unverified)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processCombinedChartData2()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData2().minValue - 10000,
-                                            max: processCombinedChartData2().maxValue + 10000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin, verticalLinePlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData2().latestDate}
-                            </Typography>
-                        </Grid>
-                        <Grid container item justifyContent="center">
-                            <Grid item>
-                                <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"
-                                        disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>
-                                    {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Copy Pine Script"
-                                    )}
-                                </Button>
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Formula #3, weighted RRP (Unverified)</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processCombinedChartData2()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: false,*/}
+                    {/*                        min: processCombinedChartData2().minValue - 10000,*/}
+                    {/*                        max: processCombinedChartData2().maxValue + 10000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processCombinedChartData2().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*    <Grid container item justifyContent="center">*/}
+                    {/*        <Grid item>*/}
+                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"*/}
+                    {/*                    disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>*/}
+                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Copy Pine Script"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
 
-                                <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>
-                                    {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Download CSV"
-                                    )}
-                                </Button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
+                    {/*            <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>*/}
+                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Download CSV"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
 
-                    {apiResponse2 && (
-                        <>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data</h1>
-                                <Grid item xs={12}>
+                    {/*{apiResponse2 && (*/}
+                    {/*    <>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationChartData2(1)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationChartData2(1).minValue - 10,
-                                                    max: processCorrelationChartData2(1).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data Squared</h1>
-                                <Grid item xs={12}>
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationChartData2(1)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationChartData2(1).minValue - 10,*/}
+                    {/*                                max: processCorrelationChartData2(1).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data Squared</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationChartData2(2)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationChartData2(2).minValue - 10,
-                                                    max: processCorrelationChartData2(2).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data (MA)</h1>
-                                <Grid item xs={12}>
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationChartData2(2)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationChartData2(2).minValue - 10,*/}
+                    {/*                                max: processCorrelationChartData2(2).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data (MA)</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationMAChartData2(1)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationMAChartData2(1).minValue - 10,
-                                                    max: processCorrelationMAChartData2(1).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                            <Grid
-                                item
-                                xs={11 / parseFloat(tabValue)}
-                                justifyContent="center"
-                            >
-                                <h1>Correlation Data (MA) Squared</h1>
-                                <Grid item xs={12}>
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationMAChartData2(1)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationMAChartData2(1).minValue - 10,*/}
+                    {/*                                max: processCorrelationMAChartData2(1).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*        <Grid*/}
+                    {/*            item*/}
+                    {/*            xs={11 / parseFloat(tabValue)}*/}
+                    {/*            justifyContent="center"*/}
+                    {/*        >*/}
+                    {/*            <h1>Correlation Data (MA) Squared</h1>*/}
+                    {/*            <Grid item xs={12}>*/}
 
-                                    <Line
-                                        data={processCorrelationMAChartData2(2)}
-                                        options={{
-                                            responsive: true,
-                                            plugins: {
-                                                legend: {
-                                                    position: 'top',
-                                                },
-                                                title: {
-                                                    display: true,
-                                                    text: 'Correlation BTC, ETH, SOL',
-                                                },
-                                            },
-                                            scales: {
-                                                x: {
-                                                    type: 'time',
-                                                    time: {
-                                                        unit: 'day',
-                                                        tooltipFormat: 'MM/dd/yyyy',
-                                                    },
-                                                },
-                                                y: {
-                                                    beginAtZero: false,
-                                                    min: processCorrelationMAChartData2(2).minValue - 10,
-                                                    max: processCorrelationMAChartData2(2).maxValue + 10,
-                                                },
-                                            },
-                                        }}
-                                        plugins={[watermarkPlugin, verticalLinePlugin]}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </>
-                    )}
+                    {/*                <Line*/}
+                    {/*                    data={processCorrelationMAChartData2(2)}*/}
+                    {/*                    options={{*/}
+                    {/*                        responsive: true,*/}
+                    {/*                        plugins: {*/}
+                    {/*                            legend: {*/}
+                    {/*                                position: 'top',*/}
+                    {/*                            },*/}
+                    {/*                            title: {*/}
+                    {/*                                display: true,*/}
+                    {/*                                text: 'Correlation BTC, ETH, SOL',*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                        scales: {*/}
+                    {/*                            x: {*/}
+                    {/*                                type: 'time',*/}
+                    {/*                                time: {*/}
+                    {/*                                    unit: 'day',*/}
+                    {/*                                    tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                                },*/}
+                    {/*                            },*/}
+                    {/*                            y: {*/}
+                    {/*                                beginAtZero: false,*/}
+                    {/*                                min: processCorrelationMAChartData2(2).minValue - 10,*/}
+                    {/*                                max: processCorrelationMAChartData2(2).maxValue + 10,*/}
+                    {/*                            },*/}
+                    {/*                        },*/}
+                    {/*                    }}*/}
+                    {/*                    plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*                />*/}
+                    {/*            </Grid>*/}
+                    {/*        </Grid>*/}
+                    {/*    </>*/}
+                    {/*)}*/}
 
                     <Grid
                         item
