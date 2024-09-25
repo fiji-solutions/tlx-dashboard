@@ -8,9 +8,9 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-import {CognitoRefreshToken, CognitoUser} from "amazon-cognito-identity-js";
-import {UserPool} from "./UserPool";
-import {Link} from "react-router-dom";
+// import {CognitoRefreshToken, CognitoUser} from "amazon-cognito-identity-js";
+// import {UserPool} from "./UserPool";
+// import {Link} from "react-router-dom";
 
 // Apply UTC plugin to dayjs
 dayjs.extend(utc);
@@ -32,8 +32,8 @@ const TGA1 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('1.3');
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(undefined);
-    const [jwtParsed, setJwtParsed] = useState({});
+    // const [isLoggedIn, setIsLoggedIn] = useState(undefined);
+    // const [jwtParsed, setJwtParsed] = useState({});
 
     const watermarkPlugin = {
         id: 'watermark',
@@ -84,67 +84,67 @@ const TGA1 = () => {
                 ctx.fillStyle = 'rgba(75, 192, 192, 1)';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
-                ctx.fillText('Latest TGA Value' + (!isLoggedIn ? " (Lagging)" : ""), xPosition, chartArea.top - 5);
+                ctx.fillText('Latest TGA Value' /*+ (!isLoggedIn ? " (Lagging)" : "")*/, xPosition, chartArea.top - 5);
 
                 ctx.restore();
             }
         },
     };
 
-    const localStorageTokenListener = () => {
-        const token = localStorage.getItem("cognito-token");
-        if (token) {
-            const parsedToken = parseJwt(token);
+    // const localStorageTokenListener = () => {
+    //     const token = localStorage.getItem("cognito-token");
+    //     if (token) {
+    //         const parsedToken = parseJwt(token);
+    //
+    //         if (parsedToken?.name) {
+    //             setJwtParsed(parsedToken);
+    //             const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
+    //
+    //             const cognitoUser = new CognitoUser({
+    //                 Username: localStorage.getItem("email"),
+    //                 Pool: UserPool,
+    //             });
+    //
+    //             cognitoUser.refreshSession(refreshToken, (err, session) => {
+    //                 if (!err) {
+    //                     localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
+    //                     setIsLoggedIn(true);
+    //                 }
+    //                 else {
+    //                     setIsLoggedIn(false);
+    //                 }
+    //             });
+    //         }
+    //         else {
+    //             setIsLoggedIn(false);
+    //         }
+    //     }
+    //     else {
+    //         setIsLoggedIn(false);
+    //     }
+    // };
 
-            if (parsedToken?.name) {
-                setJwtParsed(parsedToken);
-                const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
+    // const parseJwt = (token)  => {
+    //     var base64Url = token.split('.')[1];
+    //     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    //     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+    //         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    //     }).join(''));
+    //
+    //     return JSON.parse(jsonPayload);
+    // }
 
-                const cognitoUser = new CognitoUser({
-                    Username: localStorage.getItem("email"),
-                    Pool: UserPool,
-                });
-
-                cognitoUser.refreshSession(refreshToken, (err, session) => {
-                    if (!err) {
-                        localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
-                        setIsLoggedIn(true);
-                    }
-                    else {
-                        setIsLoggedIn(false);
-                    }
-                });
-            }
-            else {
-                setIsLoggedIn(false);
-            }
-        }
-        else {
-            setIsLoggedIn(false);
-        }
-    };
-
-    const parseJwt = (token)  => {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-
-        return JSON.parse(jsonPayload);
-    }
-
-    useEffect(() => {
-        localStorageTokenListener();
-        window.addEventListener("cognito-token-change", localStorageTokenListener);
-        // eslint-disable-next-line
-    }, []);
+    // useEffect(() => {
+    //     localStorageTokenListener();
+    //     window.addEventListener("cognito-token-change", localStorageTokenListener);
+    //     // eslint-disable-next-line
+    // }, []);
 
     useEffect(() => {
         fetchTgaData();
         fetchTgaData2();
         // eslint-disable-next-line
-    }, [startDate, endDate, isLoggedIn]);
+    }, [startDate, endDate/*, isLoggedIn*/]);
 
     useEffect(() => {
         fetchRrpData();
@@ -158,15 +158,15 @@ const TGA1 = () => {
     }, [tgaData, tgaData2, rrpData, wlcData, h4Data, walData]);
 
     const fetchTgaData = async () => {
-        if (isLoggedIn === undefined) {
-            return;
-        }
+        // if (isLoggedIn === undefined) {
+        //     return;
+        // }
         setError(false);
         setErrorSource("");
         setLoading(true);
         try {
             const token = localStorage.getItem("cognito-token");
-            const path = isLoggedIn ? "new-secret-path" : "tga1";
+            const path = /*isLoggedIn ? "new-secret-path" :*/ "tga1";
 
             const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
                 method: "GET",
@@ -193,15 +193,15 @@ const TGA1 = () => {
     };
 
     const fetchTgaData2 = async () => {
-        if (isLoggedIn === undefined) {
-            return;
-        }
+        // if (isLoggedIn === undefined) {
+        //     return;
+        // }
         setError(false);
         setErrorSource("");
         setLoading(true);
         try {
             const token = localStorage.getItem("cognito-token");
-            const path = isLoggedIn ? "new-secret-path2" : "tga2";
+            const path = /*isLoggedIn ? "new-secret-path2" :*/ "tga2";
 
             const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
                 method: "GET",
@@ -1539,35 +1539,35 @@ const TGA1 = () => {
         };
     };
 
-    const processTgaChartData2 = () => {
-        const validData = tgaData2
-            .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
-            .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
-
-        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
-        const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
-
-        const minValue = Math.min(...openTodayBalances);
-        const maxValue = Math.max(...openTodayBalances);
-
-        const latestDate = labels[labels.length - 1] || "N/A";
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'Opening Balance',
-                    data: openTodayBalances,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                },
-            ],
-            minValue, // Return minValue
-            maxValue, // Return maxValue
-            latestDate, // Return latest date
-        };
-    };
+    // const processTgaChartData2 = () => {
+    //     const validData = tgaData2
+    //         .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
+    //         .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
+    //
+    //     const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
+    //     const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
+    //
+    //     const minValue = Math.min(...openTodayBalances);
+    //     const maxValue = Math.max(...openTodayBalances);
+    //
+    //     const latestDate = labels[labels.length - 1] || "N/A";
+    //
+    //     return {
+    //         labels,
+    //         datasets: [
+    //             {
+    //                 label: 'Opening Balance',
+    //                 data: openTodayBalances,
+    //                 borderColor: 'rgba(75, 192, 192, 1)',
+    //                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
+    //                 fill: false,
+    //             },
+    //         ],
+    //         minValue, // Return minValue
+    //         maxValue, // Return maxValue
+    //         latestDate, // Return latest date
+    //     };
+    // };
 
     const processRrpChartData = () => {
         const filteredData = filterDataByDate(rrpData, startDate, endDate);
@@ -2429,14 +2429,14 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
 
     return (
         <div className="App">
-            <h1>{"NET FED Liquidity Formulas" + (!isLoggedIn ? " (LAGGING)" : "")}</h1>
-            {!isLoggedIn && (
-                <>
-                    <Typography variant={"body1"} style={{marginBottom: "16px"}}>
-                        The TGA data below lags by 7 entries. For the most recent data, join the Crypto Investing Campus and watch the Daily Investing Analysis. Go to <Link to={"/login"}>login</Link>.
-                    </Typography>
-                </>
-            )}
+            <h1>{"NET FED Liquidity Formulas" /*+ (!isLoggedIn ? " (LAGGING)" : "")*/}</h1>
+            {/*{!isLoggedIn && (*/}
+            {/*    <>*/}
+            {/*        <Typography variant={"body1"} style={{marginBottom: "16px"}}>*/}
+            {/*            The TGA data below lags by 7 entries. For the most recent data, join the Crypto Investing Campus and watch the Daily Investing Analysis. Go to <Link to={"/login"}>login</Link>.*/}
+            {/*        </Typography>*/}
+            {/*    </>*/}
+            {/*)}*/}
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -2511,7 +2511,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
+                                            // eslint-disable-next-line no-useless-concat
+                                            text: 'NET FED Liquidity' /*+ (jwtParsed?.name ? jwtParsed?.name : "") */ + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
                                     scales: {
@@ -2698,7 +2699,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                         },
                                         title: {
                                             display: true,
-                                            text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Closing Balance Over Time (Millions)',
+                                            // eslint-disable-next-line no-useless-concat
+                                            text: 'TGA' /*+ (jwtParsed?.name ? jwtParsed?.name : "")*/ + ' Closing Balance Over Time (Millions)',
                                         },
                                     },
                                     scales: {
@@ -2724,48 +2726,48 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                         </Grid>
                     </Grid>
 
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Treasury General Account (TGA) Opening Balance</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processTgaChartData2()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Opening Balance Over Time (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: true,
-                                            min: processTgaChartData2().minValue - 5000,
-                                            max: processTgaChartData2().maxValue + 5000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processTgaChartData2().latestDate}
-                            </Typography>
-                        </Grid>
-                    </Grid>
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Treasury General Account (TGA) Opening Balance</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processTgaChartData2()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Opening Balance Over Time (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: true,*/}
+                    {/*                        min: processTgaChartData2().minValue - 5000,*/}
+                    {/*                        max: processTgaChartData2().maxValue + 5000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processTgaChartData2().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
 
 
                     <Grid
