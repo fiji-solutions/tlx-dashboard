@@ -36,7 +36,10 @@ root.render(
             <p style={{marginLeft: "8px"}}>Huge thanks to everyone who helped make this website happen:
                 Professor Adam, JayWolf, Cedric, Calypso, Cryptosaurus Max ₿, OG_Simba
                 — </p>
-            <p style={{marginLeft: "8px"}}>If you have any feedback or ideas on how to extend the website, tag me in TRW:
+            <p style={{marginLeft: "8px"}}>You can view my source code here: <a
+                href="https://github.com/fiji-solutions">https://github.com/fiji-solutions</a></p>
+            <p style={{marginLeft: "8px"}}>If you have any feedback or ideas on how to extend the website, tag me in
+                TRW:
                 @01HK0BGJQMWXQC26SRG2W46TET</p>
         </Router>
     </React.StrictMode>
