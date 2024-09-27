@@ -12,7 +12,7 @@ import RSPS from "./RSPS";
 import TGA1 from "./TGA1";
 // import TGA2 from "./TGA2";
 // import TGA3 from "./TGA3";
-import Login from "./components/Login";
+// import Login from "./components/Login";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,7 +21,7 @@ root.render(
             <NavTabs/>
             <Routes>
                 <Route path="/" element={<App/>}/>
-                <Route path="/login" element={<Login/>}/>
+                {/*<Route path="/login" element={<Login/>}/>*/}
                 <Route path="/solana" element={<Solana/>}/>
                 <Route path="/coingecko-sol" element={<CoingeckoSol/>}/>
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes/>}/>

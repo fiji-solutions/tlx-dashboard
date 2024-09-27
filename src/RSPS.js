@@ -29,7 +29,6 @@ const columns = [
     { field: 'beta_total', headerName: 'beta_total', width: 200, type: "number" },
     { field: 'beta_total2', headerName: 'beta_total2', width: 200, type: "number" },
     { field: 'beta_total3', headerName: 'beta_total3', width: 200, type: "number" },
-    { field: 'beta_others', headerName: 'beta_others', width: 200, type: "number" },
     { field: 'beta_btc', headerName: 'beta_btc', width: 200, type: "number" },
     { field: 'beta_eth', headerName: 'beta_eth', width: 200, type: "number" },
     // { field: 'relative_mean_total', headerName: 'Mean ROC Total', width: 200, type: "number" },
@@ -46,21 +45,15 @@ const columns = [
 const RSPS = () => {
     const [datasets, setDatasets] = useState([]);
     const [datasets2, setDatasets2] = useState([]);
-    // const [fromDate, setFromDate] = useState(dayjs("2023-09-20"));
-    const [fromDate, setFromDate] = useState(dayjs().add(-30, "days"));
-    // const [toDate, setToDate] = useState(dayjs("2023-10-20"));
-    const [toDate, setToDate] = useState(dayjs("2024-08-01"));
+    const [fromDate, setFromDate] = useState(dayjs("2023-09-20"));
+    const [toDate, setToDate] = useState(dayjs("2023-10-20"));
     const [loading, setLoading] = useState(false);
     const [openSnackbar, setOpenSnackbar] = useState(false);
 
-    // const [minMarketCap, setMinMarketCap] = useState(250000);
-    const [minMarketCap, setMinMarketCap] = useState(1);
-    // const [maxMarketCap, setMaxMarketCap] = useState(500000000);
-    const [maxMarketCap, setMaxMarketCap] = useState(5000000000000);
-    // const [topResults, setTopResults] = useState(15);
-    const [topResults, setTopResults] = useState(50);
-    // const [excludedCoins, setExcludedCoins] = useState("wownero,harrypottertrumphomersimpson777inu,cake-monster,curve-inu,robo-inu-finance,pepe-token");
-    const [excludedCoins, setExcludedCoins] = useState("");
+    const [minMarketCap, setMinMarketCap] = useState(250000);
+    const [maxMarketCap, setMaxMarketCap] = useState(500000000);
+    const [topResults, setTopResults] = useState(15);
+    const [excludedCoins, setExcludedCoins] = useState("wownero,harrypottertrumphomersimpson777inu,cake-monster,curve-inu,robo-inu-finance,pepe-token,meme-brc-20,garlicoin,fable-of-the-dragon,harrypotterobamasonic10in,piccolo-inu,cumrocket,dinolfg,mog-coin,osaka-protocol,polydoge,el-hippo,dogegf,shina-inu,kiba-inu,floki,pepe,elmoerc,corgiai,dingocoin,baby-shiba-inu-erc,safemoon-inu,shib-original-vision,risitas,bob-token,wall-street-bets-dapp,shiba-saga,hathor,oggy-inu,tamadoge,samoyedcoin,kuma-inu,volt-inu-2,baby-doge-coin,ahatoken,richquack,snailbrook,dogelon-mars,kitty-inu,lovely-inu-finance,bone-shibaswap,milady-meme-coin,cramer-coin,sanin-inu,katana-inu,constitutiondao,vita-inu,bonk,catecoin,sharbi,cat-token");
 
     const domain = "https://api.fijisolutions.net";
     // const domain = "http://127.0.0.1:8000";
@@ -129,7 +122,7 @@ const RSPS = () => {
     }
 
     const onCopy2 = () => {
-        navigator.clipboard.writeText(datasets.map((item) => item.beta_total + "\t" + item.beta_total2 + "\t" + item.beta_total3 + "\t" + item.beta_others + "\t" + item.beta_btc + "\t" + item.beta_eth).join("\n")).then(() => {
+        navigator.clipboard.writeText(datasets.map((item) => item.beta_total + "\t" + item.beta_total2 + "\t" + item.beta_total3 + "\t" + item.beta_btc + "\t" + item.beta_eth).join("\n")).then(() => {
             setOpenSnackbar(true);
         }).catch(err => {
             console.error('Could not copy text: ', err);
@@ -202,7 +195,7 @@ const RSPS = () => {
                                 onChange={(newValue) => setToDate(newValue)}
                                 disabled={loading}
                                 minDate={fromDate}
-                                maxDate={dayjs("2024-08-01")}
+                                // maxDate={dayjs("2024-08-01")}
                             />
                         </LocalizationProvider>
                     </Grid>
@@ -367,6 +360,8 @@ const RSPS = () => {
                             columns={columns}
                             pageSize={10}
                             rowsPerPageOptions={[10]}
+                            // onCellDoubleClick={(e) => setExcludedCoins(excludedCoins + "," + e.row.coin.trim())}
+                            onCellClick={(e) => navigator.clipboard.writeText(e.row.coin.trim())}
                         />
                     </div>
                 </Grid>
