@@ -29,11 +29,12 @@ const Jupiter = () => {
     const [assets, setAssets] = useState([]);
     const [selectedAssets, setSelectedAssets] = useState([]);
     const [chartData, setChartData] = useState([]);
+    const [baseIndexedChartData, setBaseIndexedChartData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [tabValue, setTabValue] = useState('1.3');
 
     const fetchAssets = async () => {
-        const response = await fetch('https://api.fijisolutions.net/jupiter-all');
+        const response = await fetch('http://localhost:8000/jupiter-all');
         const data = await response.json();
         setAssets(data);
     };
@@ -56,15 +57,15 @@ const Jupiter = () => {
         const allAssets = selectedAssets.concat("Solana").join(',');
 
         // Fetch asset data in a single request
-        const response = await fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
+        const response = await fetch(`http://localhost:8000/jupiter?ids=${encodeURIComponent(allAssets)}`);
         const results = await response.json();
 
         // Combine the data into a suitable format for the chart
-        const combinedData = Object.keys(results).map((assetName) => {
+        const combinedData = Object.keys(results.price_data).map((assetName) => {
             const { borderColor, backgroundColor } = generateColor();
             return {
                 label: assetName,
-                data: results[assetName].map(item => ({
+                data: results.price_data[assetName].map(item => ({
                     timestamp: item.timestamp,
                     price: item.price,
                 })),
@@ -73,15 +74,28 @@ const Jupiter = () => {
             };
         });
 
+        // Prepare base indexed data
+        const baseIndexedData = Object.keys(results.base_indexed_data).map((assetName) => {
+            const { borderColor, backgroundColor } = generateColor();
+            return {
+                label: assetName,
+                data: results.base_indexed_data[assetName].map(item => ({
+                    timestamp: item.timestamp,
+                    indexed_price: item.indexed_price,
+                })),
+                borderColor,
+                backgroundColor,
+            };
+        });
+
         setChartData(combinedData);
+        setBaseIndexedChartData(baseIndexedData);
         setLoading(false);
     };
-
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
     };
-
 
     useEffect(() => {
         fetchAssets();
@@ -133,7 +147,6 @@ const Jupiter = () => {
                 </Grid>
             </Grid>
 
-
             {chartData.length > 0 && (
                 <>
                     <Grid
@@ -167,6 +180,15 @@ const Jupiter = () => {
                         >
                             <Grid item xs={12}>
                                 <CryptoChart datasets={chartData} title="Asset Prices" metric="price"/>
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            item
+                            xs={11 / parseFloat(tabValue)}
+                            justifyContent="center"
+                        >
+                            <Grid item xs={12}>
+                                <CryptoChart datasets={baseIndexedChartData} title="Base Indexed Prices" metric="indexed_price"/>
                             </Grid>
                         </Grid>
                     </Grid>
