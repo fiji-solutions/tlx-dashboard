@@ -52,20 +52,19 @@ const Jupiter = () => {
             };
         };
 
-        // Fetch asset data
-        const arrayPromises = selectedAssets.concat("Solana").map(asset =>
-            fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(asset)}`).then(response => response.json())
-        );
+        // Create a comma-separated string of asset IDs
+        const allAssets = selectedAssets.concat("Solana").join(',');
 
-        // Wait for all the promises to resolve
-        const results = await Promise.all(arrayPromises);
+        // Fetch asset data in a single request
+        const response = await fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
+        const results = await response.json();
 
         // Combine the data into a suitable format for the chart
-        const combinedData = results.map((result, index) => {
+        const combinedData = Object.keys(results).map((assetName) => {
             const { borderColor, backgroundColor } = generateColor();
             return {
-                label: selectedAssets.concat("Solana")[index],
-                data: result[selectedAssets.concat("Solana")[index]].map(item => ({
+                label: assetName,
+                data: results[assetName].map(item => ({
                     timestamp: item.timestamp,
                     price: item.price,
                 })),
@@ -77,6 +76,7 @@ const Jupiter = () => {
         setChartData(combinedData);
         setLoading(false);
     };
+
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
