@@ -133,28 +133,28 @@ const Jupiter = () => {
                 </Grid>
             </Grid>
 
-            <Grid
-                container
-                justifyContent={"center"}
-                alignItems={"center"}
-                direction={"column"}
-            >
-                <Grid item>
-                    <h4>Change charts size</h4>
-                </Grid>
-
-                <Grid item>
-                    <Tabs value={tabValue} onChange={handleTabChange}>
-                        <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
-                        <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
-                        <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
-                    </Tabs>
-                </Grid>
-            </Grid>
-
 
             {chartData.length > 0 && (
                 <>
+                    <Grid
+                        container
+                        justifyContent={"center"}
+                        alignItems={"center"}
+                        direction={"column"}
+                    >
+                        <Grid item>
+                            <h4>Change charts size</h4>
+                        </Grid>
+
+                        <Grid item>
+                            <Tabs value={tabValue} onChange={handleTabChange}>
+                                <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
+                                <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
+                                <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
+                            </Tabs>
+                        </Grid>
+                    </Grid>
+
                     <Grid
                         container
                         direction={"row"}
