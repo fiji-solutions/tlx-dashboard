@@ -34,7 +34,7 @@ const Jupiter = () => {
     const [tabValue, setTabValue] = useState('1.3');
 
     const fetchAssets = async () => {
-        const response = await fetch('http://localhost:8000/jupiter-all');
+        const response = await fetch('https://api.fijisolutions.net/jupiter-all');
         const data = await response.json();
         setAssets(data);
     };
@@ -57,34 +57,41 @@ const Jupiter = () => {
         const allAssets = selectedAssets.concat("Solana").join(',');
 
         // Fetch asset data in a single request
-        const response = await fetch(`http://localhost:8000/jupiter?ids=${encodeURIComponent(allAssets)}`);
+        const response = await fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
         const results = await response.json();
+
+        // Store colors in a map to ensure unique colors for each asset
+        const colorMap = {};
 
         // Combine the data into a suitable format for the chart
         const combinedData = Object.keys(results.price_data).map((assetName) => {
-            const { borderColor, backgroundColor } = generateColor();
+            // Generate color only if it hasn't been generated for this asset yet
+            if (!colorMap[assetName]) {
+                colorMap[assetName] = generateColor();
+            }
+
             return {
                 label: assetName,
                 data: results.price_data[assetName].map(item => ({
                     timestamp: item.timestamp,
                     price: item.price,
                 })),
-                borderColor,
-                backgroundColor,
+                ...colorMap[assetName], // Use the same color for the asset
             };
         });
 
         // Prepare base indexed data
         const baseIndexedData = Object.keys(results.base_indexed_data).map((assetName) => {
-            const { borderColor, backgroundColor } = generateColor();
+            // Use the same color from the colorMap
+            const color = colorMap[assetName] || generateColor(); // Fallback in case it's not found
+
             return {
                 label: assetName,
                 data: results.base_indexed_data[assetName].map(item => ({
                     timestamp: item.timestamp,
                     indexed_price: item.indexed_price,
                 })),
-                borderColor,
-                backgroundColor,
+                ...color, // Use the same color for the indexed data
             };
         });
 
@@ -92,6 +99,7 @@ const Jupiter = () => {
         setBaseIndexedChartData(baseIndexedData);
         setLoading(false);
     };
+
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
