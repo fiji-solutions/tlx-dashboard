@@ -53,7 +53,7 @@ const Jupiter = () => {
         };
 
         // Fetch asset data
-        const arrayPromises = selectedAssets.map(asset =>
+        const arrayPromises = selectedAssets.concat("Solana").map(asset =>
             fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(asset)}`).then(response => response.json())
         );
 
@@ -64,8 +64,8 @@ const Jupiter = () => {
         const combinedData = results.map((result, index) => {
             const { borderColor, backgroundColor } = generateColor();
             return {
-                label: selectedAssets[index],
-                data: result[selectedAssets[index]].map(item => ({
+                label: selectedAssets.concat("Solana")[index],
+                data: result[selectedAssets.concat("Solana")[index]].map(item => ({
                     timestamp: item.timestamp,
                     price: item.price,
                 })),
