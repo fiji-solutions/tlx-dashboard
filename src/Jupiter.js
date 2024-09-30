@@ -54,7 +54,7 @@ const Jupiter = () => {
         };
 
         // Create a comma-separated string of asset IDs
-        const allAssets = selectedAssets.concat("Solana").join(',');
+        const allAssets = selectedAssets.concat("solana").join(',');
 
         // Fetch asset data in a single request
         const response = await fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
@@ -134,12 +134,12 @@ const Jupiter = () => {
                             MenuProps={MenuProps}
                         >
                             {assets.map((asset) => (
-                                <MenuItem key={asset.coingeckoId} value={asset.name}>
-                                    <Checkbox checked={selectedAssets.indexOf(asset.name) > -1}/>
+                                <MenuItem key={asset.coingeckoId} value={asset.coingeckoId}>
+                                    <Checkbox checked={selectedAssets.indexOf(asset.coingeckoId) > -1}/>
                                     <img
                                         style={{height: "24px", marginRight: "8px"}}
                                         src={asset.logoURI}
-                                        alt={asset.name}
+                                        alt={asset.coingeckoId}
                                     />
                                     <ListItemText primary={asset.name}/>
                                 </MenuItem>
