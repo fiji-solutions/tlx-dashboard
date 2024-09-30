@@ -211,17 +211,21 @@ const Jupiter = () => {
                                 <CryptoChart datasets={baseIndexedChartData} title="Base Indexed Prices" metric="indexed_price" />
                             </Grid>
                         </Grid>
-                    </Grid>
 
-                    <h2>Asset Data Table</h2>
-                    <div style={{height: 400, width: '100%'}}>
-                        <DataGrid
-                            rows={tableData}
-                            columns={columns}
-                            pageSize={5}
-                            rowsPerPageOptions={[5]}
-                        />
-                    </div>
+                        <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
+                            <Grid item xs={12}>
+                                <h2>Asset Data Table</h2>
+                                <div style={{height: 400, width: '100%'}}>
+                                    <DataGrid
+                                        rows={tableData}
+                                        columns={columns}
+                                        pageSize={5}
+                                        rowsPerPageOptions={[5]}
+                                    />
+                                </div>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </>
             )}
         </div>

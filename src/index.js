@@ -4,8 +4,6 @@ import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-route
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Solana from './Solana';
-import CoingeckoSol from "./CoingeckoSol";
 import NavTabs from './components/NavTabs';
 import CoingeckoSolMemes from "./CoingeckoSolMemes";
 import RSPS from "./RSPS";
@@ -21,12 +19,11 @@ const Root = () => {
             {location.pathname !== '/jupiter' && <NavTabs/>}
             <Routes>
                 <Route path="/" element={<App/>}/>
-                <Route path="/solana" element={<Solana/>}/>
-                <Route path="/coingecko-sol" element={<CoingeckoSol/>}/>
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes/>}/>
                 <Route path="/rsps" element={<RSPS/>}/>
                 <Route path="/liquidity" element={<TGA1/>}/>
                 <Route path="/jupiter" element={<Jupiter/>}/>
+                <Route path="/lst" element={<Jupiter/>}/>
             </Routes>
 
             {location.pathname !== '/jupiter' && (
