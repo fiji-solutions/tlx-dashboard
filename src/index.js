@@ -16,17 +16,17 @@ const Root = () => {
     return (
         <>
             {/* Conditionally render NavTabs based on the current path */}
-            {location.pathname !== '/jupiter' && <NavTabs/>}
+            {location.pathname !== '/solana-lst' && <NavTabs/>}
             <Routes>
                 <Route path="/" element={<App/>}/>
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes/>}/>
                 <Route path="/rsps" element={<RSPS/>}/>
                 <Route path="/liquidity" element={<TGA1/>}/>
-                <Route path="/jupiter" element={<Jupiter/>}/>
+                <Route path="/solana-lst" element={<Jupiter/>}/>
                 <Route path="/lst" element={<Jupiter/>}/>
             </Routes>
 
-            {location.pathname !== '/jupiter' && (
+            {location.pathname !== '/solana-lst' && (
                 <>
                     <hr/>
                     <p style={{marginLeft: "8px"}}>

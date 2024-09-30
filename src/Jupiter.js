@@ -18,6 +18,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
+import {Helmet} from "react-helmet";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -31,8 +32,16 @@ const MenuProps = {
 };
 
 const columns = [
-    { field: 'asset_name', headerName: 'Asset Name', width: 200 },
-    { field: 'apy', headerName: 'APY (%)', width: 150 },
+    {
+        field: 'icon',
+        headerName: '',
+        width: 100,
+        renderCell: (params) => (
+            <img src={params.value} alt={params.row.name} style={{ height: '24px', width: '24px' }} />
+        )
+    },
+    { field: 'asset_name', headerName: 'Asset Name', width: 300 },
+    { field: 'apy', headerName: 'Estimated APY (%)', width: 300 },
     { field: 'num_days', headerName: 'Number of Days', width: 150 }
 ];
 
@@ -43,13 +52,15 @@ const Jupiter = () => {
     const [baseIndexedChartData, setBaseIndexedChartData] = useState([]);
     const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [tabValue, setTabValue] = useState('1.3');
+    const [tabValue, setTabValue] = useState('1');
 
     const fetchAssets = async () => {
         // const response = await fetch('http://localhost:8000/jupiter-all');
         const response = await fetch('https://api.fijisolutions.net/jupiter-all');
         const data = await response.json();
-        setAssets(data);
+        const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
+
+        setAssets(sortedData);
     };
 
     const fetchData = async () => {
@@ -101,12 +112,17 @@ const Jupiter = () => {
             };
         });
 
-        const combinedTableData = Object.keys(results.daily_changes).map((assetName, index) => ({
-            id: index,
-            asset_name: assetName,
-            apy: (results.daily_changes[assetName].apy * 100).toFixed(2), // Convert APY to percentage
-            num_days: results.daily_changes[assetName].num_days
-        }));
+        const combinedTableData = Object.keys(results.daily_changes).map((assetName, index) => {
+            const asset = assets.concat([{"logoURI": "https://synthetixio.github.io/synthetix-assets/markets/SOL.svg", "coingeckoId": "solana", "name": "Solana"}]).find(a => a.coingeckoId === assetName);
+
+            return {
+                id: index,
+                asset_name: asset ? asset.name : assetName,
+                apy: parseFloat((results.daily_changes[assetName].apy * 100).toFixed(2)), // Convert APY to percentage
+                num_days: results.daily_changes[assetName].num_days,
+                icon: asset ? asset.logoURI : ''
+            };
+        });
 
         setChartData(combinedData);
         setBaseIndexedChartData(baseIndexedData);
@@ -124,7 +140,10 @@ const Jupiter = () => {
 
     return (
         <div className="App">
-            <h1>Jupiter LST</h1>
+            <Helmet>
+                <title>Solana LSTs</title>
+            </Helmet>
+            <h1>Solana LSTs</h1>
 
             <Grid
                 container
@@ -215,7 +234,7 @@ const Jupiter = () => {
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
                                 <h2>Asset Data Table</h2>
-                                <div style={{height: 400, width: '100%'}}>
+                                <div style={{height: 400, width: '100%', marginBottom: "128px"}}>
                                     <DataGrid
                                         rows={tableData}
                                         columns={columns}
