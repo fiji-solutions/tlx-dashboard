@@ -141,11 +141,27 @@ const Jupiter = () => {
                             id="asset-select"
                             multiple
                             value={selectedAssets}
-                            onChange={(e) => setSelectedAssets(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+
+                                if (value.includes("all")) {
+                                    if (selectedAssets.length === assets.length) {
+                                        setSelectedAssets([]); // Deselect all if already selected
+                                    } else {
+                                        setSelectedAssets(assets.map(asset => asset.coingeckoId)); // Select all
+                                    }
+                                } else {
+                                    setSelectedAssets(value);
+                                }
+                            }}
                             input={<OutlinedInput label="Select Assets" />}
                             renderValue={(selected) => selected.join(', ')}
                             MenuProps={MenuProps}
                         >
+                            <MenuItem key="all" value="all">
+                                <Checkbox checked={selectedAssets.length === assets.length} />
+                                <ListItemText primary="Select All" />
+                            </MenuItem>
                             {assets.map((asset) => (
                                 <MenuItem key={asset.coingeckoId} value={asset.coingeckoId}>
                                     <Checkbox checked={selectedAssets.indexOf(asset.coingeckoId) > -1} />
