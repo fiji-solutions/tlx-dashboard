@@ -4,12 +4,17 @@ import {
     Button,
     Checkbox,
     CircularProgress,
-    FormControl, Grid,
-    InputLabel, ListItemText,
+    FormControl,
+    Grid,
+    InputLabel,
+    ListItemText,
     MenuItem,
     OutlinedInput,
-    Select, Tab, Tabs
+    Select,
+    Tab,
+    Tabs
 } from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
@@ -25,15 +30,23 @@ const MenuProps = {
     },
 };
 
+const columns = [
+    { field: 'asset_name', headerName: 'Asset Name', width: 200 },
+    { field: 'apy', headerName: 'APY (%)', width: 150 },
+    { field: 'num_days', headerName: 'Number of Days', width: 150 }
+];
+
 const Jupiter = () => {
     const [assets, setAssets] = useState([]);
     const [selectedAssets, setSelectedAssets] = useState([]);
     const [chartData, setChartData] = useState([]);
     const [baseIndexedChartData, setBaseIndexedChartData] = useState([]);
+    const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [tabValue, setTabValue] = useState('1.3');
 
     const fetchAssets = async () => {
+        // const response = await fetch('http://localhost:8000/jupiter-all');
         const response = await fetch('https://api.fijisolutions.net/jupiter-all');
         const data = await response.json();
         setAssets(data);
@@ -42,7 +55,6 @@ const Jupiter = () => {
     const fetchData = async () => {
         setLoading(true);
 
-        // Generate colors for the charts
         const generateColor = () => {
             const r = Math.floor(Math.random() * 255);
             const g = Math.floor(Math.random() * 255);
@@ -53,19 +65,15 @@ const Jupiter = () => {
             };
         };
 
-        // Create a comma-separated string of asset IDs
         const allAssets = selectedAssets.concat("solana").join(',');
 
-        // Fetch asset data in a single request
+        // const response = await fetch(`http://localhost:8000/jupiter?ids=${encodeURIComponent(allAssets)}`);
         const response = await fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
         const results = await response.json();
 
-        // Store colors in a map to ensure unique colors for each asset
         const colorMap = {};
 
-        // Combine the data into a suitable format for the chart
         const combinedData = Object.keys(results.price_data).map((assetName) => {
-            // Generate color only if it hasn't been generated for this asset yet
             if (!colorMap[assetName]) {
                 colorMap[assetName] = generateColor();
             }
@@ -76,14 +84,12 @@ const Jupiter = () => {
                     timestamp: item.timestamp,
                     price: item.price,
                 })),
-                ...colorMap[assetName], // Use the same color for the asset
+                ...colorMap[assetName],
             };
         });
 
-        // Prepare base indexed data
         const baseIndexedData = Object.keys(results.base_indexed_data).map((assetName) => {
-            // Use the same color from the colorMap
-            const color = colorMap[assetName] || generateColor(); // Fallback in case it's not found
+            const color = colorMap[assetName] || generateColor();
 
             return {
                 label: assetName,
@@ -91,15 +97,22 @@ const Jupiter = () => {
                     timestamp: item.timestamp,
                     indexed_price: item.indexed_price,
                 })),
-                ...color, // Use the same color for the indexed data
+                ...color,
             };
         });
 
+        const combinedTableData = Object.keys(results.daily_changes).map((assetName, index) => ({
+            id: index,
+            asset_name: assetName,
+            apy: (results.daily_changes[assetName].apy * 100).toFixed(2), // Convert APY to percentage
+            num_days: results.daily_changes[assetName].num_days
+        }));
+
         setChartData(combinedData);
         setBaseIndexedChartData(baseIndexedData);
+        setTableData(combinedTableData);
         setLoading(false);
     };
-
 
     const handleTabChange = (event, newValue) => {
         setTabValue(newValue);
@@ -121,7 +134,7 @@ const Jupiter = () => {
                 spacing={1}
             >
                 <Grid item>
-                    <FormControl sx={{m: 1, width: 300}}>
+                    <FormControl sx={{ m: 1, width: 300 }}>
                         <InputLabel id="asset-select-label">Select Assets</InputLabel>
                         <Select
                             labelId="asset-select-label"
@@ -129,19 +142,19 @@ const Jupiter = () => {
                             multiple
                             value={selectedAssets}
                             onChange={(e) => setSelectedAssets(e.target.value)}
-                            input={<OutlinedInput label="Select Assets"/>}
+                            input={<OutlinedInput label="Select Assets" />}
                             renderValue={(selected) => selected.join(', ')}
                             MenuProps={MenuProps}
                         >
                             {assets.map((asset) => (
                                 <MenuItem key={asset.coingeckoId} value={asset.coingeckoId}>
-                                    <Checkbox checked={selectedAssets.indexOf(asset.coingeckoId) > -1}/>
+                                    <Checkbox checked={selectedAssets.indexOf(asset.coingeckoId) > -1} />
                                     <img
-                                        style={{height: "24px", marginRight: "8px"}}
+                                        style={{ height: "24px", marginRight: "8px" }}
                                         src={asset.logoURI}
                                         alt={asset.coingeckoId}
                                     />
-                                    <ListItemText primary={asset.name}/>
+                                    <ListItemText primary={asset.name} />
                                 </MenuItem>
                             ))}
                         </Select>
@@ -150,56 +163,49 @@ const Jupiter = () => {
 
                 <Grid item>
                     <Button onClick={fetchData} variant="contained" disabled={loading}>
-                        {loading ? <CircularProgress size={25} color={"grey"}/> : "Fetch Data"}
+                        {loading ? <CircularProgress size={25} color={"grey"} /> : "Fetch Data"}
                     </Button>
                 </Grid>
             </Grid>
 
             {chartData.length > 0 && (
                 <>
-                    <Grid
-                        container
-                        justifyContent={"center"}
-                        alignItems={"center"}
-                        direction={"column"}
-                    >
+                    <Grid container justifyContent={"center"} alignItems={"center"} direction={"column"}>
                         <Grid item>
                             <h4>Change charts size</h4>
                         </Grid>
 
                         <Grid item>
                             <Tabs value={tabValue} onChange={handleTabChange}>
-                                <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
-                                <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
-                                <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
+                                <Tab label={(<ViewAgendaOutlinedIcon />)} value={"1"} />
+                                <Tab label={(<ViewQuiltOutlinedIcon />)} value={"1.3"} />
+                                <Tab label={(<GridViewOutlinedIcon />)} value={"2"} />
                             </Tabs>
                         </Grid>
                     </Grid>
 
-                    <Grid
-                        container
-                        direction={"row"}
-                        justifyContent={"space-evenly"}
-                    >
-                        <Grid
-                            item
-                            xs={11 / parseFloat(tabValue)}
-                            justifyContent="center"
-                        >
+                    <Grid container direction={"row"} justifyContent={"space-evenly"}>
+                        <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
-                                <CryptoChart datasets={chartData} title="Asset Prices" metric="price"/>
+                                <CryptoChart datasets={chartData} title="Asset Prices" metric="price" />
                             </Grid>
                         </Grid>
-                        <Grid
-                            item
-                            xs={11 / parseFloat(tabValue)}
-                            justifyContent="center"
-                        >
+                        <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
-                                <CryptoChart datasets={baseIndexedChartData} title="Base Indexed Prices" metric="indexed_price"/>
+                                <CryptoChart datasets={baseIndexedChartData} title="Base Indexed Prices" metric="indexed_price" />
                             </Grid>
                         </Grid>
                     </Grid>
+
+                    <h2>Asset Data Table</h2>
+                    <div style={{height: 400, width: '100%'}}>
+                        <DataGrid
+                            rows={tableData}
+                            columns={columns}
+                            pageSize={5}
+                            rowsPerPageOptions={[5]}
+                        />
+                    </div>
                 </>
             )}
         </div>
