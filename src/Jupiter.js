@@ -40,9 +40,18 @@ const columns = [
             <img src={params.value} alt={params.row.name} style={{ height: '24px', width: '24px' }} />
         )
     },
-    { field: 'asset_name', headerName: 'Asset Name', width: 300 },
-    { field: 'apy', headerName: 'Estimated APY (%)', width: 300 },
-    { field: 'num_days', headerName: 'Number of Days', width: 150 }
+    { field: 'asset_name', headerName: 'Asset Name', width: 200 },
+    { field: 'apy', headerName: 'Estimated APY (%)', width: 150 },
+    { field: 'num_days', headerName: 'Number of Days', width: 150 },
+    { field: 'variance', headerName: 'Variance', width: 150 },
+    { field: 'std_deviation', headerName: 'Standard Deviation', width: 150 },
+    { field: 'rolling_apy_30d', headerName: 'Rolling APY (30d) (%)', width: 200 },
+    { field: 'rolling_apy_60d', headerName: 'Rolling APY (60d) (%)', width: 200 },
+    { field: 'rolling_apy_90d', headerName: 'Rolling APY (90d) (%)', width: 200 },
+    { field: 'rolling_apy_120d', headerName: 'Rolling APY (120d) (%)', width: 200 },
+    { field: 'cumulative_yield', headerName: 'Cumulative Yield (%)', width: 200 },
+    { field: 'skewness', headerName: 'Skewness', width: 150 },
+    { field: 'kurtosis', headerName: 'Kurtosis', width: 150 }
 ];
 
 const Jupiter = () => {
@@ -120,6 +129,15 @@ const Jupiter = () => {
                 asset_name: asset ? asset.name : assetName,
                 apy: parseFloat((results.daily_changes[assetName].apy * 100).toFixed(2)), // Convert APY to percentage
                 num_days: results.daily_changes[assetName].num_days,
+                variance: parseFloat(results.daily_changes[assetName].variance.toFixed(6)),
+                std_deviation: parseFloat(results.daily_changes[assetName].std_deviation.toFixed(4)),
+                rolling_apy_30d: parseFloat((results.daily_changes[assetName].rolling_apy_30d.slice(-1)[0] * 100).toFixed(2)), // Convert latest Rolling APY to percentage
+                rolling_apy_60d: parseFloat((results.daily_changes[assetName].rolling_apy_60d.slice(-1)[0] * 100).toFixed(2)),
+                rolling_apy_90d: parseFloat((results.daily_changes[assetName].rolling_apy_90d.slice(-1)[0] * 100).toFixed(2)),
+                rolling_apy_120d: parseFloat((results.daily_changes[assetName].rolling_apy_120d.slice(-1)[0] * 100).toFixed(2)),
+                cumulative_yield: parseFloat((results.daily_changes[assetName].cumulative_yield * 100).toFixed(2)),
+                skewness: parseFloat(results.daily_changes[assetName].skewness.toFixed(4)),
+                kurtosis: parseFloat(results.daily_changes[assetName].kurtosis.toFixed(4)),
                 icon: asset ? asset.logoURI : ''
             };
         });
