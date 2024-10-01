@@ -45,6 +45,7 @@ const columns = [
     { field: 'num_days', headerName: 'Number of Days', width: 150 },
     { field: 'variance', headerName: 'Variance', width: 150 },
     { field: 'std_deviation', headerName: 'Standard Deviation', width: 150 },
+    { field: 'downside_volatility', headerName: 'Downside Volatility', width: 200 },
     { field: 'rolling_apy_30d', headerName: 'Rolling APY (30d) (%)', width: 200 },
     { field: 'rolling_apy_60d', headerName: 'Rolling APY (60d) (%)', width: 200 },
     { field: 'rolling_apy_90d', headerName: 'Rolling APY (90d) (%)', width: 200 },
@@ -131,6 +132,7 @@ const Jupiter = () => {
                 num_days: results.daily_changes[assetName].num_days,
                 variance: parseFloat(results.daily_changes[assetName].variance.toFixed(6)),
                 std_deviation: parseFloat(results.daily_changes[assetName].std_deviation.toFixed(4)),
+                downside_volatility: parseFloat(results.daily_changes[assetName].downside_volatility.toFixed(4)),
                 rolling_apy_30d: parseFloat((results.daily_changes[assetName].rolling_apy_30d.slice(-1)[0] * 100).toFixed(2)), // Convert latest Rolling APY to percentage
                 rolling_apy_60d: parseFloat((results.daily_changes[assetName].rolling_apy_60d.slice(-1)[0] * 100).toFixed(2)),
                 rolling_apy_90d: parseFloat((results.daily_changes[assetName].rolling_apy_90d.slice(-1)[0] * 100).toFixed(2)),
