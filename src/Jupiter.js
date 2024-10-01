@@ -168,7 +168,7 @@ const Jupiter = () => {
     return (
         <div className="App">
             <Helmet>
-                <title>Solana LSTs</title>
+                <title>Catalytics platform</title>
             </Helmet>
             <h1>Solana LSTs</h1>
 
