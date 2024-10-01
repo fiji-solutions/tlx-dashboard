@@ -162,6 +162,7 @@ const Jupiter = () => {
         if (assets.length > 0) {
             fetchData();
         }
+        // eslint-disable-next-line
     }, [assets.length]);
 
     return (
