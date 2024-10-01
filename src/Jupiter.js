@@ -57,7 +57,7 @@ const columns = [
 
 const Jupiter = () => {
     const [assets, setAssets] = useState([]);
-    const [selectedAssets, setSelectedAssets] = useState([]);
+    const [selectedAssets, setSelectedAssets] = useState(['bonk-staked-sol', 'jito-staked-sol', 'jupiter-staked-sol']);
     const [chartData, setChartData] = useState([]);
     const [baseIndexedChartData, setBaseIndexedChartData] = useState([]);
     const [tableData, setTableData] = useState([]);
@@ -158,6 +158,12 @@ const Jupiter = () => {
         fetchAssets();
     }, []);
 
+    useEffect(() => {
+        if (assets.length > 0) {
+            fetchData();
+        }
+    }, [assets.length]);
+
     return (
         <div className="App">
             <Helmet>
@@ -253,7 +259,7 @@ const Jupiter = () => {
 
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
-                                <h2>Asset Data Table</h2>
+                                <h2>Asset Data Table (Scrollable to the right)</h2>
                                 <div style={{height: 400, width: '100%', marginBottom: "128px"}}>
                                     <DataGrid
                                         rows={tableData}
