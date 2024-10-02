@@ -300,6 +300,19 @@ const Jupiter = () => {
                     <Grid container direction={"row"} justifyContent={"space-evenly"}>
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
+                                <h2>Asset Data Table (Scrollable to the right)</h2>
+                                <div style={{height: 400, width: '100%', marginBottom: "128px"}}>
+                                    <DataGrid
+                                        rows={tableData}
+                                        columns={columns}
+                                        pageSize={5}
+                                        rowsPerPageOptions={[5]}
+                                    />
+                                </div>
+                            </Grid>
+                        </Grid>
+                        <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
+                            <Grid item xs={12}>
                                 <CryptoChart datasets={chartData} title="Asset Prices" metric="price" />
                             </Grid>
                         </Grid>
@@ -311,20 +324,6 @@ const Jupiter = () => {
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
                                 <CryptoChart datasets={cumulativeYieldChartData} title="Compounded Cumulative Yield Over Time (%)" metric="cumulative_yield" plugins={[horizontalLinePlugin]} />
-                            </Grid>
-                        </Grid>
-
-                        <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
-                            <Grid item xs={12}>
-                                <h2>Asset Data Table (Scrollable to the right)</h2>
-                                <div style={{height: 400, width: '100%', marginBottom: "128px"}}>
-                                    <DataGrid
-                                        rows={tableData}
-                                        columns={columns}
-                                        pageSize={5}
-                                        rowsPerPageOptions={[5]}
-                                    />
-                                </div>
                             </Grid>
                         </Grid>
                     </Grid>
