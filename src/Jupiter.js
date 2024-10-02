@@ -37,7 +37,7 @@ const columns = [
         headerName: '',
         width: 100,
         renderCell: (params) => (
-            <img src={params.value} alt={params.row.name} style={{ height: '24px', width: '24px' }} />
+            <img src={params.value} alt={params.row.asset_name} style={{ height: '24px', width: '24px' }} />
         )
     },
     { field: 'asset_name', headerName: 'Asset Name', width: 200 },
@@ -129,32 +129,42 @@ const Jupiter = () => {
                 label: assetName,
                 data: results.cumulative_yield_data[assetName].map(item => ({
                     timestamp: item.timestamp,
-                    cumulative_yield: item.cumulative_yield,
+                    cumulative_yield: item.cumulative_yield * 100,
                 })),
                 ...color,
             };
         });
 
         const combinedTableData = Object.keys(results.daily_changes).map((assetName, index) => {
-            const asset = assets.concat([{"logoURI": "https://synthetixio.github.io/synthetix-assets/markets/SOL.svg", "coingeckoId": "solana", "name": "Solana"}]).find(a => a.coingeckoId === assetName);
+            const asset = assets.concat([
+                { "logoURI": "https://synthetixio.github.io/synthetix-assets/markets/SOL.svg", "coingeckoId": "solana", "name": "Solana" }
+            ]).find(a => a.coingeckoId === assetName);
+
+            const getValue = (value, decimalPlaces) => {
+                if (value === undefined || value === null || isNaN(value)) {
+                    return null; // or you can return 0 or '--' based on preference
+                }
+                return parseFloat(value.toFixed(decimalPlaces));
+            };
 
             return {
                 id: index,
                 asset_name: asset ? asset.name : assetName,
-                apy: parseFloat((results.daily_changes[assetName].apy * 100).toFixed(2)), // Convert APY to percentage
-                num_days: results.daily_changes[assetName].num_days,
-                variance: parseFloat(results.daily_changes[assetName].variance.toFixed(6)),
-                std_deviation: parseFloat(results.daily_changes[assetName].std_deviation.toFixed(4)),
-                downside_volatility: parseFloat(results.daily_changes[assetName].downside_volatility.toFixed(4)),
-                rolling_apy_30d: parseFloat((results.daily_changes[assetName].rolling_apy_30d * 100).toFixed(2)), // Convert latest Rolling APY to percentage
-                rolling_apy_60d: parseFloat((results.daily_changes[assetName].rolling_apy_60d * 100).toFixed(2)),
-                rolling_apy_90d: parseFloat((results.daily_changes[assetName].rolling_apy_90d * 100).toFixed(2)),
-                rolling_apy_120d: parseFloat((results.daily_changes[assetName].rolling_apy_120d * 100).toFixed(2)),
-                skewness: parseFloat(results.daily_changes[assetName].skewness.toFixed(4)),
-                kurtosis: parseFloat(results.daily_changes[assetName].kurtosis.toFixed(4)),
+                apy: getValue(results.daily_changes[assetName]?.apy * 100, 2), // Convert APY to percentage
+                num_days: results.daily_changes[assetName]?.num_days ?? 0,
+                variance: getValue(results.daily_changes[assetName]?.variance, 6),
+                std_deviation: getValue(results.daily_changes[assetName]?.std_deviation, 4),
+                downside_volatility: getValue(results.daily_changes[assetName]?.downside_volatility, 4),
+                rolling_apy_30d: getValue(results.daily_changes[assetName]?.rolling_apy_30d * 100, 2), // Convert Rolling APY to percentage
+                rolling_apy_60d: getValue(results.daily_changes[assetName]?.rolling_apy_60d * 100, 2),
+                rolling_apy_90d: getValue(results.daily_changes[assetName]?.rolling_apy_90d * 100, 2),
+                rolling_apy_120d: getValue(results.daily_changes[assetName]?.rolling_apy_120d * 100, 2),
+                skewness: getValue(results.daily_changes[assetName]?.skewness, 4),
+                kurtosis: getValue(results.daily_changes[assetName]?.kurtosis, 4),
                 icon: asset ? asset.logoURI : ''
             };
         });
+
 
         setChartData(combinedData);
         setBaseIndexedChartData(baseIndexedData);
@@ -272,7 +282,7 @@ const Jupiter = () => {
                         </Grid>
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
-                                <CryptoChart datasets={cumulativeYieldChartData} title="Compounded Cumulative Yield Over Time" metric="cumulative_yield" />
+                                <CryptoChart datasets={cumulativeYieldChartData} title="Compounded Cumulative Yield Over Time (%)" metric="cumulative_yield" />
                             </Grid>
                         </Grid>
 
