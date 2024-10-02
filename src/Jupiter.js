@@ -64,6 +64,34 @@ const Jupiter = () => {
     const [loading, setLoading] = useState(false);
     const [tabValue, setTabValue] = useState('1');
 
+    const horizontalLinePlugin = {
+        id: 'horizontalLine',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            const yScale = chart.scales['y']; // Get the y-axis scale
+
+            // Get the y position for the value 0
+            const yPosition = yScale.getPixelForValue(0);
+
+            // Draw the horizontal line
+            if (yPosition >= chartArea.top && yPosition <= chartArea.bottom) {
+                ctx.save();
+
+                // Draw the horizontal line
+                ctx.beginPath();
+                ctx.moveTo(chartArea.left, yPosition);
+                ctx.lineTo(chartArea.right, yPosition);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'rgba(120, 123, 134, 0.5)'; // Gray line for the 0 line
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        },
+    };
+
+
     const fetchAssets = async () => {
         // const response = await fetch('http://localhost:8000/jupiter-all');
         const response = await fetch('https://api.fijisolutions.net/jupiter-all');
@@ -282,7 +310,7 @@ const Jupiter = () => {
                         </Grid>
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
-                                <CryptoChart datasets={cumulativeYieldChartData} title="Compounded Cumulative Yield Over Time (%)" metric="cumulative_yield" />
+                                <CryptoChart datasets={cumulativeYieldChartData} title="Compounded Cumulative Yield Over Time (%)" metric="cumulative_yield" plugins={[horizontalLinePlugin]} />
                             </Grid>
                         </Grid>
 

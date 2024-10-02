@@ -24,7 +24,7 @@ ChartJS.register(
     Legend
 );
 
-const CryptoChart = ({ datasets, title, metric, showDatesOnly = false }) => {
+const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins = [] }) => {
     // Collect all unique timestamps from all datasets
     const allTimestamps = datasets.reduce((acc, dataset) => {
         dataset?.data?.forEach(entry => {
@@ -105,7 +105,7 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false }) => {
     return (
         <>
             <h1>{title}</h1>
-            <Line data={chartData} options={options} />
+            <Line data={chartData} options={options} plugins={plugins} />
         </>
     );
 };
