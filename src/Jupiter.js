@@ -56,7 +56,7 @@ const columns = [
 
 const Jupiter = () => {
     const [assets, setAssets] = useState([]);
-    const [selectedAssets, setSelectedAssets] = useState(['bonk-staked-sol', 'jito-staked-sol', 'jupiter-staked-sol']);
+    const [selectedAssets, setSelectedAssets] = useState(['bonk-staked-sol', 'helius-staked-sol', 'jito-staked-sol', 'jupiter-staked-sol']);
     const [chartData, setChartData] = useState([]);
     const [baseIndexedChartData, setBaseIndexedChartData] = useState([]);
     const [cumulativeYieldChartData, setCumulativeYieldChartData] = useState([]);
@@ -297,11 +297,11 @@ const Jupiter = () => {
                         </Grid>
                     </Grid>
 
-                    <Grid container direction={"row"} justifyContent={"space-evenly"}>
+                    <Grid container direction={"row"} justifyContent={"space-evenly"} style={{marginBottom: "128px"}}>
                         <Grid item xs={11 / parseFloat(tabValue)} justifyContent="center">
                             <Grid item xs={12}>
                                 <h2>Asset Data Table (Scrollable to the right)</h2>
-                                <div style={{height: 400, width: '100%', marginBottom: "128px"}}>
+                                <div style={{height: 400, width: '100%'}}>
                                     <DataGrid
                                         rows={tableData}
                                         columns={columns}
