@@ -50,7 +50,6 @@ const columns = [
     { field: 'rolling_apy_60d', headerName: 'Rolling APY (60d) (%)', width: 200 },
     { field: 'rolling_apy_90d', headerName: 'Rolling APY (90d) (%)', width: 200 },
     { field: 'rolling_apy_120d', headerName: 'Rolling APY (120d) (%)', width: 200 },
-    { field: 'cumulative_yield', headerName: 'Cumulative Yield (%)', width: 200 },
     { field: 'skewness', headerName: 'Skewness', width: 150 },
     { field: 'kurtosis', headerName: 'Kurtosis', width: 150 }
 ];
@@ -151,7 +150,6 @@ const Jupiter = () => {
                 rolling_apy_60d: parseFloat((results.daily_changes[assetName].rolling_apy_60d * 100).toFixed(2)),
                 rolling_apy_90d: parseFloat((results.daily_changes[assetName].rolling_apy_90d * 100).toFixed(2)),
                 rolling_apy_120d: parseFloat((results.daily_changes[assetName].rolling_apy_120d * 100).toFixed(2)),
-                cumulative_yield: parseFloat((results.daily_changes[assetName].cumulative_yield * 100).toFixed(2)),
                 skewness: parseFloat(results.daily_changes[assetName].skewness.toFixed(4)),
                 kurtosis: parseFloat(results.daily_changes[assetName].kurtosis.toFixed(4)),
                 icon: asset ? asset.logoURI : ''
