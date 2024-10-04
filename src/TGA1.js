@@ -2346,7 +2346,7 @@ const TGA1 = () => {
         const mostRecentDate = filledDates[filledDates.length - 1];
 
         let pineScript = `//@version=5
-indicator("${processCombinedChartData().datasets[0].label} Data Plot", overlay=true)
+indicator("WWW.JOINTHEREALWORLD.COM ${processCombinedChartData().datasets[0].label} Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
