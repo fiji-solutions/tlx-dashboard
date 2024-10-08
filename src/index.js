@@ -6,10 +6,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import NavTabs from './components/NavTabs';
 import CoingeckoSolMemes from "./CoingeckoSolMemes";
-import RSPS from "./RSPS";
+// import RSPS from "./RSPS";
 import TGA1 from "./TGA1";
 import Jupiter from "./Jupiter";
-import TGA4 from "./TGA4";
+// import TGA4 from "./TGA4";
 
 const Root = () => {
     const location = useLocation();
@@ -21,9 +21,9 @@ const Root = () => {
             <Routes>
                 <Route path="/" element={<App/>}/>
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes/>}/>
-                <Route path="/rsps" element={<RSPS/>}/>
+                {/*<Route path="/rsps" element={<RSPS/>}/>*/}
                 <Route path="/liquidity" element={<TGA1/>}/>
-                <Route path="/liquidity-csv" element={<TGA4/>}/>
+                {/*<Route path="/liquidity-csv" element={<TGA4/>}/>*/}
                 <Route path="/solana-lst" element={<Jupiter/>}/>
                 <Route path="/lst" element={<Jupiter/>}/>
             </Routes>
