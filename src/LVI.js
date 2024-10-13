@@ -25,21 +25,16 @@ const LiquidityValuationIndicator = () => {
             </Grid>
             <Grid
                 container
-                direction={"row"}
+                direction={"column"}
                 justifyContent={"space-evenly"}
             >
                 {imageUrls.map((imageUrl, index) => (
-                    <Grid
-                        item
-                        xs={11}
-                        key={index}
-                        justifyContent="center"
-                    >
-                        <a href={imageUrl} target="_blank" rel="noopener noreferrer">
+                    <Grid item xs={12} key={index} style={{ marginBottom: '16px' }}>
+                        <a href={imageUrl} target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}>
                             <img
                                 src={imageUrl}
                                 alt={`Liquidity Valuation Indicator ${index + 1}`}
-                                style={{ width: '100%', height: 'auto', marginBottom: '16px' }}
+                                style={{ maxWidth: '100%', height: 'auto' }}
                             />
                         </a>
                     </Grid>
