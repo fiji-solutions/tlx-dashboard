@@ -14,9 +14,8 @@ const NavTabs = () => {
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="navigation tabs">
                 <Tab label="TLX & Toros" value="/" component={Link} to="/" />
-                <Tab label="Solana Memes" value="/coingecko-sol-memes" component={Link} to="/coingecko-sol-memes" />
                 <Tab label="Liquidity" value="/liquidity" component={Link} to="/liquidity" />
-                <Tab label="LSTs" value="/lst" component={Link} to="/lst" />
+                <Tab label="Liquidity Valuation Indicators" value="/liquidity-valuation-indicators" component={Link} to="/liquidity-valuation-indicators" />
             </Tabs>
         </Box>
     );

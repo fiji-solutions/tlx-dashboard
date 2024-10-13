@@ -9,6 +9,7 @@ import CoingeckoSolMemes from "./CoingeckoSolMemes";
 // import RSPS from "./RSPS";
 import TGA1 from "./TGA1";
 import Jupiter from "./Jupiter";
+import LiquidityValuationIndicator from "./LVI";
 // import TGA4 from "./TGA4";
 
 const Root = () => {
@@ -26,6 +27,7 @@ const Root = () => {
                 {/*<Route path="/liquidity-csv" element={<TGA4/>}/>*/}
                 <Route path="/solana-lst" element={<Jupiter/>}/>
                 <Route path="/lst" element={<Jupiter/>}/>
+                <Route path="/liquidity-valuation-indicators" element={<LiquidityValuationIndicator/>}/>
             </Routes>
 
             {location.pathname !== '/solana-lst' && (
