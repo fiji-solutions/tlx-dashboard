@@ -3,11 +3,11 @@ import { Grid, Typography } from '@mui/material';
 
 const LiquidityValuationIndicator = () => {
     const [imageUrls] = useState([
-        "https://api.fijisolutions.net//static/plots/global_liquidity_vs_bitcoin.png",
-        "https://api.fijisolutions.net//static/plots/zscore_btc_prices.png",
-        "https://api.fijisolutions.net//static/plots/michael_howell_better_model.png",
-        "https://api.fijisolutions.net//static/plots/btc_vs_gl_better_model.png",
-        "https://api.fijisolutions.net//static/plots/zscore_btc_prices_valuation.png",
+        "https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png",
+        "https://api.fijisolutions.net/static/plots/zscore_btc_prices.png",
+        "https://api.fijisolutions.net/static/plots/michael_howell_better_model.png",
+        "https://api.fijisolutions.net/static/plots/btc_vs_gl_better_model.png",
+        "https://api.fijisolutions.net/static/plots/zscore_btc_prices_valuation.png",
     ]);
 
     return (
