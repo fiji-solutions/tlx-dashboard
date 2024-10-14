@@ -19,10 +19,13 @@ const LiquidityValuationIndicator = () => {
                         The charts displayed on this page were created by JayWolf as part of his analysis on liquidity valuation metrics.
                     </Typography>
                     <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
-                        The first two charts look at a 3rd degree polynomial trend line and the last three charts look at Michael Howell’s “Better Model” as described in his CBC letter titled “Is Bitcoin A Liquidity Proxy?” (29th September 2024).
+                        The first two charts look at a third-degree polynomial trend line, and the last three charts look at Michael Howell’s “Better Model” as described in his CBC letter titled “Is Bitcoin A Liquidity Proxy?” (29 September 2024).
                     </Typography>
                     <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
-                        For both trend lines, the Z-scores between data points and the trendlines have been calculated to create a non-stationary time-series that could be used for valuation-style analysis.
+                        For both trend lines, the Z-scores between data points and the trendlines have been calculated to create a non-stationary time series that could be used for valuation-style analysis.
+                    </Typography>
+                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                        Michael Howell’s “Better Model” is calculated by combining the linear trend between Bitcoin and gold prices (log-log) with the linear trend line between gold prices and CBC’s Global Liquidity Index (log-log).
                     </Typography>
                     <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
                         Charts are updated weekly.
