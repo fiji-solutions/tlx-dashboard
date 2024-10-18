@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
+import LinkComp from '@mui/material/Link';
 
 const NavTabs = () => {
     const location = useLocation();
@@ -16,6 +17,7 @@ const NavTabs = () => {
                 <Tab label="TLX & Toros" value="/" component={Link} to="/" />
                 <Tab label="Liquidity" value="/liquidity" component={Link} to="/liquidity" />
                 <Tab label="Liquidity Valuation Indicators" value="/liquidity-valuation-indicators" component={Link} to="/liquidity-valuation-indicators" />
+                <p><LinkComp href={"https://jointherealworld.com/?a=rz8pp6ccdq"} target={"_blank"}>Join the real world</LinkComp></p>
             </Tabs>
         </Box>
     );
