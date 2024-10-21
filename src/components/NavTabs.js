@@ -1,7 +1,6 @@
 import React from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import LinkComp from '@mui/material/Link';
 
 const NavTabs = () => {
     const location = useLocation();
