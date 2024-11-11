@@ -53,10 +53,7 @@ const LiquidityValuationIndicator = () => {
                         Michael Howell’s “Better Model” is calculated by combining the linear trend between Bitcoin and gold prices (log-log) with the linear trend line between gold prices and CBC’s Global Liquidity Index (log-log).
                     </Typography>
                     <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
-                        Charts are updated weekly.
-                    </Typography>
-                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
-                        {`Last updated: ${lastModifiedDates["https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png"] || 'Loading...'}`}
+                        {`Charts are updated weekly. Last updated: ${lastModifiedDates["https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png"] || 'Loading...'}`}
                     </Typography>
                 </Grid>
             </Grid>
