@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
 
 const LiquidityValuationIndicator = () => {
@@ -9,6 +9,31 @@ const LiquidityValuationIndicator = () => {
         "https://api.fijisolutions.net/static/plots/btc_vs_gl_better_model.png",
         "https://api.fijisolutions.net/static/plots/zscore_btc_prices_valuation.png",
     ]);
+    const [lastModifiedDates, setLastModifiedDates] = useState({});
+
+    useEffect(() => {
+        // Function to fetch Last-Modified header
+        const fetchLastModified = async (url) => {
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                const lastModified = response.headers.get('Last-Modified');
+                return lastModified ? new Date(lastModified).toLocaleString() : 'Unknown';
+            } catch (error) {
+                console.error(`Error fetching last modified date for ${url}:`, error);
+                return 'Unknown';
+            }
+        };
+
+        const fetchDates = async () => {
+            const dates = {};
+            for (const url of imageUrls) {
+                dates[url] = await fetchLastModified(url);
+            }
+            setLastModifiedDates(dates);
+        };
+
+        fetchDates();
+    }, [imageUrls]);
 
     return (
         <div className="App">
@@ -29,6 +54,9 @@ const LiquidityValuationIndicator = () => {
                     </Typography>
                     <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
                         Charts are updated weekly.
+                    </Typography>
+                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                        {`Last updated: ${lastModifiedDates["https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png"] || 'Loading...'}`}
                     </Typography>
                 </Grid>
             </Grid>
