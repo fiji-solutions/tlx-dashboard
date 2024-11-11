@@ -54,6 +54,9 @@ const App = () => {
     const [ethbtc5l, setEthbtc5l] = useState(false);
     const [ethbtc10l, setEthbtc10l] = useState(false);
 
+    const [sui2l, setSui2l] = useState(false);
+    const [sui5l, setSui5l] = useState(false);
+
     const [btc3xpol, setBtc3xpol] = useState(false);
     const [btc2xopt, setBtc2xopt] = useState(false);
     const [btc3xopt, setBtc3xopt] = useState(false);
@@ -187,6 +190,16 @@ const App = () => {
                 boolValue = !ethbtc10l;
                 setEthbtc10l(!ethbtc10l);
                 break;
+
+            case "SUI2L":
+                boolValue = !sui2l;
+                setSui2l(!sui2l);
+                break;
+
+            case "SUI5L":
+                boolValue = !sui5l;
+                setSui5l(!sui5l);
+                break;
             default:
                 break;
         }
@@ -299,6 +312,8 @@ const App = () => {
         "ETHBTC2L": "2024-07-30",
         "ETHBTC5L": "2024-07-30",
         "ETHBTC10L": "2024-09-18",
+        "SUI2L": "2024-08-16",
+        "SUI5L": "2024-08-16",
         "BTC2XOPT": "2023-10-10",
         "BTC3XOPT": "2024-03-13",
         "BTC4XOPT": "2024-06-05",
@@ -809,6 +824,29 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>ETHBTC10L</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={sui2l}
+                            onChange={() => checkboxClick("SUI2L")}
+                            disabled={loading}
+                        />
+                        <span>SUI2L</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sui5l}
+                            onChange={() => checkboxClick("SUI5L")}
+                            disabled={loading}
+                        />
+                        <span>SUI5L</span>
                     </Grid>
                 </Grid>
                 <Grid
