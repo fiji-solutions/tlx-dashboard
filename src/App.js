@@ -77,6 +77,8 @@ const App = () => {
     const [sol2xopt, setSol2xopt] = useState(false);
     const [sol3xopt, setSol3xopt] = useState(false);
 
+    const [sui2xopt, setSui2xopt] = useState(false);
+
     const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
 
@@ -278,6 +280,10 @@ const App = () => {
                 boolValue = !sol3xopt;
                 setSol3xopt(!sol3xopt);
                 break;
+            case "SUI2XOPT":
+                boolValue = !sui2xopt;
+                setSui2xopt(!sui2xopt);
+                break;
             default:
                 break;
         }
@@ -330,6 +336,7 @@ const App = () => {
         "STETH4X": "2024-06-14",
         "SOL2XOPT": "2024-05-27",
         "SOL3XOPT": "2024-05-27",
+        "SUI2XOPT": "2024-11-12",
     }
 
     const fetchData = async () => {
@@ -1010,6 +1017,21 @@ const App = () => {
                             disabled={loading}
                         />
                         <span>SOL3XOPT</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={sui2xopt}
+                            onChange={() => torosCheckboxClick("SUI2XOPT")}
+                            disabled={loading}
+                        />
+                        <span>SUI2XOPT</span>
                     </Grid>
                 </Grid>
             </Grid>
