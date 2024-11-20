@@ -79,6 +79,8 @@ const App = () => {
 
     const [sui2xopt, setSui2xopt] = useState(false);
 
+    const [doge2xopt, setDoge2xopt] = useState(false);
+
     const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
 
@@ -284,6 +286,10 @@ const App = () => {
                 boolValue = !sui2xopt;
                 setSui2xopt(!sui2xopt);
                 break;
+            case "DOGE2XOPT":
+                boolValue = !doge2xopt;
+                setDoge2xopt(!doge2xopt);
+                break;
             default:
                 break;
         }
@@ -337,6 +343,7 @@ const App = () => {
         "SOL2XOPT": "2024-05-27",
         "SOL3XOPT": "2024-05-27",
         "SUI2XOPT": "2024-11-12",
+        "DOGE2XOPT": "2024-11-13",
     }
 
     const fetchData = async () => {
@@ -1027,11 +1034,11 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={sui2xopt}
-                            onChange={() => torosCheckboxClick("SUI2XOPT")}
+                            checked={doge2xopt}
+                            onChange={() => torosCheckboxClick("DOGE2XOPT")}
                             disabled={loading}
                         />
-                        <span>SUI2XOPT</span>
+                        <span>DOGE2XOPT</span>
                     </Grid>
                 </Grid>
             </Grid>
