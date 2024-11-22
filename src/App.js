@@ -10,6 +10,7 @@ import {
     InputLabel,
     MenuItem,
     Select,
+    Switch,
     Tab,
     Tabs,
     TextField
@@ -80,6 +81,8 @@ const App = () => {
     const [sui2xopt, setSui2xopt] = useState(false);
 
     const [doge2xopt, setDoge2xopt] = useState(false);
+
+    const [compareAgainstBTC, setCompareAgainstBTC] = useState(false);
 
     const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
@@ -357,17 +360,32 @@ const App = () => {
             fetch(domain + "toros/?coin=" + asset + "&interval=" + interval + "&fromDate=" + dayjs(fromDate).format("YYYY-MM-DD") + "&toDate=" + getToDateString(asset) + "&initialInvestment=" + initialCapital + "&riskFreeRate=" + riskFreeRate).then(response => response.json())
         );
 
-        const results = await Promise.all([...arrayPromises, ...torosArrayPromises]);
+        // Fetch BTC Lambda function data
+        const btcPromise = compareAgainstBTC ? [fetch(
+            `${domain}btc?fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}&initialInvestment=${initialCapital}&riskFreeRate=${riskFreeRate}`
+        ).then(response => response.json())] : [];
+
+        const results = await Promise.all([...arrayPromises, ...torosArrayPromises, ...btcPromise]);
 
         const combinedData = results.map((result, index) => ({
-            label: index < array.length ? array[index] : torosArray[index - array.length],
+                label:
+                    index < array.length
+                        ? array[index]
+                        : index < array.length + torosArray.length
+                            ? torosArray[index - array.length]
+                            : "BTC",
             data: result.data,
             borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
             backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
         }));
 
         const assetMetrics = results.map((result, index) => ({
-            label: index < array.length ? array[index] : torosArray[index - array.length],
+                label:
+                    index < array.length
+                        ? array[index]
+                        : index < array.length + torosArray.length
+                            ? torosArray[index - array.length]
+                            : "BTC",
             volatility: result.volatility,
             sharpe_ratio: result.sharpe_ratio,
             sortino_ratio: result.sortino_ratio,
@@ -598,6 +616,20 @@ const App = () => {
                             onChange={(event) => setRiskFreeRate(event.target.value)}
                             disabled={loading}
                         />
+                    </Grid>
+
+                    <Grid
+                        item
+                        container
+                        direction={"column"}
+                        style={{"width": "unset", "display": "flex", "flex-direction": "row", "align-items": "center"}}
+                    >
+                        <Switch
+                            checked={compareAgainstBTC}
+                            onChange={() => (setCompareAgainstBTC(!compareAgainstBTC))}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                        <span>Include BTC Spot</span>
                     </Grid>
                 </Grid>
 
