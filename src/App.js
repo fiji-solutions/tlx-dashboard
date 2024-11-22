@@ -10,7 +10,6 @@ import {
     InputLabel,
     MenuItem,
     Select,
-    Switch,
     Tab,
     Tabs,
     TextField
@@ -82,10 +81,15 @@ const App = () => {
 
     const [doge2xopt, setDoge2xopt] = useState(false);
 
-    const [compareAgainstBTC, setCompareAgainstBTC] = useState(false);
+    const [spotBtc, setSpotBtc] = useState(false);
+    const [spotEth, setSpotEth] = useState(false);
+    const [spotSol, setSpotSol] = useState(false);
+    const [spotSui, setSpotSui] = useState(false);
+    const [spotDoge, setSpotDoge] = useState(false);
 
     const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
+    const [spotArray,setSpotArray] = useState([]);
 
     const [tabValue, setTabValue] = React.useState('2');
     const [granularity, setGranularity] = useState("DAYS");
@@ -304,6 +308,41 @@ const App = () => {
         }
     }
 
+    const spotCheckboxClick = (asset) => {
+        let boolValue = false;
+        switch (asset) {
+
+            case "btc":
+                boolValue = !spotBtc;
+                setSpotBtc(!spotBtc);
+                break;
+            case "eth":
+                boolValue = !spotEth;
+                setSpotEth(!spotEth);
+                break;
+            case "sol":
+                boolValue = !spotSol;
+                setSpotSol(!spotSol);
+                break;
+            case "sui":
+                boolValue = !spotSui;
+                setSpotSui(!spotSui);
+                break;
+            case "doge":
+                boolValue = !spotDoge;
+                setSpotDoge(!spotDoge);
+                break;
+            default:
+                break;
+        }
+
+        if (boolValue) {
+            setSpotArray([...spotArray, asset]);
+        } else {
+            setSpotArray(spotArray.filter(str => str !== asset));
+        }
+    };
+
     const maxDates = {
         "BTC1L": "2024-05-14",
         "BTC2L": "2024-05-14",
@@ -347,6 +386,11 @@ const App = () => {
         "SOL3XOPT": "2024-05-27",
         "SUI2XOPT": "2024-11-12",
         "DOGE2XOPT": "2024-11-13",
+        "btc": "2024-05-14",
+        "eth": "2024-05-14",
+        "sol": "2024-05-14",
+        "sui": "2024-05-14",
+        "doge": "2024-05-14",
     }
 
     const fetchData = async () => {
@@ -361,11 +405,11 @@ const App = () => {
         );
 
         // Fetch BTC Lambda function data
-        const btcPromise = compareAgainstBTC ? [fetch(
-            `${domain}btc?fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}&initialInvestment=${initialCapital}&riskFreeRate=${riskFreeRate}`
-        ).then(response => response.json())] : [];
 
-        const results = await Promise.all([...arrayPromises, ...torosArrayPromises, ...btcPromise]);
+        const spotArrayPromises = spotArray.map(asset =>
+            fetch(`${domain}spot?asset=${asset}&fromDate=${dayjs(fromDate).format("YYYY-MM-DD")}&toDate=${dayjs(toDate).format("YYYY-MM-DD")}&initialInvestment=${initialCapital}&riskFreeRate=${riskFreeRate}`).then(response => response.json())
+        );
+        const results = await Promise.all([...arrayPromises, ...torosArrayPromises, ...spotArrayPromises]);
 
         const combinedData = results.map((result, index) => ({
                 label:
@@ -373,7 +417,7 @@ const App = () => {
                         ? array[index]
                         : index < array.length + torosArray.length
                             ? torosArray[index - array.length]
-                            : "BTC",
+                            : spotArray[index - array.length - torosArray.length],
             data: result.data,
             borderColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 1)`,
             backgroundColor: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.2)`,
@@ -385,7 +429,7 @@ const App = () => {
                         ? array[index]
                         : index < array.length + torosArray.length
                             ? torosArray[index - array.length]
-                            : "BTC",
+                            : spotArray[index - array.length - torosArray.length],
             volatility: result.volatility,
             sharpe_ratio: result.sharpe_ratio,
             sortino_ratio: result.sortino_ratio,
@@ -616,20 +660,6 @@ const App = () => {
                             onChange={(event) => setRiskFreeRate(event.target.value)}
                             disabled={loading}
                         />
-                    </Grid>
-
-                    <Grid
-                        item
-                        container
-                        direction={"column"}
-                        style={{"width": "unset", "display": "flex", "flex-direction": "row", "align-items": "center"}}
-                    >
-                        <Switch
-                            checked={compareAgainstBTC}
-                            onChange={() => (setCompareAgainstBTC(!compareAgainstBTC))}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                        />
-                        <span>Include BTC Spot</span>
                     </Grid>
                 </Grid>
 
@@ -1074,10 +1104,86 @@ const App = () => {
                     </Grid>
                 </Grid>
             </Grid>
+
+
+
+            <Grid
+                item
+                container
+                justifyContent={"center"}
+            >
+                <Grid
+                    item
+                    container
+                    md={8}
+                    justifyContent={"space-around"}
+                >
+                    <Grid
+                        item
+                        style={{"text-align": "center"}}
+                    >
+                        <h2>Spots</h2>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid
+                item
+                container
+                direction={"column"}
+                style={{"width": "unset", "borderRight": "1px solid"}}
+            >
+            </Grid>
+            <Grid
+                item
+                container
+                direction={"column"}
+                style={{"width": "unset"}}
+            >
+                <Grid item>
+                    <Checkbox
+                        checked={spotBtc}
+                        onChange={() => spotCheckboxClick("btc")}
+                        disabled={loading}
+                    />
+                    <span>BTC</span>
+                </Grid>
+                <Grid item>
+                    <Checkbox
+                        checked={spotEth}
+                        onChange={() => spotCheckboxClick("eth")}
+                        disabled={loading}
+                    />
+                    <span>ETH</span>
+                </Grid>
+                <Grid item>
+                    <Checkbox
+                        checked={spotSol}
+                        onChange={() => spotCheckboxClick("sol")}
+                        disabled={loading}
+                    />
+                    <span>SOL</span>
+                </Grid>
+                <Grid item>
+                    <Checkbox
+                        checked={spotSui}
+                        onChange={() => spotCheckboxClick("sui")}
+                        disabled={loading}
+                    />
+                    <span>SUI</span>
+                </Grid>
+                <Grid item>
+                    <Checkbox
+                        checked={spotDoge}
+                        onChange={() => spotCheckboxClick("doge")}
+                        disabled={loading}
+                    />
+                    <span>DOGE</span>
+                </Grid>
+            </Grid>
             <br/>
 
             <Button onClick={onSearch} variant="contained"
-                    disabled={loading || (array.length === 0 && torosArray.length === 0)}>
+                    disabled={loading || (array.length === 0 && torosArray.length === 0 && spotArray.length === 0)}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
@@ -1085,7 +1191,7 @@ const App = () => {
                 )}
             </Button>
             <Button style={{marginLeft: "8px"}} onClick={onExport} variant="contained"
-                    disabled={loading || (array.length === 0 && torosArray.length === 0)}>
+                    disabled={loading || (array.length === 0 && torosArray.length === 0 && spotArray.length === 0)}>
                 {loading ? (
                     <CircularProgress size={25} color={"grey"}/>
                 ) : (
