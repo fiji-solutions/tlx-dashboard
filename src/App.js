@@ -82,10 +82,30 @@ const App = () => {
     const [doge2xopt, setDoge2xopt] = useState(false);
 
     const [spotBtc, setSpotBtc] = useState(false);
+    const [spotBtc2, setSpotBtc2] = useState(false);
+    const [spotBtc3, setSpotBtc3] = useState(false);
+    const [spotBtc4, setSpotBtc4] = useState(false);
+    const [spotBtc5, setSpotBtc5] = useState(false);
     const [spotEth, setSpotEth] = useState(false);
+    const [spotEth2, setSpotEth2] = useState(false);
+    const [spotEth3, setSpotEth3] = useState(false);
+    const [spotEth4, setSpotEth4] = useState(false);
+    const [spotEth5, setSpotEth5] = useState(false);
     const [spotSol, setSpotSol] = useState(false);
+    const [spotSol2, setSpotSol2] = useState(false);
+    const [spotSol3, setSpotSol3] = useState(false);
+    const [spotSol4, setSpotSol4] = useState(false);
+    const [spotSol5, setSpotSol5] = useState(false);
     const [spotSui, setSpotSui] = useState(false);
+    const [spotSui2, setSpotSui2] = useState(false);
+    const [spotSui3, setSpotSui3] = useState(false);
+    const [spotSui4, setSpotSui4] = useState(false);
+    const [spotSui5, setSpotSui5] = useState(false);
     const [spotDoge, setSpotDoge] = useState(false);
+    const [spotDoge2, setSpotDoge2] = useState(false);
+    const [spotDoge3, setSpotDoge3] = useState(false);
+    const [spotDoge4, setSpotDoge4] = useState(false);
+    const [spotDoge5, setSpotDoge5] = useState(false);
 
     const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
@@ -311,26 +331,105 @@ const App = () => {
     const spotCheckboxClick = (asset) => {
         let boolValue = false;
         switch (asset) {
-
-            case "btc":
+            case "btc-1":
                 boolValue = !spotBtc;
                 setSpotBtc(!spotBtc);
                 break;
-            case "eth":
+            case "btc-2":
+                boolValue = !spotBtc2;
+                setSpotBtc2(!spotBtc2);
+                break;
+            case "btc-3":
+                boolValue = !spotBtc3;
+                setSpotBtc3(!spotBtc3);
+                break;
+            case "btc-4":
+                boolValue = !spotBtc4;
+                setSpotBtc4(!spotBtc4);
+                break;
+            case "btc-5":
+                boolValue = !spotBtc5;
+                setSpotBtc5(!spotBtc5);
+                break;
+            case "eth-1":
                 boolValue = !spotEth;
                 setSpotEth(!spotEth);
                 break;
-            case "sol":
+            case "eth-2":
+                boolValue = !spotEth2;
+                setSpotEth2(!spotEth2);
+                break;
+            case "eth-3":
+                boolValue = !spotEth3;
+                setSpotEth3(!spotEth3);
+                break;
+            case "eth-4":
+                boolValue = !spotEth4;
+                setSpotEth4(!spotEth4);
+                break;
+            case "eth-5":
+                boolValue = !spotEth5;
+                setSpotEth5(!spotEth5);
+                break;
+            case "sol-1":
                 boolValue = !spotSol;
                 setSpotSol(!spotSol);
                 break;
-            case "sui":
+            case "sol-2":
+                boolValue = !spotSol2;
+                setSpotSol2(!spotSol2);
+                break;
+            case "sol-3":
+                boolValue = !spotSol3;
+                setSpotSol3(!spotSol3);
+                break;
+            case "sol-4":
+                boolValue = !spotSol4;
+                setSpotSol4(!spotSol4);
+                break;
+            case "sol-5":
+                boolValue = !spotSol5;
+                setSpotSol5(!spotSol5);
+                break;
+            case "sui-1":
                 boolValue = !spotSui;
                 setSpotSui(!spotSui);
                 break;
-            case "doge":
+            case "sui-2":
+                boolValue = !spotSui2;
+                setSpotSui2(!spotSui2);
+                break;
+            case "sui-3":
+                boolValue = !spotSui3;
+                setSpotSui3(!spotSui3);
+                break;
+            case "sui-4":
+                boolValue = !spotSui4;
+                setSpotSui4(!spotSui4);
+                break;
+            case "sui-5":
+                boolValue = !spotSui5;
+                setSpotSui5(!spotSui5);
+                break;
+            case "doge-1":
                 boolValue = !spotDoge;
                 setSpotDoge(!spotDoge);
+                break;
+            case "doge-2":
+                boolValue = !spotDoge2;
+                setSpotDoge2(!spotDoge2);
+                break;
+            case "doge-3":
+                boolValue = !spotDoge3;
+                setSpotDoge3(!spotDoge3);
+                break;
+            case "doge-4":
+                boolValue = !spotDoge4;
+                setSpotDoge4(!spotDoge4);
+                break;
+            case "doge-5":
+                boolValue = !spotDoge5;
+                setSpotDoge5(!spotDoge5);
                 break;
             default:
                 break;
@@ -1124,60 +1223,260 @@ const App = () => {
                     >
                         <h2>Spots</h2>
                     </Grid>
+                    <Grid
+                        item
+                        style={{"text-align": "center"}}
+                    >
+                        <h2>No-Fee Leverage</h2>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid
                 item
                 container
-                direction={"column"}
-                style={{"width": "unset", "borderRight": "1px solid"}}
+                justifyContent={"center"}
             >
-            </Grid>
-            <Grid
-                item
-                container
-                direction={"column"}
-                style={{"width": "unset"}}
-            >
-                <Grid item>
-                    <Checkbox
-                        checked={spotBtc}
-                        onChange={() => spotCheckboxClick("btc")}
-                        disabled={loading}
-                    />
-                    <span>BTC</span>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotBtc}
+                            onChange={() => spotCheckboxClick("btc-1")}
+                            disabled={loading}
+                        />
+                        <span>BTC</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotEth}
+                            onChange={() => spotCheckboxClick("eth-1")}
+                            disabled={loading}
+                        />
+                        <span>ETH</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol}
+                            onChange={() => spotCheckboxClick("sol-1")}
+                            disabled={loading}
+                        />
+                        <span>SOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui}
+                            onChange={() => spotCheckboxClick("sui-1")}
+                            disabled={loading}
+                        />
+                        <span>SUI</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge}
+                            onChange={() => spotCheckboxClick("doge-1")}
+                            disabled={loading}
+                        />
+                        <span>DOGE</span>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Checkbox
-                        checked={spotEth}
-                        onChange={() => spotCheckboxClick("eth")}
-                        disabled={loading}
-                    />
-                    <span>ETH</span>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset", "borderRight": "1px solid", "marginLeft": "16px"}}
+                >
                 </Grid>
-                <Grid item>
-                    <Checkbox
-                        checked={spotSol}
-                        onChange={() => spotCheckboxClick("sol")}
-                        disabled={loading}
-                    />
-                    <span>SOL</span>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotBtc2}
+                            onChange={() => spotCheckboxClick("btc-2")}
+                            disabled={loading}
+                        />
+                        <span>BTC2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotEth2}
+                            onChange={() => spotCheckboxClick("eth-2")}
+                            disabled={loading}
+                        />
+                        <span>ETH2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol2}
+                            onChange={() => spotCheckboxClick("sol-2")}
+                            disabled={loading}
+                        />
+                        <span>SOL2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui2}
+                            onChange={() => spotCheckboxClick("sui-2")}
+                            disabled={loading}
+                        />
+                        <span>SUI2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge2}
+                            onChange={() => spotCheckboxClick("doge-2")}
+                            disabled={loading}
+                        />
+                        <span>DOGE2X</span>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Checkbox
-                        checked={spotSui}
-                        onChange={() => spotCheckboxClick("sui")}
-                        disabled={loading}
-                    />
-                    <span>SUI</span>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotBtc3}
+                            onChange={() => spotCheckboxClick("btc-3")}
+                            disabled={loading}
+                        />
+                        <span>BTC3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotEth3}
+                            onChange={() => spotCheckboxClick("eth-3")}
+                            disabled={loading}
+                        />
+                        <span>ETH3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol3}
+                            onChange={() => spotCheckboxClick("sol-3")}
+                            disabled={loading}
+                        />
+                        <span>SOL3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui3}
+                            onChange={() => spotCheckboxClick("sui-3")}
+                            disabled={loading}
+                        />
+                        <span>SUI3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge3}
+                            onChange={() => spotCheckboxClick("doge-3")}
+                            disabled={loading}
+                        />
+                        <span>DOGE3X</span>
+                    </Grid>
                 </Grid>
-                <Grid item>
-                    <Checkbox
-                        checked={spotDoge}
-                        onChange={() => spotCheckboxClick("doge")}
-                        disabled={loading}
-                    />
-                    <span>DOGE</span>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotBtc4}
+                            onChange={() => spotCheckboxClick("btc-4")}
+                            disabled={loading}
+                        />
+                        <span>BTC4X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotEth4}
+                            onChange={() => spotCheckboxClick("eth-4")}
+                            disabled={loading}
+                        />
+                        <span>ETH4X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol4}
+                            onChange={() => spotCheckboxClick("sol-4")}
+                            disabled={loading}
+                        />
+                        <span>SOL4X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui4}
+                            onChange={() => spotCheckboxClick("sui-4")}
+                            disabled={loading}
+                        />
+                        <span>SUI4X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge4}
+                            onChange={() => spotCheckboxClick("doge-4")}
+                            disabled={loading}
+                        />
+                        <span>DOGE4X</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotBtc5}
+                            onChange={() => spotCheckboxClick("btc-5")}
+                            disabled={loading}
+                        />
+                        <span>BTC5X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotEth5}
+                            onChange={() => spotCheckboxClick("eth-5")}
+                            disabled={loading}
+                        />
+                        <span>ETH5X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol5}
+                            onChange={() => spotCheckboxClick("sol-5")}
+                            disabled={loading}
+                        />
+                        <span>SOL5X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui5}
+                            onChange={() => spotCheckboxClick("sui-5")}
+                            disabled={loading}
+                        />
+                        <span>SUI5X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge5}
+                            onChange={() => spotCheckboxClick("doge-5")}
+                            disabled={loading}
+                        />
+                        <span>DOGE5X</span>
+                    </Grid>
                 </Grid>
             </Grid>
             <br/>
