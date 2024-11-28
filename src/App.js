@@ -830,7 +830,13 @@ const App = () => {
                             item
                             style={{"text-align": "center"}}
                         >
-                            <h2>Toros Coins</h2>
+                            <h2>
+                                <img
+                                    style={{"height": "24px", "marginRight": "4px", "vertical-align": "bottom"}}
+                                    src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/toros.jpg"}
+                                    alt={"coin"}/>
+                                Toros Coins
+                            </h2>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -848,7 +854,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC1XPOL")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -871,7 +877,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC1XBASE")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -894,7 +900,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC1XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -917,7 +923,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC1XARB")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -950,7 +956,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC3XPOL")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -973,7 +979,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC2XBASE")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -996,7 +1002,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC3XBASE")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1019,7 +1025,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC2XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1042,7 +1048,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC3XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1065,7 +1071,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC4XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1088,7 +1094,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC2XARB")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1111,7 +1117,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("BTC3XARB")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1143,7 +1149,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH1XPOL")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1166,7 +1172,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH1XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1189,7 +1195,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH1XARB")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1219,7 +1225,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH3XPOL")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1242,7 +1248,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("STETH2X")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1265,7 +1271,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("STETH3X")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1288,7 +1294,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("STETH4X")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1311,7 +1317,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH2XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1334,7 +1340,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH3XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1357,7 +1363,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH2XARB")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1380,7 +1386,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("ETH3XARB")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1417,7 +1423,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("SOL2XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1440,7 +1446,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("SOL3XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1470,7 +1476,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("SUI2XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -1500,7 +1506,7 @@ const App = () => {
                             onChange={() => torosCheckboxClick("DOGE2XOPT")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -1534,7 +1540,13 @@ const App = () => {
                             item
                             style={{"text-align": "center"}}
                         >
-                            <h2>TLX Coins</h2>
+                            <h2>
+                                <img
+                                    style={{"height": "24px", "marginRight": "4px", "vertical-align": "bottom"}}
+                                    src={"https://tlx.fi/favicon.ico"}
+                                    alt={"coin"}/>
+                                TLX Coins
+                            </h2>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -1551,7 +1563,7 @@ const App = () => {
                             onChange={() => checkboxClick("BTC1L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1574,7 +1586,7 @@ const App = () => {
                             onChange={() => checkboxClick("BTC2L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1597,7 +1609,7 @@ const App = () => {
                             onChange={() => checkboxClick("BTC3L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1620,7 +1632,7 @@ const App = () => {
                             onChange={() => checkboxClick("BTC4L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1643,7 +1655,7 @@ const App = () => {
                             onChange={() => checkboxClick("BTC5L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1666,7 +1678,7 @@ const App = () => {
                             onChange={() => checkboxClick("BTC7L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -1696,7 +1708,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETH1L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1719,7 +1731,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETH2L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1742,7 +1754,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETH3L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1765,7 +1777,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETH4L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1788,7 +1800,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETH5L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1811,7 +1823,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETH7L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -1841,7 +1853,7 @@ const App = () => {
                             onChange={() => checkboxClick("SOL1L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1864,7 +1876,7 @@ const App = () => {
                             onChange={() => checkboxClick("SOL2L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1887,7 +1899,7 @@ const App = () => {
                             onChange={() => checkboxClick("SOL3L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1910,7 +1922,7 @@ const App = () => {
                             onChange={() => checkboxClick("SOL4L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1933,7 +1945,7 @@ const App = () => {
                             onChange={() => checkboxClick("SOL5L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -1970,7 +1982,7 @@ const App = () => {
                             onChange={() => checkboxClick("SUI2L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -1993,7 +2005,7 @@ const App = () => {
                             onChange={() => checkboxClick("SUI5L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -2023,7 +2035,7 @@ const App = () => {
                             onChange={() => checkboxClick("DOGE2L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -2046,7 +2058,7 @@ const App = () => {
                             onChange={() => checkboxClick("DOGE5L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -2077,7 +2089,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETHBTC2L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}
@@ -2100,7 +2112,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETHBTC5L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}
@@ -2123,7 +2135,7 @@ const App = () => {
                             onChange={() => checkboxClick("ETHBTC10L")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}
@@ -2179,7 +2191,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("btc-1")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -2193,7 +2205,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("btc-2")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -2207,7 +2219,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("btc-3")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -2221,7 +2233,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("btc-4")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -2235,7 +2247,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("btc-5")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
@@ -2256,7 +2268,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-1")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -2270,7 +2282,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-2")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -2284,7 +2296,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-3")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -2298,7 +2310,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-4")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -2312,7 +2324,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-5")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
@@ -2333,7 +2345,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sol-1")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -2347,7 +2359,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sol-2")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -2361,7 +2373,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sol-3")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -2375,7 +2387,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sol-4")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -2389,7 +2401,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sol-5")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
@@ -2410,7 +2422,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sui-1")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -2424,7 +2436,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sui-2")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -2438,7 +2450,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sui-3")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -2452,7 +2464,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sui-4")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -2466,7 +2478,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sui-5")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
@@ -2487,7 +2499,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("doge-1")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -2501,7 +2513,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("doge-2")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -2515,7 +2527,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("doge-3")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -2529,7 +2541,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("doge-4")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
@@ -2543,7 +2555,7 @@ const App = () => {
                             onChange={() => spotCheckboxClick("doge-5")}
                             disabled={loading}
                         />
-                        <div style={{"position": "relative", "display": "inline-block"}}>
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
                             <img
                                 style={{"height": "24px", "marginRight": "4px"}}
                                 src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
