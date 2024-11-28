@@ -57,21 +57,29 @@ const App = () => {
     const [sui2l, setSui2l] = useState(false);
     const [sui5l, setSui5l] = useState(false);
 
-    const [btc3xpol, setBtc3xpol] = useState(false);
+    const [btc1xpol, setBtc1xpol] = useState(false);
+    const [btc1xbase, setBtc1xbase] = useState(false);
+    const [btc1xopt, setBtc1xopt] = useState(false);
+    const [btc1xarb, setBtc1xarb] = useState(false);
+    const [btc2xbase, setBtc2xbase] = useState(false);
     const [btc2xopt, setBtc2xopt] = useState(false);
-    const [btc3xopt, setBtc3xopt] = useState(false);
-    const [btc4xopt, setBtc4xopt] = useState(false);
     const [btc2xarb, setBtc2xarb] = useState(false);
+    const [btc3xpol, setBtc3xpol] = useState(false);
+    const [btc3xbase, setBtc3xbase] = useState(false);
+    const [btc3xopt, setBtc3xopt] = useState(false);
     const [btc3xarb, setBtc3xarb] = useState(false);
+    const [btc4xopt, setBtc4xopt] = useState(false);
 
-    const [eth3xpol, setEth3xpol] = useState(false);
-    const [eth2xopt, setEth2xopt] = useState(false);
-    const [eth3xopt, setEth3xopt] = useState(false);
-    const [eth2xarb, setEth2xarb] = useState(false);
-    const [eth3xarb, setEth3xarb] = useState(false);
-
+    const [eth1xpol, setEth1xpol] = useState(false);
+    const [eth1xopt, setEth1xopt] = useState(false);
+    const [eth1xarb, setEth1xarb] = useState(false);
     const [steth2x, setSteth2x] = useState(false);
+    const [eth2xopt, setEth2xopt] = useState(false);
+    const [eth2xarb, setEth2xarb] = useState(false);
+    const [eth3xpol, setEth3xpol] = useState(false);
     const [steth3x, setSteth3x] = useState(false);
+    const [eth3xopt, setEth3xopt] = useState(false);
+    const [eth3xarb, setEth3xarb] = useState(false);
     const [steth4x, setSteth4x] = useState(false);
 
     const [sol2xopt, setSol2xopt] = useState(false);
@@ -245,57 +253,93 @@ const App = () => {
     const torosCheckboxClick = (asset) => {
         let boolValue = false;
         switch (asset) {
-            case "BTC3XPOL":
-                boolValue = !btc3xpol;
-                setBtc3xpol(!btc3xpol);
+            case "BTC1XPOL":
+                boolValue = !btc1xpol;
+                setBtc1xpol(!btc1xpol);
+                break;
+            case "BTC1XBASE":
+                boolValue = !btc1xbase;
+                setBtc1xbase(!btc1xbase);
+                break;
+            case "BTC1XOPT":
+                boolValue = !btc1xopt;
+                setBtc1xopt(!btc1xopt);
+                break;
+            case "BTC1XARB":
+                boolValue = !btc1xarb;
+                setBtc1xarb(!btc1xarb);
                 break;
             case "BTC2XOPT":
                 boolValue = !btc2xopt;
                 setBtc2xopt(!btc2xopt);
                 break;
-            case "BTC3XOPT":
-                boolValue = !btc3xopt;
-                setBtc3xopt(!btc3xopt);
-                break;
-            case "BTC4XOPT":
-                boolValue = !btc4xopt;
-                setBtc4xopt(!btc4xopt);
+            case "BTC2XBASE":
+                boolValue = !btc2xbase;
+                setBtc2xbase(!btc2xbase);
                 break;
             case "BTC2XARB":
                 boolValue = !btc2xarb;
                 setBtc2xarb(!btc2xarb);
                 break;
+            case "BTC3XPOL":
+                boolValue = !btc3xpol;
+                setBtc3xpol(!btc3xpol);
+                break;
+            case "BTC3XBASE":
+                boolValue = !btc3xbase;
+                setBtc3xbase(!btc3xbase);
+                break;
+            case "BTC3XOPT":
+                boolValue = !btc3xopt;
+                setBtc3xopt(!btc3xopt);
+                break;
             case "BTC3XARB":
                 boolValue = !btc3xarb;
                 setBtc3xarb(!btc3xarb);
                 break;
-            case "ETH3XPOL":
-                boolValue = !eth3xpol;
-                setEth3xpol(!eth3xpol);
+            case "BTC4XOPT":
+                boolValue = !btc4xopt;
+                setBtc4xopt(!btc4xopt);
                 break;
-            case "ETH2XOPT":
-                boolValue = !eth2xopt;
-                setEth2xopt(!eth2xopt);
+            case "ETH1XPOL":
+                boolValue = !eth1xpol;
+                setEth1xpol(!eth1xpol);
                 break;
-            case "ETH3XOPT":
-                boolValue = !eth3xopt;
-                setEth3xopt(!eth3xopt);
+            case "ETH1XOPT":
+                boolValue = !eth1xopt;
+                setEth1xopt(!eth1xopt);
                 break;
-            case "ETH2XARB":
-                boolValue = !eth2xarb;
-                setEth2xarb(!eth2xarb);
-                break;
-            case "ETH3XARB":
-                boolValue = !eth3xarb;
-                setEth3xarb(!eth3xarb);
+            case "ETH1XARB":
+                boolValue = !eth1xarb;
+                setEth1xarb(!eth1xarb);
                 break;
             case "STETH2X":
                 boolValue = !steth2x;
                 setSteth2x(!steth2x);
                 break;
+            case "ETH2XOPT":
+                boolValue = !eth2xopt;
+                setEth2xopt(!eth2xopt);
+                break;
+            case "ETH2XARB":
+                boolValue = !eth2xarb;
+                setEth2xarb(!eth2xarb);
+                break;
+            case "ETH3XPOL":
+                boolValue = !eth3xpol;
+                setEth3xpol(!eth3xpol);
+                break;
             case "STETH3X":
                 boolValue = !steth3x;
                 setSteth3x(!steth3x);
+                break;
+            case "ETH3XOPT":
+                boolValue = !eth3xopt;
+                setEth3xopt(!eth3xopt);
+                break;
+            case "ETH3XARB":
+                boolValue = !eth3xarb;
+                setEth3xarb(!eth3xarb);
                 break;
             case "STETH4X":
                 boolValue = !steth4x;
@@ -485,6 +529,15 @@ const App = () => {
         "SOL3XOPT": "2024-05-27",
         "SUI2XOPT": "2024-11-12",
         "DOGE2XOPT": "2024-11-13",
+        "BTC1XPOL": "2024-05-01",
+        "BTC1XBASE": "2024-11-13",
+        "BTC1XOPT": "2024-05-01",
+        "BTC1XARB": "2024-07-16",
+        "BTC2XBASE": "2024-11-13",
+        "BTC3XBASE": "2024-11-13",
+        "ETH1XPOL": "2024-05-01",
+        "ETH1XOPT": "2024-05-01",
+        "ETH1XARB": "2024-07-16",
         "btc": "2024-05-14",
         "eth": "2024-05-14",
         "sol": "2024-05-14",
@@ -777,13 +830,6 @@ const App = () => {
                             item
                             style={{"text-align": "center"}}
                         >
-                            <h2>TLX Coins</h2>
-                        </Grid>
-
-                        <Grid
-                            item
-                            style={{"text-align": "center"}}
-                        >
                             <h2>Toros Coins</h2>
                         </Grid>
                     </Grid>
@@ -798,10 +844,728 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
+                            checked={btc1xpol}
+                            onChange={() => torosCheckboxClick("BTC1XPOL")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/polygon-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC1XPOL BEAR</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc1xbase}
+                            onChange={() => torosCheckboxClick("BTC1XBASE")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/base-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC1XBASE BEAR</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc1xopt}
+                            onChange={() => torosCheckboxClick("BTC1XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC1XOPT BEAR</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc1xarb}
+                            onChange={() => torosCheckboxClick("BTC1XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC1XARB BEAR</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid
+                        item
+                        style={{"border-top": "1px"}}
+                    >
+                        <Checkbox
+                            checked={btc3xpol}
+                            onChange={() => torosCheckboxClick("BTC3XPOL")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/polygon-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC3XPOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc2xbase}
+                            onChange={() => torosCheckboxClick("BTC2XBASE")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/base-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC2XBASE</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xbase}
+                            onChange={() => torosCheckboxClick("BTC3XBASE")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/base-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC3XBASE</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc2xopt}
+                            onChange={() => torosCheckboxClick("BTC2XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC2XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xopt}
+                            onChange={() => torosCheckboxClick("BTC3XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC3XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc4xopt}
+                            onChange={() => torosCheckboxClick("BTC4XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC4XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc2xarb}
+                            onChange={() => torosCheckboxClick("BTC2XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC2XARB</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xarb}
+                            onChange={() => torosCheckboxClick("BTC3XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC3XARB</span>
+                    </Grid>
+                </Grid>
+
+
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={eth1xpol}
+                            onChange={() => torosCheckboxClick("ETH1XPOL")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/polygon-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH1XPOL BEAR</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth1xopt}
+                            onChange={() => torosCheckboxClick("ETH1XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH1XOPT BEAR</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth1xarb}
+                            onChange={() => torosCheckboxClick("ETH1XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH1XARB BEAR</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={eth3xpol}
+                            onChange={() => torosCheckboxClick("ETH3XPOL")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/polygon-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH3XPOL</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={steth2x}
+                            onChange={() => torosCheckboxClick("STETH2X")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/base-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>STETH2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={steth3x}
+                            onChange={() => torosCheckboxClick("STETH3X")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/base-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>STETH3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={steth4x}
+                            onChange={() => torosCheckboxClick("STETH4X")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/base-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>STETH4X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth2xopt}
+                            onChange={() => torosCheckboxClick("ETH2XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH2XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth3xopt}
+                            onChange={() => torosCheckboxClick("ETH3XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH3XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth2xarb}
+                            onChange={() => torosCheckboxClick("ETH2XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH2XARB</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth3xarb}
+                            onChange={() => torosCheckboxClick("ETH3XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH3XARB</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={sol2xopt}
+                            onChange={() => torosCheckboxClick("SOL2XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SOL2XOPT</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sol3xopt}
+                            onChange={() => torosCheckboxClick("SOL3XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SOL3XOPT</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={sui2xopt}
+                            onChange={() => torosCheckboxClick("SUI2XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SUI2XOPT</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={doge2xopt}
+                            onChange={() => torosCheckboxClick("DOGE2XOPT")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>DOGE2XOPT</span>
+                    </Grid>
+                </Grid>
+
+                <Grid
+                    item
+                    container
+                    justifyContent={"center"}
+                >
+                    <Grid
+                        item
+                        container
+                        md={8}
+                        justifyContent={"space-around"}
+                    >
+                        <Grid
+                            item
+                            style={{"text-align": "center"}}
+                        >
+                            <h2>TLX Coins</h2>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
                             checked={btc1l}
                             onChange={() => checkboxClick("BTC1L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>BTC1L</span>
                     </Grid>
                     <Grid item>
@@ -810,6 +1574,21 @@ const App = () => {
                             onChange={() => checkboxClick("BTC2L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>BTC2L</span>
                     </Grid>
                     <Grid item>
@@ -818,6 +1597,21 @@ const App = () => {
                             onChange={() => checkboxClick("BTC3L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>BTC3L</span>
                     </Grid>
                     <Grid item>
@@ -826,6 +1620,21 @@ const App = () => {
                             onChange={() => checkboxClick("BTC4L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>BTC4L</span>
                     </Grid>
                     <Grid item>
@@ -834,6 +1643,21 @@ const App = () => {
                             onChange={() => checkboxClick("BTC5L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>BTC5L</span>
                     </Grid>
                     <Grid item>
@@ -842,6 +1666,21 @@ const App = () => {
                             onChange={() => checkboxClick("BTC7L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>BTC7L</span>
                     </Grid>
                 </Grid>
@@ -857,6 +1696,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETH1L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETH1L</span>
                     </Grid>
                     <Grid item>
@@ -865,6 +1719,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETH2L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETH2L</span>
                     </Grid>
                     <Grid item>
@@ -873,6 +1742,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETH3L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETH3L</span>
                     </Grid>
                     <Grid item>
@@ -881,6 +1765,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETH4L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETH4L</span>
                     </Grid>
                     <Grid item>
@@ -889,6 +1788,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETH5L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETH5L</span>
                     </Grid>
                     <Grid item>
@@ -897,6 +1811,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETH7L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETH7L</span>
                     </Grid>
                 </Grid>
@@ -912,6 +1841,21 @@ const App = () => {
                             onChange={() => checkboxClick("SOL1L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>SOL1L</span>
                     </Grid>
                     <Grid item>
@@ -920,6 +1864,21 @@ const App = () => {
                             onChange={() => checkboxClick("SOL2L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>SOL2L</span>
                     </Grid>
                     <Grid item>
@@ -928,6 +1887,21 @@ const App = () => {
                             onChange={() => checkboxClick("SOL3L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>SOL3L</span>
                     </Grid>
                     <Grid item>
@@ -936,6 +1910,21 @@ const App = () => {
                             onChange={() => checkboxClick("SOL4L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>SOL4L</span>
                     </Grid>
                     <Grid item>
@@ -944,7 +1933,82 @@ const App = () => {
                             onChange={() => checkboxClick("SOL5L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>SOL5L</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={sui2l}
+                            onChange={() => checkboxClick("SUI2L")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SUI2L</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sui5l}
+                            onChange={() => checkboxClick("SUI5L")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SUI5L</span>
                     </Grid>
                 </Grid>
                 <Grid
@@ -959,6 +2023,21 @@ const App = () => {
                             onChange={() => checkboxClick("DOGE2L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>DOGE2L</span>
                     </Grid>
                     <Grid item>
@@ -967,9 +2046,25 @@ const App = () => {
                             onChange={() => checkboxClick("DOGE5L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>DOGE5L</span>
                     </Grid>
                 </Grid>
+
                 <Grid
                     item
                     container
@@ -982,6 +2077,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETHBTC2L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETHBTC2L</span>
                     </Grid>
                     <Grid item>
@@ -990,6 +2100,21 @@ const App = () => {
                             onChange={() => checkboxClick("ETHBTC5L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETHBTC5L</span>
                     </Grid>
                     <Grid item>
@@ -998,214 +2123,26 @@ const App = () => {
                             onChange={() => checkboxClick("ETHBTC10L")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}
+                                alt={"coin"}/>
+
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://tlx.fi/favicon.ico"}
+                                 alt={"coin"}/>
+                        </div>
                         <span>ETHBTC10L</span>
                     </Grid>
                 </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={sui2l}
-                            onChange={() => checkboxClick("SUI2L")}
-                            disabled={loading}
-                        />
-                        <span>SUI2L</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={sui5l}
-                            onChange={() => checkboxClick("SUI5L")}
-                            disabled={loading}
-                        />
-                        <span>SUI5L</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset", "borderRight": "1px solid"}}
-                >
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={btc2xopt}
-                            onChange={() => torosCheckboxClick("BTC2XOPT")}
-                            disabled={loading}
-                        />
-                        <span>BTC2XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={btc3xopt}
-                            onChange={() => torosCheckboxClick("BTC3XOPT")}
-                            disabled={loading}
-                        />
-                        <span>BTC3XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={btc4xopt}
-                            onChange={() => torosCheckboxClick("BTC4XOPT")}
-                            disabled={loading}
-                        />
-                        <span>BTC4XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={btc3xpol}
-                            onChange={() => torosCheckboxClick("BTC3XPOL")}
-                            disabled={loading}
-                        />
-                        <span>BTC3XPOL</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={btc2xarb}
-                            onChange={() => torosCheckboxClick("BTC2XARB")}
-                            disabled={loading}
-                        />
-                        <span>BTC2XARB</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={btc3xarb}
-                            onChange={() => torosCheckboxClick("BTC3XARB")}
-                            disabled={loading}
-                        />
-                        <span>BTC3XARB</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={eth2xopt}
-                            onChange={() => torosCheckboxClick("ETH2XOPT")}
-                            disabled={loading}
-                        />
-                        <span>ETH2XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={eth3xopt}
-                            onChange={() => torosCheckboxClick("ETH3XOPT")}
-                            disabled={loading}
-                        />
-                        <span>ETH3XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={eth3xpol}
-                            onChange={() => torosCheckboxClick("ETH3XPOL")}
-                            disabled={loading}
-                        />
-                        <span>ETH3XPOL</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={eth2xarb}
-                            onChange={() => torosCheckboxClick("ETH2XARB")}
-                            disabled={loading}
-                        />
-                        <span>ETH2XARB</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={eth3xarb}
-                            onChange={() => torosCheckboxClick("ETH3XARB")}
-                            disabled={loading}
-                        />
-                        <span>ETH3XARB</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={steth2x}
-                            onChange={() => torosCheckboxClick("STETH2X")}
-                            disabled={loading}
-                        />
-                        <span>STETH2X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={steth3x}
-                            onChange={() => torosCheckboxClick("STETH3X")}
-                            disabled={loading}
-                        />
-                        <span>STETH3X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={steth4x}
-                            onChange={() => torosCheckboxClick("STETH4X")}
-                            disabled={loading}
-                        />
-                        <span>STETH4X</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={sol2xopt}
-                            onChange={() => torosCheckboxClick("SOL2XOPT")}
-                            disabled={loading}
-                        />
-                        <span>SOL2XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={sol3xopt}
-                            onChange={() => torosCheckboxClick("SOL3XOPT")}
-                            disabled={loading}
-                        />
-                        <span>SOL3XOPT</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={doge2xopt}
-                            onChange={() => torosCheckboxClick("DOGE2XOPT")}
-                            disabled={loading}
-                        />
-                        <span>DOGE2XOPT</span>
-                    </Grid>
-                </Grid>
             </Grid>
-
-
-
             <Grid
                 item
                 container
