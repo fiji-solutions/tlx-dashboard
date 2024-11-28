@@ -2158,13 +2158,7 @@ const App = () => {
                         item
                         style={{"text-align": "center"}}
                     >
-                        <h2>Spots</h2>
-                    </Grid>
-                    <Grid
-                        item
-                        style={{"text-align": "center"}}
-                    >
-                        <h2>No-Fee Leverage</h2>
+                        <h2>Spots and No-Fee Perps</h2>
                     </Grid>
                 </Grid>
             </Grid>
@@ -2185,47 +2179,70 @@ const App = () => {
                             onChange={() => spotCheckboxClick("btc-1")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                        </div>
                         <span>BTC</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
-                            checked={spotEth}
-                            onChange={() => spotCheckboxClick("eth-1")}
+                            checked={spotBtc2}
+                            onChange={() => spotCheckboxClick("btc-2")}
                             disabled={loading}
                         />
-                        <span>ETH</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>BTC2X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
-                            checked={spotSol}
-                            onChange={() => spotCheckboxClick("sol-1")}
+                            checked={spotBtc3}
+                            onChange={() => spotCheckboxClick("btc-3")}
                             disabled={loading}
                         />
-                        <span>SOL</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>BTC3X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
-                            checked={spotSui}
-                            onChange={() => spotCheckboxClick("sui-1")}
+                            checked={spotBtc4}
+                            onChange={() => spotCheckboxClick("btc-4")}
                             disabled={loading}
                         />
-                        <span>SUI</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>BTC4X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
-                            checked={spotDoge}
-                            onChange={() => spotCheckboxClick("doge-1")}
+                            checked={spotBtc5}
+                            onChange={() => spotCheckboxClick("btc-5")}
                             disabled={loading}
                         />
-                        <span>DOGE</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>BTC5X</span>
                     </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset", "borderRight": "1px solid", "marginLeft": "16px"}}
-                >
                 </Grid>
                 <Grid
                     item
@@ -2235,11 +2252,17 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={spotBtc2}
-                            onChange={() => spotCheckboxClick("btc-2")}
+                            checked={spotEth}
+                            onChange={() => spotCheckboxClick("eth-1")}
                             disabled={loading}
                         />
-                        <span>BTC2X</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>ETH</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -2247,46 +2270,13 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-2")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                        </div>
                         <span>ETH2X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotSol2}
-                            onChange={() => spotCheckboxClick("sol-2")}
-                            disabled={loading}
-                        />
-                        <span>SOL2X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotSui2}
-                            onChange={() => spotCheckboxClick("sui-2")}
-                            disabled={loading}
-                        />
-                        <span>SUI2X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotDoge2}
-                            onChange={() => spotCheckboxClick("doge-2")}
-                            disabled={loading}
-                        />
-                        <span>DOGE2X</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={spotBtc3}
-                            onChange={() => spotCheckboxClick("btc-3")}
-                            disabled={loading}
-                        />
-                        <span>BTC3X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -2294,46 +2284,13 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-3")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                        </div>
                         <span>ETH3X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotSol3}
-                            onChange={() => spotCheckboxClick("sol-3")}
-                            disabled={loading}
-                        />
-                        <span>SOL3X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotSui3}
-                            onChange={() => spotCheckboxClick("sui-3")}
-                            disabled={loading}
-                        />
-                        <span>SUI3X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotDoge3}
-                            onChange={() => spotCheckboxClick("doge-3")}
-                            disabled={loading}
-                        />
-                        <span>DOGE3X</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={spotBtc4}
-                            onChange={() => spotCheckboxClick("btc-4")}
-                            disabled={loading}
-                        />
-                        <span>BTC4X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -2341,31 +2298,27 @@ const App = () => {
                             onChange={() => spotCheckboxClick("eth-4")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                        </div>
                         <span>ETH4X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
-                            checked={spotSol4}
-                            onChange={() => spotCheckboxClick("sol-4")}
+                            checked={spotEth5}
+                            onChange={() => spotCheckboxClick("eth-5")}
                             disabled={loading}
                         />
-                        <span>SOL4X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotSui4}
-                            onChange={() => spotCheckboxClick("sui-4")}
-                            disabled={loading}
-                        />
-                        <span>SUI4X</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={spotDoge4}
-                            onChange={() => spotCheckboxClick("doge-4")}
-                            disabled={loading}
-                        />
-                        <span>DOGE4X</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>ETH5X</span>
                     </Grid>
                 </Grid>
                 <Grid
@@ -2376,19 +2329,59 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={spotBtc5}
-                            onChange={() => spotCheckboxClick("btc-5")}
+                            checked={spotSol}
+                            onChange={() => spotCheckboxClick("sol-1")}
                             disabled={loading}
                         />
-                        <span>BTC5X</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SOL</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
-                            checked={spotEth5}
-                            onChange={() => spotCheckboxClick("eth-5")}
+                            checked={spotSol2}
+                            onChange={() => spotCheckboxClick("sol-2")}
                             disabled={loading}
                         />
-                        <span>ETH5X</span>
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SOL2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol3}
+                            onChange={() => spotCheckboxClick("sol-3")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SOL3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSol4}
+                            onChange={() => spotCheckboxClick("sol-4")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SOL4X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -2396,7 +2389,76 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sol-5")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                        </div>
                         <span>SOL5X</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui}
+                            onChange={() => spotCheckboxClick("sui-1")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SUI</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui2}
+                            onChange={() => spotCheckboxClick("sui-2")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SUI2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui3}
+                            onChange={() => spotCheckboxClick("sui-3")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SUI3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotSui4}
+                            onChange={() => spotCheckboxClick("sui-4")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>SUI4X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -2404,7 +2466,76 @@ const App = () => {
                             onChange={() => spotCheckboxClick("sui-5")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                        </div>
                         <span>SUI5X</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge}
+                            onChange={() => spotCheckboxClick("doge-1")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>DOGE</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge2}
+                            onChange={() => spotCheckboxClick("doge-2")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>DOGE2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge3}
+                            onChange={() => spotCheckboxClick("doge-3")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>DOGE3X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={spotDoge4}
+                            onChange={() => spotCheckboxClick("doge-4")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                        </div>
+                        <span>DOGE4X</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -2412,6 +2543,12 @@ const App = () => {
                             onChange={() => spotCheckboxClick("doge-5")}
                             disabled={loading}
                         />
+                        <div style={{"position": "relative", "display": "inline-block"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
+                                alt={"coin"}/>
+                        </div>
                         <span>DOGE5X</span>
                     </Grid>
                 </Grid>
