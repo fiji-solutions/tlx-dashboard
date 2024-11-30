@@ -2429,7 +2429,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     // }
 
     return (
-        <div className="App" style={{"min-height": "3000px"}}>
+        <div className="App" style={{"min-height": "2000px"}}>
             <Snowfall
                 color={"black"}
             />
