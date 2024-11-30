@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, Typography } from '@mui/material';
+import {Snowfall} from "react-snowfall";
 
 const LiquidityValuationIndicator = () => {
     const [imageUrls] = useState([
@@ -37,6 +38,9 @@ const LiquidityValuationIndicator = () => {
 
     return (
         <div className="App">
+            <Snowfall
+                color={"black"}
+            />
             <h1>{"Liquidity Valuation Indicator"}</h1>
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
