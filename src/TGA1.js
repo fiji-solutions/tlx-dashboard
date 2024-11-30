@@ -2429,7 +2429,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     // }
 
     return (
-        <div className="App">
+        <div className="App" style={{"min-height": "3000px"}}>
             <Snowfall
                 color={"black"}
             />
@@ -2490,469 +2490,470 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                     </Grid>
                 </Grid>
             </Grid>
-            {loading && (
+            {loading ? (
                 <CircularProgress/>
-            )}
-            <Grid
-                container
-                direction={"row"}
-                justifyContent={"space-evenly"}
-            >
+            ) : (
                 <Grid
-                    item
-                    xs={11 / parseFloat(tabValue)}
-                    justifyContent="center"
+                    container
+                    direction={"row"}
+                    justifyContent={"space-evenly"}
                 >
-                    <h1>Formula #1, Original</h1>
-                    <Grid item xs={12}>
-                        <Line
-                            data={processCombinedChartData()}
-                            options={{
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        // eslint-disable-next-line no-useless-concat
-                                        text: 'NET FED Liquidity' /*+ (jwtParsed?.name ? jwtParsed?.name : "") */ + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
-                                    },
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day',
-                                            tooltipFormat: 'MM/dd/yyyy',
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Formula #1, Original</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processCombinedChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            // eslint-disable-next-line no-useless-concat
+                                            text: 'NET FED Liquidity' /*+ (jwtParsed?.name ? jwtParsed?.name : "") */ + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
                                         },
                                     },
-                                    y: {
-                                        beginAtZero: false,
-                                        min: processCombinedChartData().minValue - 10000,
-                                        max: processCombinedChartData().maxValue + 10000,
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processCombinedChartData().minValue - 10000,
+                                            max: processCombinedChartData().maxValue + 10000,
+                                        },
                                     },
-                                },
-                            }}
-                            plugins={[watermarkPlugin, verticalLinePlugin]}
-                        />
-                        <Typography variant="body1" align="center">
-                            Latest Date: {processCombinedChartData().latestDate}
-                        </Typography>
-                    </Grid>
-                    <Grid container item justifyContent="center">
-                        <Grid item>
-                            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(1)} variant="contained"
-                                    disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>
-                                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                                    <CircularProgress size={25} color={"grey"}/>
-                                ) : (
-                                    "Copy Pine Script"
-                                )}
-                            </Button>
+                                }}
+                                plugins={[watermarkPlugin, verticalLinePlugin]}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processCombinedChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                        <Grid container item justifyContent="center">
+                            <Grid item>
+                                <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(1)} variant="contained"
+                                        disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>
+                                    {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
+                                        <CircularProgress size={25} color={"grey"}/>
+                                    ) : (
+                                        "Copy Pine Script"
+                                    )}
+                                </Button>
 
-                            {/*        <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(1)}>*/}
-                            {/*            {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
-                            {/*                <CircularProgress size={25} color={"grey"}/>*/}
-                            {/*            ) : (*/}
-                            {/*                "Download CSV"*/}
-                            {/*            )}*/}
-                            {/*        </Button>*/}
+                        {/*        <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(1)}>*/}
+                        {/*            {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                        {/*                <CircularProgress size={25} color={"grey"}/>*/}
+                        {/*            ) : (*/}
+                        {/*                "Download CSV"*/}
+                        {/*            )}*/}
+                        {/*        </Button>*/}
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Formula #2, TGA Opening Balance (Unverified)</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processCombinedChartData3()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: false,*/}
+                    {/*                        min: processCombinedChartData3().minValue - 10000,*/}
+                    {/*                        max: processCombinedChartData3().maxValue + 10000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processCombinedChartData3().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*    <Grid container item justifyContent="center">*/}
+                    {/*        <Grid item>*/}
+                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"*/}
+                    {/*                    disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>*/}
+                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Copy Pine Script"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+
+                    {/*            <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>*/}
+                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Download CSV"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Formula #3, weighted RRP (Unverified)</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processCombinedChartData2()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: false,*/}
+                    {/*                        min: processCombinedChartData2().minValue - 10000,*/}
+                    {/*                        max: processCombinedChartData2().maxValue + 10000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processCombinedChartData2().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*    <Grid container item justifyContent="center">*/}
+                    {/*        <Grid item>*/}
+                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"*/}
+                    {/*                    disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>*/}
+                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Copy Pine Script"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+
+                    {/*            <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>*/}
+                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
+                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
+                    {/*                ) : (*/}
+                    {/*                    "Download CSV"*/}
+                    {/*                )}*/}
+                    {/*            </Button>*/}
+                    {/*        </Grid>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
+
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Treasury General Account (TGA) Closing Balance</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processTgaChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            // eslint-disable-next-line no-useless-concat
+                                            text: 'TGA' /*+ (jwtParsed?.name ? jwtParsed?.name : "")*/ + ' Closing Balance Over Time (Millions)',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: true,
+                                            min: processTgaChartData().minValue - 5000,
+                                            max: processTgaChartData().maxValue + 5000,
+                                        },
+                                    },
+                                }}
+                                plugins={[watermarkPlugin]}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processTgaChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+                    {/*<Grid*/}
+                    {/*    item*/}
+                    {/*    xs={11 / parseFloat(tabValue)}*/}
+                    {/*    justifyContent="center"*/}
+                    {/*>*/}
+                    {/*    <h1>Treasury General Account (TGA) Opening Balance</h1>*/}
+                    {/*    <Grid item xs={12}>*/}
+                    {/*        <Line*/}
+                    {/*            data={processTgaChartData2()}*/}
+                    {/*            options={{*/}
+                    {/*                responsive: true,*/}
+                    {/*                plugins: {*/}
+                    {/*                    legend: {*/}
+                    {/*                        position: 'top',*/}
+                    {/*                    },*/}
+                    {/*                    title: {*/}
+                    {/*                        display: true,*/}
+                    {/*                        text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Opening Balance Over Time (Millions)',*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*                scales: {*/}
+                    {/*                    x: {*/}
+                    {/*                        type: 'time',*/}
+                    {/*                        time: {*/}
+                    {/*                            unit: 'day',*/}
+                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
+                    {/*                        },*/}
+                    {/*                    },*/}
+                    {/*                    y: {*/}
+                    {/*                        beginAtZero: true,*/}
+                    {/*                        min: processTgaChartData2().minValue - 5000,*/}
+                    {/*                        max: processTgaChartData2().maxValue + 5000,*/}
+                    {/*                    },*/}
+                    {/*                },*/}
+                    {/*            }}*/}
+                    {/*            plugins={[watermarkPlugin]}*/}
+                    {/*        />*/}
+                    {/*        <Typography variant="body1" align="center">*/}
+                    {/*            Latest Date: {processTgaChartData2().latestDate}*/}
+                    {/*        </Typography>*/}
+                    {/*    </Grid>*/}
+                    {/*</Grid>*/}
+
+
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Factors Affecting Reserve Balances:</h1>
+                        <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processWalChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'WALCL (Millions)',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processWalChartData().minValue - 3000,
+                                            max: processWalChartData().maxValue + 3000,
+                                        },
+                                    },
+                                }}
+                                plugins={[watermarkPlugin]}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processWalChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Overnight Reverse Repurchase Agreements:</h1>
+                        <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processRrpChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'RRPONTSYD (Millions)',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processRrpChartData().minValue - 10000,
+                                            max: processRrpChartData().maxValue + 10000,
+                                        },
+                                    },
+                                }}
+                                plugins={[watermarkPlugin]}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processRrpChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Factors Affecting Reserve Balances: Reserve Bank Credit:</h1>
+                        <h1>Liquidity and Credit Facilities: Loans on Wednesdays (H41RESPPALDKNWW)</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processH4ChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'H41RESPPALDKNWW (Millions)',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processH4ChartData().minValue - 200,
+                                            max: processH4ChartData().maxValue + 200,
+                                        },
+                                    },
+                                }}
+                                plugins={[watermarkPlugin]}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processH4ChartData().latestDate}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+
+
+                    <Grid
+                        item
+                        xs={11 / parseFloat(tabValue)}
+                        justifyContent="center"
+                    >
+                        <h1>Assets: Liquidity and Credit Facilities:</h1>
+                        <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
+                        <Grid item xs={12}>
+                            <Line
+                                data={processWlcChartData()}
+                                options={{
+                                    responsive: true,
+                                    plugins: {
+                                        legend: {
+                                            position: 'top',
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'WLCFLPCL (Millions)',
+                                        },
+                                    },
+                                    scales: {
+                                        x: {
+                                            type: 'time',
+                                            time: {
+                                                unit: 'day',
+                                                tooltipFormat: 'MM/dd/yyyy',
+                                            },
+                                        },
+                                        y: {
+                                            beginAtZero: false,
+                                            min: processWlcChartData().minValue - 500,
+                                            max: processWlcChartData().maxValue + 500,
+                                        },
+                                    },
+                                }}
+                                plugins={[watermarkPlugin]}
+                            />
+                            <Typography variant="body1" align="center">
+                                Latest Date: {processWlcChartData().latestDate}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Grid>
-                {/*<Grid*/}
-                {/*    item*/}
-                {/*    xs={11 / parseFloat(tabValue)}*/}
-                {/*    justifyContent="center"*/}
-                {/*>*/}
-                {/*    <h1>Formula #2, TGA Opening Balance (Unverified)</h1>*/}
-                {/*    <Grid item xs={12}>*/}
-                {/*        <Line*/}
-                {/*            data={processCombinedChartData3()}*/}
-                {/*            options={{*/}
-                {/*                responsive: true,*/}
-                {/*                plugins: {*/}
-                {/*                    legend: {*/}
-                {/*                        position: 'top',*/}
-                {/*                    },*/}
-                {/*                    title: {*/}
-                {/*                        display: true,*/}
-                {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
-                {/*                    },*/}
-                {/*                },*/}
-                {/*                scales: {*/}
-                {/*                    x: {*/}
-                {/*                        type: 'time',*/}
-                {/*                        time: {*/}
-                {/*                            unit: 'day',*/}
-                {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
-                {/*                        },*/}
-                {/*                    },*/}
-                {/*                    y: {*/}
-                {/*                        beginAtZero: false,*/}
-                {/*                        min: processCombinedChartData3().minValue - 10000,*/}
-                {/*                        max: processCombinedChartData3().maxValue + 10000,*/}
-                {/*                    },*/}
-                {/*                },*/}
-                {/*            }}*/}
-                {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
-                {/*        />*/}
-                {/*        <Typography variant="body1" align="center">*/}
-                {/*            Latest Date: {processCombinedChartData3().latestDate}*/}
-                {/*        </Typography>*/}
-                {/*    </Grid>*/}
-                {/*    <Grid container item justifyContent="center">*/}
-                {/*        <Grid item>*/}
-                {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"*/}
-                {/*                    disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>*/}
-                {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
-                {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                {/*                ) : (*/}
-                {/*                    "Copy Pine Script"*/}
-                {/*                )}*/}
-                {/*            </Button>*/}
-
-                {/*            <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>*/}
-                {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
-                {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                {/*                ) : (*/}
-                {/*                    "Download CSV"*/}
-                {/*                )}*/}
-                {/*            </Button>*/}
-                {/*        </Grid>*/}
-                {/*    </Grid>*/}
-                {/*</Grid>*/}
-                {/*<Grid*/}
-                {/*    item*/}
-                {/*    xs={11 / parseFloat(tabValue)}*/}
-                {/*    justifyContent="center"*/}
-                {/*>*/}
-                {/*    <h1>Formula #3, weighted RRP (Unverified)</h1>*/}
-                {/*    <Grid item xs={12}>*/}
-                {/*        <Line*/}
-                {/*            data={processCombinedChartData2()}*/}
-                {/*            options={{*/}
-                {/*                responsive: true,*/}
-                {/*                plugins: {*/}
-                {/*                    legend: {*/}
-                {/*                        position: 'top',*/}
-                {/*                    },*/}
-                {/*                    title: {*/}
-                {/*                        display: true,*/}
-                {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
-                {/*                    },*/}
-                {/*                },*/}
-                {/*                scales: {*/}
-                {/*                    x: {*/}
-                {/*                        type: 'time',*/}
-                {/*                        time: {*/}
-                {/*                            unit: 'day',*/}
-                {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
-                {/*                        },*/}
-                {/*                    },*/}
-                {/*                    y: {*/}
-                {/*                        beginAtZero: false,*/}
-                {/*                        min: processCombinedChartData2().minValue - 10000,*/}
-                {/*                        max: processCombinedChartData2().maxValue + 10000,*/}
-                {/*                    },*/}
-                {/*                },*/}
-                {/*            }}*/}
-                {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
-                {/*        />*/}
-                {/*        <Typography variant="body1" align="center">*/}
-                {/*            Latest Date: {processCombinedChartData2().latestDate}*/}
-                {/*        </Typography>*/}
-                {/*    </Grid>*/}
-                {/*    <Grid container item justifyContent="center">*/}
-                {/*        <Grid item>*/}
-                {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"*/}
-                {/*                    disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>*/}
-                {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
-                {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                {/*                ) : (*/}
-                {/*                    "Copy Pine Script"*/}
-                {/*                )}*/}
-                {/*            </Button>*/}
-
-                {/*            <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>*/}
-                {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
-                {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                {/*                ) : (*/}
-                {/*                    "Download CSV"*/}
-                {/*                )}*/}
-                {/*            </Button>*/}
-                {/*        </Grid>*/}
-                {/*    </Grid>*/}
-                {/*</Grid>*/}
-
-                <Grid
-                    item
-                    xs={11 / parseFloat(tabValue)}
-                    justifyContent="center"
-                >
-                    <h1>Treasury General Account (TGA) Closing Balance</h1>
-                    <Grid item xs={12}>
-                        <Line
-                            data={processTgaChartData()}
-                            options={{
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        // eslint-disable-next-line no-useless-concat
-                                        text: 'TGA' /*+ (jwtParsed?.name ? jwtParsed?.name : "")*/ + ' Closing Balance Over Time (Millions)',
-                                    },
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day',
-                                            tooltipFormat: 'MM/dd/yyyy',
-                                        },
-                                    },
-                                    y: {
-                                        beginAtZero: true,
-                                        min: processTgaChartData().minValue - 5000,
-                                        max: processTgaChartData().maxValue + 5000,
-                                    },
-                                },
-                            }}
-                            plugins={[watermarkPlugin]}
-                        />
-                        <Typography variant="body1" align="center">
-                            Latest Date: {processTgaChartData().latestDate}
-                        </Typography>
-                    </Grid>
-                </Grid>
-
-                {/*<Grid*/}
-                {/*    item*/}
-                {/*    xs={11 / parseFloat(tabValue)}*/}
-                {/*    justifyContent="center"*/}
-                {/*>*/}
-                {/*    <h1>Treasury General Account (TGA) Opening Balance</h1>*/}
-                {/*    <Grid item xs={12}>*/}
-                {/*        <Line*/}
-                {/*            data={processTgaChartData2()}*/}
-                {/*            options={{*/}
-                {/*                responsive: true,*/}
-                {/*                plugins: {*/}
-                {/*                    legend: {*/}
-                {/*                        position: 'top',*/}
-                {/*                    },*/}
-                {/*                    title: {*/}
-                {/*                        display: true,*/}
-                {/*                        text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Opening Balance Over Time (Millions)',*/}
-                {/*                    },*/}
-                {/*                },*/}
-                {/*                scales: {*/}
-                {/*                    x: {*/}
-                {/*                        type: 'time',*/}
-                {/*                        time: {*/}
-                {/*                            unit: 'day',*/}
-                {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
-                {/*                        },*/}
-                {/*                    },*/}
-                {/*                    y: {*/}
-                {/*                        beginAtZero: true,*/}
-                {/*                        min: processTgaChartData2().minValue - 5000,*/}
-                {/*                        max: processTgaChartData2().maxValue + 5000,*/}
-                {/*                    },*/}
-                {/*                },*/}
-                {/*            }}*/}
-                {/*            plugins={[watermarkPlugin]}*/}
-                {/*        />*/}
-                {/*        <Typography variant="body1" align="center">*/}
-                {/*            Latest Date: {processTgaChartData2().latestDate}*/}
-                {/*        </Typography>*/}
-                {/*    </Grid>*/}
-                {/*</Grid>*/}
-
-
-                <Grid
-                    item
-                    xs={11 / parseFloat(tabValue)}
-                    justifyContent="center"
-                >
-                    <h1>Factors Affecting Reserve Balances:</h1>
-                    <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
-                    <Grid item xs={12}>
-                        <Line
-                            data={processWalChartData()}
-                            options={{
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'WALCL (Millions)',
-                                    },
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day',
-                                            tooltipFormat: 'MM/dd/yyyy',
-                                        },
-                                    },
-                                    y: {
-                                        beginAtZero: false,
-                                        min: processWalChartData().minValue - 3000,
-                                        max: processWalChartData().maxValue + 3000,
-                                    },
-                                },
-                            }}
-                            plugins={[watermarkPlugin]}
-                        />
-                        <Typography variant="body1" align="center">
-                            Latest Date: {processWalChartData().latestDate}
-                        </Typography>
-                    </Grid>
-                </Grid>
-
-
-                <Grid
-                    item
-                    xs={11 / parseFloat(tabValue)}
-                    justifyContent="center"
-                >
-                    <h1>Overnight Reverse Repurchase Agreements:</h1>
-                    <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
-                    <Grid item xs={12}>
-                        <Line
-                            data={processRrpChartData()}
-                            options={{
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'RRPONTSYD (Millions)',
-                                    },
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day',
-                                            tooltipFormat: 'MM/dd/yyyy',
-                                        },
-                                    },
-                                    y: {
-                                        beginAtZero: false,
-                                        min: processRrpChartData().minValue - 10000,
-                                        max: processRrpChartData().maxValue + 10000,
-                                    },
-                                },
-                            }}
-                            plugins={[watermarkPlugin]}
-                        />
-                        <Typography variant="body1" align="center">
-                            Latest Date: {processRrpChartData().latestDate}
-                        </Typography>
-                    </Grid>
-                </Grid>
-
-
-                <Grid
-                    item
-                    xs={11 / parseFloat(tabValue)}
-                    justifyContent="center"
-                >
-                    <h1>Factors Affecting Reserve Balances: Reserve Bank Credit:</h1>
-                    <h1>Liquidity and Credit Facilities: Loans on Wednesdays (H41RESPPALDKNWW)</h1>
-                    <Grid item xs={12}>
-                        <Line
-                            data={processH4ChartData()}
-                            options={{
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'H41RESPPALDKNWW (Millions)',
-                                    },
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day',
-                                            tooltipFormat: 'MM/dd/yyyy',
-                                        },
-                                    },
-                                    y: {
-                                        beginAtZero: false,
-                                        min: processH4ChartData().minValue - 200,
-                                        max: processH4ChartData().maxValue + 200,
-                                    },
-                                },
-                            }}
-                            plugins={[watermarkPlugin]}
-                        />
-                        <Typography variant="body1" align="center">
-                            Latest Date: {processH4ChartData().latestDate}
-                        </Typography>
-                    </Grid>
-                </Grid>
-
-
-                <Grid
-                    item
-                    xs={11 / parseFloat(tabValue)}
-                    justifyContent="center"
-                >
-                    <h1>Assets: Liquidity and Credit Facilities:</h1>
-                    <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
-                    <Grid item xs={12}>
-                        <Line
-                            data={processWlcChartData()}
-                            options={{
-                                responsive: true,
-                                plugins: {
-                                    legend: {
-                                        position: 'top',
-                                    },
-                                    title: {
-                                        display: true,
-                                        text: 'WLCFLPCL (Millions)',
-                                    },
-                                },
-                                scales: {
-                                    x: {
-                                        type: 'time',
-                                        time: {
-                                            unit: 'day',
-                                            tooltipFormat: 'MM/dd/yyyy',
-                                        },
-                                    },
-                                    y: {
-                                        beginAtZero: false,
-                                        min: processWlcChartData().minValue - 500,
-                                        max: processWlcChartData().maxValue + 500,
-                                    },
-                                },
-                            }}
-                            plugins={[watermarkPlugin]}
-                        />
-                        <Typography variant="body1" align="center">
-                            Latest Date: {processWlcChartData().latestDate}
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </Grid>
+            )}
 
             <Snackbar
                 open={openSnackbar}
