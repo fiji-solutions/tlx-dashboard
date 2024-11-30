@@ -37,7 +37,7 @@ const LiquidityValuationIndicator = () => {
     }, [imageUrls]);
 
     return (
-        <div className="App">
+        <div className="App" style={{"min-height": "2000px"}}>
             <Snowfall
                 color={"black"}
             />
