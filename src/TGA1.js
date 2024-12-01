@@ -2428,10 +2428,14 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
     //     document.body.removeChild(link);
     // }
 
+    const snowflake = document.createElement('img');
+    snowflake.src = '/snowflake.png';
+
     return (
         <div className="App" style={{"min-height": "2000px"}}>
             <Snowfall
-                color={"black"}
+                images={[snowflake]}
+                radius={[10, 15.0]}
             />
             <h1>{"NET FED Liquidity Formulas" /*+ (!isLoggedIn ? " (LAGGING)" : "")*/}</h1>
             {/*{!isLoggedIn && (*/}

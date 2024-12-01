@@ -36,10 +36,14 @@ const LiquidityValuationIndicator = () => {
         fetchDates();
     }, [imageUrls]);
 
+    const snowflake = document.createElement('img');
+    snowflake.src = '/snowflake.png';
+
     return (
         <div className="App" style={{"min-height": "2000px"}}>
             <Snowfall
-                color={"black"}
+                images={[snowflake]}
+                radius={[10, 15.0]}
             />
             <h1>{"Liquidity Valuation Indicator"}</h1>
             <Grid container spacing={2} justifyContent="center">

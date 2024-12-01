@@ -700,10 +700,14 @@ const App = () => {
         }
     }, [interval]);
 
+    const snowflake = document.createElement('img');
+    snowflake.src = '/snowflake.png';
+
     return (
         <div className="App">
             <Snowfall
-                color={"black"}
+                images={[snowflake]}
+                radius={[10, 15.0]}
             />
             <h1>
                 TLX & Toros Performance Analysis
