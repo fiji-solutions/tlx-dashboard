@@ -1,0 +1,34 @@
+/* Add this to your CSS file */
+.creator-section {
+    display: flex;
+    align-items: center;
+    margin-right: 16px !important;
+    margin-top: 8px !important;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.creator-section:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+.creator-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 0 8px;
+    vertical-align: middle;
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.creator-name {
+    font-weight: bold;
+    color: #007BFF; /* Adjust the color as needed */
+    transition: color 0.2s ease;
+}
+
+.creator-section:hover .creator-name {
+    color: #0056b3; /* Slightly darker color on hover */
+}
