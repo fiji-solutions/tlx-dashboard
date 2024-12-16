@@ -11,6 +11,7 @@ import TGA1 from "./TGA1";
 import Jupiter from "./Jupiter";
 import LiquidityValuationIndicator from "./LVI";
 import AddDataForm from "./LVIForm";
+import TradingViewExperiments from "./TradingViewExperiments";
 // import TGA4 from "./TGA4";
 
 const Root = () => {
@@ -30,6 +31,7 @@ const Root = () => {
                 <Route path="/lst" element={<Jupiter/>}/>
                 <Route path="/liquidity-valuation-indicators" element={<LiquidityValuationIndicator/>}/>
                 <Route path="/liquidity-valuation-indicators-form" element={<AddDataForm/>}/>
+                <Route path="/trading-view-experiments" element={<TradingViewExperiments/>}/>
             </Routes>
 
             {location.pathname !== '/solana-lst' && (
