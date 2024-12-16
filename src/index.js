@@ -34,7 +34,7 @@ const Root = () => {
                 <Route path="/trading-view-experiments" element={<TradingViewExperiments/>}/>
             </Routes>
 
-            {location.pathname !== '/solana-lst' && (
+            {location.pathname !== '/solana-lst' && location.pathname !== '/trading-view-experiments' && (
                 <>
                     <hr/>
                     <p style={{marginLeft: "8px"}}>
