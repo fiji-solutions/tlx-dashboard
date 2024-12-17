@@ -1,13 +1,44 @@
 import React, { useState } from 'react';
-import { TextField, Button, Grid, Typography } from '@mui/material';
+import {TextField, Button, Grid, Typography, CircularProgress, Snackbar} from '@mui/material';
+import {DataGrid} from "@mui/x-data-grid";
 
 const AddDataForm = () => {
+    const [loading, setLoading] = useState(false);
+    const [rows, setRows] = useState([]);
     const [date, setDate] = useState('');
     const [globalLiquidity, setGlobalLiquidity] = useState('');
     const [bitcoinPrice, setBitcoinPrice] = useState('');
     const [goldPrice, setGoldPrice] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    const columns = [
+        { field: 'date', headerName: 'Date', width: 100 },
+        { field: 'bitcoin_price', headerName: 'Bitcoin Price', width: 100 },
+        { field: 'global_liquidity', headerName: 'Global Liquidity', width: 100 },
+        { field: 'gold_price', headerName: 'Gold Price', width: 100 },
+    ];
+
+    const fetchData = async () => {
+        setLoading(true);
+        try {
+            const queryParams = new URLSearchParams();
+            if (password) queryParams.append('password', password);
+
+            const response = await fetch(`https://api.fijisolutions.net/get-data?${queryParams.toString()}`);
+            const data = await response.json();
+            // Assuming the API response provides a flat array of records
+            setRows(data["data"]);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setSnackbarMessage('Failed to fetch data. Please try again later.');
+            setOpenSnackbar(true);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -44,6 +75,13 @@ const AddDataForm = () => {
         } catch (error) {
             setMessage('An error occurred. Please try again.');
         }
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
     };
 
     return (
@@ -101,12 +139,39 @@ const AddDataForm = () => {
                         Submit
                     </Button>
                 </Grid>
+                <Grid item xs={12}>
+                    <Button variant="contained" color="primary" onClick={fetchData}>
+                        Fetch Data
+                    </Button>
+                </Grid>
                 {message && (
                     <Grid item xs={12}>
                         <Typography variant="body1">{message}</Typography>
                     </Grid>
                 )}
             </Grid>
+
+            {loading ? (
+                <CircularProgress />
+            ) : (
+                <div style={{ height: 600, width: '100%' }}>
+                    <DataGrid
+                        getRowId={(row) => row.date}
+                        rows={rows}
+                        columns={columns}
+                        pageSize={10}
+                        rowsPerPageOptions={[10]}
+                        disableSelectionOnClick
+                    />
+                </div>
+            )}
+
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                message={snackbarMessage}
+            />
         </div>
     );
 };
