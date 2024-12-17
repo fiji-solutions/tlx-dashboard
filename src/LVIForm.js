@@ -15,10 +15,10 @@ const AddDataForm = () => {
     const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const columns = [
-        { field: 'date', headerName: 'Date', width: 100 },
-        { field: 'bitcoin_price', headerName: 'Bitcoin Price', width: 100 },
-        { field: 'global_liquidity', headerName: 'Global Liquidity', width: 100 },
-        { field: 'gold_price', headerName: 'Gold Price', width: 100 },
+        { field: 'date', headerName: 'Date', width: 400 },
+        { field: 'bitcoin_price', headerName: 'Bitcoin Price', width: 400 },
+        { field: 'global_liquidity', headerName: 'Global Liquidity', width: 400 },
+        { field: 'gold_price', headerName: 'Gold Price', width: 400 },
     ];
 
     const fetchData = async () => {
