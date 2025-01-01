@@ -33,7 +33,7 @@ const NavTabs = () => {
             >
                 <span>Created by</span>
                 <img
-                    src="https://d2l35o8v06vi7z.cloudfront.net/fiji/fiji_xmas.png"
+                    src="https://d2l35o8v06vi7z.cloudfront.net/fiji/fiji2.png"
                     alt="Fiji Icon"
                     className="creator-icon"
                 />

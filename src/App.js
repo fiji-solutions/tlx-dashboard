@@ -22,7 +22,6 @@ import "./App.css";
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
-import {Snowfall} from "react-snowfall";
 
 const App = () => {
     const [datasets, setDatasets] = useState([]);
@@ -705,10 +704,6 @@ const App = () => {
 
     return (
         <div className="App">
-            <Snowfall
-                images={[snowflake]}
-                radius={[10, 15.0]}
-            />
             <h1>
                 TLX & Toros Performance Analysis
             </h1>

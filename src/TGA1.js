@@ -8,7 +8,6 @@ import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
 import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
 import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-import {Snowfall} from "react-snowfall";
 // import {CognitoRefreshToken, CognitoUser} from "amazon-cognito-identity-js";
 // import {UserPool} from "./UserPool";
 // import {Link} from "react-router-dom";
@@ -2433,10 +2432,6 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
 
     return (
         <div className="App" style={{"min-height": "2000px"}}>
-            <Snowfall
-                images={[snowflake]}
-                radius={[10, 15.0]}
-            />
             <h1>{"NET FED Liquidity Formulas" /*+ (!isLoggedIn ? " (LAGGING)" : "")*/}</h1>
             {/*{!isLoggedIn && (*/}
             {/*    <>*/}
