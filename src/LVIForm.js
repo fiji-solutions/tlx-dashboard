@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {TextField, Button, Grid, Typography, CircularProgress, Snackbar} from '@mui/material';
+import {TextField, Button, Grid, Typography, CircularProgress, Snackbar, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
 import {DataGrid} from "@mui/x-data-grid";
 
 const AddDataForm = () => {
@@ -13,12 +13,28 @@ const AddDataForm = () => {
     const [message, setMessage] = useState('');
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [openDialog, setOpenDialog] = useState(false);
+    const [selectedDateToDelete, setSelectedDateToDelete] = useState(null);
 
     const columns = [
         { field: 'date', headerName: 'Date', width: 400 },
         { field: 'bitcoin_price', headerName: 'Bitcoin Price', width: 400 },
         { field: 'global_liquidity', headerName: 'Global Liquidity', width: 400 },
         { field: 'gold_price', headerName: 'Gold Price', width: 400 },
+        {
+            field: 'actions',
+            headerName: 'Actions',
+            width: 150,
+            renderCell: (params) => (
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => confirmDelete(params.row.date)}
+                >
+                    Delete
+                </Button>
+            )
+        }
     ];
 
     const fetchData = async () => {
@@ -69,6 +85,7 @@ const AddDataForm = () => {
                 setBitcoinPrice('');
                 setGoldPrice('');
                 setPassword('');
+                fetchData(); // Refresh the data grid
             } else {
                 setMessage(`Error: ${result.error}`);
             }
@@ -77,11 +94,49 @@ const AddDataForm = () => {
         }
     };
 
+    const confirmDelete = (dateToDelete) => {
+        setSelectedDateToDelete(dateToDelete);
+        setOpenDialog(true);
+    };
+
+    const handleDelete = async () => {
+        setOpenDialog(false);
+        try {
+            const response = await fetch('https://api.fijisolutions.net/delete-data', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    date: selectedDateToDelete,
+                    password,
+                }),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                setSnackbarMessage('Data deleted successfully!');
+                setOpenSnackbar(true);
+                fetchData(); // Refresh the data grid
+            } else {
+                setSnackbarMessage(`Error: ${result.error}`);
+                setOpenSnackbar(true);
+            }
+        } catch (error) {
+            setSnackbarMessage('An error occurred while deleting the data. Please try again.');
+            setOpenSnackbar(true);
+        }
+    };
+
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
         setOpenSnackbar(false);
+    };
+
+    const handleCloseDialog = () => {
+        setOpenDialog(false);
     };
 
     return (
@@ -172,6 +227,26 @@ const AddDataForm = () => {
                 onClose={handleCloseSnackbar}
                 message={snackbarMessage}
             />
+
+            <Dialog
+                open={openDialog}
+                onClose={handleCloseDialog}
+            >
+                <DialogTitle>Confirm Deletion</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you sure you want to delete the data for date {selectedDateToDelete}?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDelete} color="secondary">
+                        Delete
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     );
 };
