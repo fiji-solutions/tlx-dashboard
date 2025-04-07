@@ -1378,7 +1378,7 @@ const TGA1 = () => {
         };
         let count = 0;
         try {
-            const response1 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=RRPONTSYD`, {
+            const response1 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=RRPONTSYD`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -1395,7 +1395,7 @@ const TGA1 = () => {
             setRrpData(normalizedData1);
             count = 1;
 
-            const response2 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
+            const response2 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -1412,7 +1412,7 @@ const TGA1 = () => {
             setWlcData(normalizedData2);
             count = 2;
 
-            const response3 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
+            const response3 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -1429,7 +1429,7 @@ const TGA1 = () => {
             setH4Data(normalizedData3);
             count = 3;
 
-            const response4 = await fetch(`https://cors.fijisolutions.net:8080/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
+            const response4 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
