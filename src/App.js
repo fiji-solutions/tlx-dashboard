@@ -82,8 +82,11 @@ const App = () => {
     const [eth3xarb, setEth3xarb] = useState(false);
     const [steth4x, setSteth4x] = useState(false);
 
+    const [sol1xarb, setSol1xarb] = useState(false);
     const [sol2xopt, setSol2xopt] = useState(false);
     const [sol3xopt, setSol3xopt] = useState(false);
+    const [sol2xarb, setSol2xarb] = useState(false);
+    const [sol3xarb, setSol3xarb] = useState(false);
 
     const [sui2xopt, setSui2xopt] = useState(false);
 
@@ -345,6 +348,10 @@ const App = () => {
                 boolValue = !steth4x;
                 setSteth4x(!steth4x);
                 break;
+            case "SOL1XARB":
+                boolValue = !sol1xarb;
+                setSol1xarb(!sol1xarb);
+                break;
             case "SOL2XOPT":
                 boolValue = !sol2xopt;
                 setSol2xopt(!sol2xopt);
@@ -352,6 +359,14 @@ const App = () => {
             case "SOL3XOPT":
                 boolValue = !sol3xopt;
                 setSol3xopt(!sol3xopt);
+                break;
+            case "SOL2XARB":
+                boolValue = !sol2xarb;
+                setSol2xarb(!sol2xarb);
+                break;
+            case "SOL3XARB":
+                boolValue = !sol3xarb;
+                setSol3xarb(!sol3xarb);
                 break;
             case "SUI2XOPT":
                 boolValue = !sui2xopt;
@@ -525,8 +540,11 @@ const App = () => {
         "STETH2X": "2024-06-14",
         "STETH3X": "2024-06-14",
         "STETH4X": "2024-06-14",
+        "SOL1XARB": "2025-03-13",
         "SOL2XOPT": "2024-05-27",
         "SOL3XOPT": "2024-05-27",
+        "SOL2XARB": "2025-03-13",
+        "SOL3XARB": "2025-03-13",
         "SUI2XOPT": "2024-11-12",
         "DOGE2XOPT": "2024-11-13",
         "BTC1XPOL": "2024-05-01",
@@ -736,6 +754,7 @@ const App = () => {
                                 label="Interval"
                                 onChange={handleIntervalChange}
                                 disabled={loading}
+                                variant="outlined"
                             >
                                 <MenuItem value={"1h"}>1 Hour</MenuItem>
                                 <MenuItem value={"4h"}>4 Hours</MenuItem>
@@ -872,7 +891,7 @@ const App = () => {
                                  src={"https://toros.finance/icons/polygon-network.svg"}
                                  alt={"coin"}/>
                         </div>
-                        <span>BTC1XPOL BEAR</span>
+                        <span style={{ textDecoration: "line-through" }}>BTC1XPOL BEAR</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -1167,7 +1186,7 @@ const App = () => {
                                  src={"https://toros.finance/icons/polygon-network.svg"}
                                  alt={"coin"}/>
                         </div>
-                        <span>ETH1XPOL BEAR</span>
+                        <span style={{ textDecoration: "line-through" }}>ETH1XPOL BEAR</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -1422,6 +1441,43 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
+                            checked={sol1xarb}
+                            onChange={() => torosCheckboxClick("SOL1XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SOL1XARB BEAR</span>
+                    </Grid>
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                </Grid>
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
                             checked={sol2xopt}
                             onChange={() => torosCheckboxClick("SOL2XOPT")}
                             disabled={loading}
@@ -1466,6 +1522,52 @@ const App = () => {
                         </div>
                         <span>SOL3XOPT</span>
                     </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sol2xarb}
+                            onChange={() => torosCheckboxClick("SOL2XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SOL2XARB</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sol3xarb}
+                            onChange={() => torosCheckboxClick("SOL3XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SOL3XARB</span>
+                    </Grid>
                 </Grid>
                 <Grid
                     item
@@ -1494,7 +1596,7 @@ const App = () => {
                                  src={"https://toros.finance/icons/optimism-network.svg"}
                                  alt={"coin"}/>
                         </div>
-                        <span>SUI2XOPT</span>
+                        <span style={{ textDecoration: "line-through" }}>SUI2XOPT</span>
                     </Grid>
                 </Grid>
                 <Grid
@@ -1524,7 +1626,7 @@ const App = () => {
                                  src={"https://toros.finance/icons/optimism-network.svg"}
                                  alt={"coin"}/>
                         </div>
-                        <span>DOGE2XOPT</span>
+                        <span style={{ textDecoration: "line-through" }}>DOGE2XOPT</span>
                     </Grid>
                 </Grid>
 
