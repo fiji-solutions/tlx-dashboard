@@ -27,35 +27,35 @@ const App = () => {
     const [datasets, setDatasets] = useState([]);
     const [metrics, setMetrics] = useState([]);
 
-    const [btc1l, setBtc1l] = useState(false);
-    const [btc2l, setBtc2l] = useState(false);
-    const [btc3l, setBtc3l] = useState(false);
-    const [btc4l, setBtc4l] = useState(false);
-    const [btc5l, setBtc5l] = useState(false);
-    const [btc7l, setBtc7l] = useState(false);
-
-    const [eth1l, setEth1l] = useState(false);
-    const [eth2l, setEth2l] = useState(false);
-    const [eth3l, setEth3l] = useState(false);
-    const [eth4l, setEth4l] = useState(false);
-    const [eth5l, setEth5l] = useState(false);
-    const [eth7l, setEth7l] = useState(false);
-
-    const [sol1l, setSol1l] = useState(false);
-    const [sol2l, setSol2l] = useState(false);
-    const [sol3l, setSol3l] = useState(false);
-    const [sol4l, setSol4l] = useState(false);
-    const [sol5l, setSol5l] = useState(false);
-
-    const [doge2l, setDoge2l] = useState(false);
-    const [doge5l, setDoge5l] = useState(false);
-
-    const [ethbtc2l, setEthbtc2l] = useState(false);
-    const [ethbtc5l, setEthbtc5l] = useState(false);
-    const [ethbtc10l, setEthbtc10l] = useState(false);
-
-    const [sui2l, setSui2l] = useState(false);
-    const [sui5l, setSui5l] = useState(false);
+    // const [btc1l, setBtc1l] = useState(false);
+    // const [btc2l, setBtc2l] = useState(false);
+    // const [btc3l, setBtc3l] = useState(false);
+    // const [btc4l, setBtc4l] = useState(false);
+    // const [btc5l, setBtc5l] = useState(false);
+    // const [btc7l, setBtc7l] = useState(false);
+    //
+    // const [eth1l, setEth1l] = useState(false);
+    // const [eth2l, setEth2l] = useState(false);
+    // const [eth3l, setEth3l] = useState(false);
+    // const [eth4l, setEth4l] = useState(false);
+    // const [eth5l, setEth5l] = useState(false);
+    // const [eth7l, setEth7l] = useState(false);
+    //
+    // const [sol1l, setSol1l] = useState(false);
+    // const [sol2l, setSol2l] = useState(false);
+    // const [sol3l, setSol3l] = useState(false);
+    // const [sol4l, setSol4l] = useState(false);
+    // const [sol5l, setSol5l] = useState(false);
+    //
+    // const [doge2l, setDoge2l] = useState(false);
+    // const [doge5l, setDoge5l] = useState(false);
+    //
+    // const [ethbtc2l, setEthbtc2l] = useState(false);
+    // const [ethbtc5l, setEthbtc5l] = useState(false);
+    // const [ethbtc10l, setEthbtc10l] = useState(false);
+    //
+    // const [sui2l, setSui2l] = useState(false);
+    // const [sui5l, setSui5l] = useState(false);
 
     const [btc1xpol, setBtc1xpol] = useState(false);
     const [btc1xbase, setBtc1xbase] = useState(false);
@@ -118,7 +118,8 @@ const App = () => {
     const [spotDoge4, setSpotDoge4] = useState(false);
     const [spotDoge5, setSpotDoge5] = useState(false);
 
-    const [array,setArray] = useState([]);
+    const array = [];
+    // const [array,setArray] = useState([]);
     const [torosArray,setTorosArray] = useState([]);
     const [spotArray,setSpotArray] = useState([]);
 
@@ -134,124 +135,124 @@ const App = () => {
 
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/";
 
-    const checkboxClick = (asset) => {
-        let boolValue = false;
-        switch (asset) {
-            case "BTC1L":
-                boolValue = !btc1l;
-                setBtc1l(!btc1l);
-                break;
-            case "BTC2L":
-                boolValue = !btc2l;
-                setBtc2l(!btc2l);
-                break;
-            case "BTC3L":
-                boolValue = !btc3l;
-                setBtc3l(!btc3l);
-                break;
-            case "BTC4L":
-                boolValue = !btc4l;
-                setBtc4l(!btc4l);
-                break;
-            case "BTC5L":
-                boolValue = !btc5l;
-                setBtc5l(!btc5l);
-                break;
-            case "BTC7L":
-                boolValue = !btc7l;
-                setBtc7l(!btc7l);
-                break;
-
-            case "ETH1L":
-                boolValue = !eth1l;
-                setEth1l(!eth1l);
-                break;
-            case "ETH2L":
-                boolValue = !eth2l;
-                setEth2l(!eth2l);
-                break;
-            case "ETH3L":
-                boolValue = !eth3l;
-                setEth3l(!eth3l);
-                break;
-            case "ETH4L":
-                boolValue = !eth4l;
-                setEth4l(!eth4l);
-                break;
-            case "ETH5L":
-                boolValue = !eth5l;
-                setEth5l(!eth5l);
-                break;
-            case "ETH7L":
-                boolValue = !eth7l;
-                setEth7l(!eth7l);
-                break;
-
-            case "SOL1L":
-                boolValue = !sol1l;
-                setSol1l(!sol1l);
-                break;
-            case "SOL2L":
-                boolValue = !sol2l;
-                setSol2l(!sol2l);
-                break;
-            case "SOL3L":
-                boolValue = !sol3l;
-                setSol3l(!sol3l);
-                break;
-            case "SOL4L":
-                boolValue = !sol4l;
-                setSol4l(!sol4l);
-                break;
-            case "SOL5L":
-                boolValue = !sol5l;
-                setSol5l(!sol5l);
-                break;
-
-            case "DOGE2L":
-                boolValue = !doge2l;
-                setDoge2l(!doge2l);
-                break;
-
-            case "DOGE5L":
-                boolValue = !doge5l;
-                setDoge5l(!doge5l);
-                break;
-
-            case "ETHBTC2L":
-                boolValue = !ethbtc2l;
-                setEthbtc2l(!ethbtc2l);
-                break;
-
-            case "ETHBTC5L":
-                boolValue = !ethbtc5l;
-                setEthbtc5l(!ethbtc5l);
-                break;
-
-            case "ETHBTC10L":
-                boolValue = !ethbtc10l;
-                setEthbtc10l(!ethbtc10l);
-                break;
-
-            case "SUI2L":
-                boolValue = !sui2l;
-                setSui2l(!sui2l);
-                break;
-
-            case "SUI5L":
-                boolValue = !sui5l;
-                setSui5l(!sui5l);
-                break;
-            default:
-                break;
-        }
-
-        if (boolValue) {
-            setArray([...array, asset]);
-        } else {
-            setArray(array.filter(str => str !== asset));
-        }
-    };
+    // const checkboxClick = (asset) => {
+    //     let boolValue = false;
+    //     switch (asset) {
+    //         case "BTC1L":
+    //             boolValue = !btc1l;
+    //             setBtc1l(!btc1l);
+    //             break;
+    //         case "BTC2L":
+    //             boolValue = !btc2l;
+    //             setBtc2l(!btc2l);
+    //             break;
+    //         case "BTC3L":
+    //             boolValue = !btc3l;
+    //             setBtc3l(!btc3l);
+    //             break;
+    //         case "BTC4L":
+    //             boolValue = !btc4l;
+    //             setBtc4l(!btc4l);
+    //             break;
+    //         case "BTC5L":
+    //             boolValue = !btc5l;
+    //             setBtc5l(!btc5l);
+    //             break;
+    //         case "BTC7L":
+    //             boolValue = !btc7l;
+    //             setBtc7l(!btc7l);
+    //             break;
+    //
+    //         case "ETH1L":
+    //             boolValue = !eth1l;
+    //             setEth1l(!eth1l);
+    //             break;
+    //         case "ETH2L":
+    //             boolValue = !eth2l;
+    //             setEth2l(!eth2l);
+    //             break;
+    //         case "ETH3L":
+    //             boolValue = !eth3l;
+    //             setEth3l(!eth3l);
+    //             break;
+    //         case "ETH4L":
+    //             boolValue = !eth4l;
+    //             setEth4l(!eth4l);
+    //             break;
+    //         case "ETH5L":
+    //             boolValue = !eth5l;
+    //             setEth5l(!eth5l);
+    //             break;
+    //         case "ETH7L":
+    //             boolValue = !eth7l;
+    //             setEth7l(!eth7l);
+    //             break;
+    //
+    //         case "SOL1L":
+    //             boolValue = !sol1l;
+    //             setSol1l(!sol1l);
+    //             break;
+    //         case "SOL2L":
+    //             boolValue = !sol2l;
+    //             setSol2l(!sol2l);
+    //             break;
+    //         case "SOL3L":
+    //             boolValue = !sol3l;
+    //             setSol3l(!sol3l);
+    //             break;
+    //         case "SOL4L":
+    //             boolValue = !sol4l;
+    //             setSol4l(!sol4l);
+    //             break;
+    //         case "SOL5L":
+    //             boolValue = !sol5l;
+    //             setSol5l(!sol5l);
+    //             break;
+    //
+    //         case "DOGE2L":
+    //             boolValue = !doge2l;
+    //             setDoge2l(!doge2l);
+    //             break;
+    //
+    //         case "DOGE5L":
+    //             boolValue = !doge5l;
+    //             setDoge5l(!doge5l);
+    //             break;
+    //
+    //         case "ETHBTC2L":
+    //             boolValue = !ethbtc2l;
+    //             setEthbtc2l(!ethbtc2l);
+    //             break;
+    //
+    //         case "ETHBTC5L":
+    //             boolValue = !ethbtc5l;
+    //             setEthbtc5l(!ethbtc5l);
+    //             break;
+    //
+    //         case "ETHBTC10L":
+    //             boolValue = !ethbtc10l;
+    //             setEthbtc10l(!ethbtc10l);
+    //             break;
+    //
+    //         case "SUI2L":
+    //             boolValue = !sui2l;
+    //             setSui2l(!sui2l);
+    //             break;
+    //
+    //         case "SUI5L":
+    //             boolValue = !sui5l;
+    //             setSui5l(!sui5l);
+    //             break;
+    //         default:
+    //             break;
+    //     }
+    //
+    //     if (boolValue) {
+    //         setArray([...array, asset]);
+    //     } else {
+    //         setArray(array.filter(str => str !== asset));
+    //     }
+    // };
 
     const torosCheckboxClick = (asset) => {
         let boolValue = false;
