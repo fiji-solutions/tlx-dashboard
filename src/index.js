@@ -22,7 +22,8 @@ const Root = () => {
             {/* Conditionally render NavTabs based on the current path */}
             {location.pathname !== '/solana-lst' && <NavTabs/>}
             <Routes>
-                <Route path="/" element={<App/>}/>
+                <Route path="/" element={<TGA1/>}/>
+                <Route path="/toros" element={<App/>}/>
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes/>}/>
                 {/*<Route path="/rsps" element={<RSPS/>}/>*/}
                 <Route path="/liquidity" element={<TGA1/>}/>

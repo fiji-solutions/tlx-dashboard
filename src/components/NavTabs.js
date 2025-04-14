@@ -20,8 +20,8 @@ const NavTabs = () => {
             <Grid item>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                     <Tabs value={value} onChange={handleChange} aria-label="navigation tabs">
-                        <Tab label="Toros" value="/" component={Link} to="/" />
-                        <Tab label="Liquidity" value="/liquidity" component={Link} to="/liquidity" />
+                        <Tab label="Toros" value="/toros" component={Link} to="/toros" />
+                        <Tab label="Liquidity" value="/" component={Link} to="/" />
                         <Tab label="Liquidity Valuation Indicators" value="/liquidity-valuation-indicators" component={Link} to="/liquidity-valuation-indicators" />
                     </Tabs>
                 </Box>
