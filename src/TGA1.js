@@ -30,7 +30,7 @@ const TGA1 = () => {
     const [errorSource, setErrorSource] = useState("");
     const [startDate, setStartDate] = useState(dayjs().utc().add(-2, "M"));
     const [endDate, setEndDate] = useState(dayjs().utc());
-    const [tabValue, setTabValue] = useState('1.3');
+    const [tabValue, setTabValue] = useState('2');
     const [openSnackbar, setOpenSnackbar] = useState(false);
     // const [isLoggedIn, setIsLoggedIn] = useState(undefined);
     // const [jwtParsed, setJwtParsed] = useState({});
