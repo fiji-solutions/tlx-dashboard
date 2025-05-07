@@ -1808,10 +1808,6 @@ const TGA1 = () => {
             lastH4Value = h4Value;
             lastWlcValue = wlcValue;
 
-            if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
-                return 0;
-            }
-
             // Apply the formula
             return walValue - tgaValue - rrpValue + h4Value + wlcValue;
         });
@@ -1819,7 +1815,7 @@ const TGA1 = () => {
         const filteredData = [];
         const filteredDates = [];
 
-        for (let i = 0; i < combinedData.length; i++) {
+        for (let i = 1; i < combinedData.length; i++) {
             if (combinedData[i] !== 0) {
                 filteredData.push(combinedData[i]);
                 filteredDates.push(dates[i]);
