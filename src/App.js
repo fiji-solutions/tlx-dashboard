@@ -93,6 +93,7 @@ const App = () => {
     const [sol3xarb, setSol3xarb] = useState(false);
 
     const [sui2xopt, setSui2xopt] = useState(false);
+    const [sui2xarb, setSui2xarb] = useState(false);
 
     const [doge2xopt, setDoge2xopt] = useState(false);
 
@@ -381,6 +382,10 @@ const App = () => {
                 boolValue = !sui2xopt;
                 setSui2xopt(!sui2xopt);
                 break;
+            case "SUI2XARB":
+                boolValue = !sui2xarb;
+                setSui2xarb(!sui2xarb);
+                break;
             case "DOGE2XOPT":
                 boolValue = !doge2xopt;
                 setDoge2xopt(!doge2xopt);
@@ -556,6 +561,7 @@ const App = () => {
         "SOL2XARB": "2025-03-13",
         "SOL3XARB": "2025-03-13",
         "SUI2XOPT": "2024-11-12",
+        "SUI2XARB": "2025-05-21",
         "DOGE2XOPT": "2024-11-13",
         "BTC1XPOL": "2024-05-01",
         "BTC1XBASE": "2024-11-13",
@@ -1642,6 +1648,29 @@ const App = () => {
                         </div>
                         <span style={{ textDecoration: "line-through" }}>SUI2XOPT</span>
                     </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={sui2xarb}
+                            onChange={() => torosCheckboxClick("SUI2XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>SUI2XARB</span>
+                    </Grid>
                 </Grid>
                 <Grid
                     item
@@ -2225,7 +2254,7 @@ const App = () => {
                 {/*        <span>DOGE5L</span>*/}
                 {/*    </Grid>*/}
                 {/*</Grid>*/}
-                
+
                 {/*<Grid*/}
                 {/*    item*/}
                 {/*    container*/}
@@ -2289,7 +2318,7 @@ const App = () => {
                 {/*                style={{"height": "24px", "marginRight": "4px"}}*/}
                 {/*                src={"https://synthetixio.github.io/synthetix-assets/markets/ETHBTC.svg"}*/}
                 {/*                alt={"coin"}/>*/}
-                
+
                 {/*            <img style={{*/}
                 {/*                "height": "12px",*/}
                 {/*                "position": "absolute",*/}
