@@ -84,15 +84,18 @@ const App = () => {
     const [steth3x, setSteth3x] = useState(false);
     const [eth3xopt, setEth3xopt] = useState(false);
     const [eth3xarb, setEth3xarb] = useState(false);
+    const [eth4xarb, setEth4xarb] = useState(false);
     const [steth4x, setSteth4x] = useState(false);
 
     const [sol1xarb, setSol1xarb] = useState(false);
     const [sol2xopt, setSol2xopt] = useState(false);
     const [sol3xopt, setSol3xopt] = useState(false);
+    const [sol1xxarb, setSol1xxarb] = useState(false);
     const [sol2xarb, setSol2xarb] = useState(false);
     const [sol3xarb, setSol3xarb] = useState(false);
 
     const [sui2xopt, setSui2xopt] = useState(false);
+    const [sui1xxarb, setSui1xxarb] = useState(false);
     const [sui2xarb, setSui2xarb] = useState(false);
 
     const [doge2xopt, setDoge2xopt] = useState(false);
@@ -354,6 +357,10 @@ const App = () => {
                 boolValue = !eth3xarb;
                 setEth3xarb(!eth3xarb);
                 break;
+            case "ETH4XARB":
+                boolValue = !eth4xarb;
+                setEth4xarb(!eth4xarb);
+                break;
             case "STETH4X":
                 boolValue = !steth4x;
                 setSteth4x(!steth4x);
@@ -370,6 +377,10 @@ const App = () => {
                 boolValue = !sol3xopt;
                 setSol3xopt(!sol3xopt);
                 break;
+            case "SOL1XXARB":
+                boolValue = !sol1xxarb;
+                setSol1xxarb(!sol1xxarb);
+                break;
             case "SOL2XARB":
                 boolValue = !sol2xarb;
                 setSol2xarb(!sol2xarb);
@@ -381,6 +392,10 @@ const App = () => {
             case "SUI2XOPT":
                 boolValue = !sui2xopt;
                 setSui2xopt(!sui2xopt);
+                break;
+            case "SUI1XXARB":
+                boolValue = !sui1xxarb;
+                setSui1xxarb(!sui1xxarb);
                 break;
             case "SUI2XARB":
                 boolValue = !sui2xarb;
@@ -552,15 +567,18 @@ const App = () => {
         "ETH3XPOL": "2023-06-27",
         "ETH2XARB": "2024-07-16",
         "ETH3XARB": "2024-02-22",
+        "ETH4XARB": "2024-02-22",
         "STETH2X": "2024-06-14",
         "STETH3X": "2024-06-14",
         "STETH4X": "2024-06-14",
         "SOL1XARB": "2025-03-13",
         "SOL2XOPT": "2024-05-27",
         "SOL3XOPT": "2024-05-27",
+        "SOL1XXARB": "2025-03-13",
         "SOL2XARB": "2025-03-13",
         "SOL3XARB": "2025-03-13",
         "SUI2XOPT": "2024-11-12",
+        "SUI1XXARB": "2025-04-28",
         "SUI2XARB": "2025-04-28",
         "DOGE2XOPT": "2024-11-13",
         "BTC1XPOL": "2024-05-01",
@@ -897,29 +915,6 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={btc1xpol}
-                            onChange={() => torosCheckboxClick("BTC1XPOL")}
-                            disabled={loading}
-                        />
-                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
-                            <img
-                                style={{"height": "24px", "marginRight": "4px"}}
-                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
-                                alt={"coin"}/>
-                            <img style={{
-                                "height": "12px",
-                                "position": "absolute",
-                                "top": 0,
-                                "right": 0,
-                                "border-radius": "20px"
-                            }}
-                                 src={"https://toros.finance/icons/polygon-network.svg"}
-                                 alt={"coin"}/>
-                        </div>
-                        <span style={{ textDecoration: "line-through" }}>BTC1XPOL BEAR</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
                             checked={btc1xbase}
                             onChange={() => torosCheckboxClick("BTC1XBASE")}
                             disabled={loading}
@@ -1217,29 +1212,6 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={eth1xpol}
-                            onChange={() => torosCheckboxClick("ETH1XPOL")}
-                            disabled={loading}
-                        />
-                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
-                            <img
-                                style={{"height": "24px", "marginRight": "4px"}}
-                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
-                                alt={"coin"}/>
-                            <img style={{
-                                "height": "12px",
-                                "position": "absolute",
-                                "top": 0,
-                                "right": 0,
-                                "border-radius": "20px"
-                            }}
-                                 src={"https://toros.finance/icons/polygon-network.svg"}
-                                 alt={"coin"}/>
-                        </div>
-                        <span style={{ textDecoration: "line-through" }}>ETH1XPOL BEAR</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
                             checked={eth1xopt}
                             onChange={() => torosCheckboxClick("ETH1XOPT")}
                             disabled={loading}
@@ -1475,6 +1447,29 @@ const App = () => {
                         </div>
                         <span>ETH3XARB</span>
                     </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={eth4xarb}
+                            onChange={() => torosCheckboxClick("ETH4XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>ETH4XARB</span>
+                    </Grid>
                 </Grid>
                 <Grid
                     item
@@ -1528,8 +1523,8 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={sol2xopt}
-                            onChange={() => torosCheckboxClick("SOL2XOPT")}
+                            checked={sol1xxarb}
+                            onChange={() => torosCheckboxClick("SOL1XXARB")}
                             disabled={loading}
                         />
                         <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
@@ -1544,33 +1539,10 @@ const App = () => {
                                 "right": 0,
                                 "border-radius": "20px"
                             }}
-                                 src={"https://toros.finance/icons/optimism-network.svg"}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
                                  alt={"coin"}/>
                         </div>
-                        <span>SOL2XOPT</span>
-                    </Grid>
-                    <Grid item>
-                        <Checkbox
-                            checked={sol3xopt}
-                            onChange={() => torosCheckboxClick("SOL3XOPT")}
-                            disabled={loading}
-                        />
-                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
-                            <img
-                                style={{"height": "24px", "marginRight": "4px", "border-radius": "20px"}}
-                                src={"https://d2l35o8v06vi7z.cloudfront.net/SOL.webp"}
-                                alt={"coin"}/>
-                            <img style={{
-                                "height": "12px",
-                                "position": "absolute",
-                                "top": 0,
-                                "right": 0,
-                                "border-radius": "20px"
-                            }}
-                                 src={"https://toros.finance/icons/optimism-network.svg"}
-                                 alt={"coin"}/>
-                        </div>
-                        <span>SOL3XOPT</span>
+                        <span>SOL1XARB</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -1627,8 +1599,8 @@ const App = () => {
                 >
                     <Grid item>
                         <Checkbox
-                            checked={sui2xopt}
-                            onChange={() => torosCheckboxClick("SUI2XOPT")}
+                            checked={sui1xxarb}
+                            onChange={() => torosCheckboxClick("SUI1XXARB")}
                             disabled={loading}
                         />
                         <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
@@ -1646,7 +1618,7 @@ const App = () => {
                                  src={"https://toros.finance/icons/optimism-network.svg"}
                                  alt={"coin"}/>
                         </div>
-                        <span style={{ textDecoration: "line-through" }}>SUI2XOPT</span>
+                        <span>SUI1XARB</span>
                     </Grid>
                     <Grid item>
                         <Checkbox
@@ -1670,36 +1642,6 @@ const App = () => {
                                  alt={"coin"}/>
                         </div>
                         <span>SUI2XARB</span>
-                    </Grid>
-                </Grid>
-                <Grid
-                    item
-                    container
-                    direction={"column"}
-                    style={{"width": "unset"}}
-                >
-                    <Grid item>
-                        <Checkbox
-                            checked={doge2xopt}
-                            onChange={() => torosCheckboxClick("DOGE2XOPT")}
-                            disabled={loading}
-                        />
-                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
-                            <img
-                                style={{"height": "24px", "marginRight": "4px"}}
-                                src={"https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png"}
-                                alt={"coin"}/>
-                            <img style={{
-                                "height": "12px",
-                                "position": "absolute",
-                                "top": 0,
-                                "right": 0,
-                                "border-radius": "20px"
-                            }}
-                                 src={"https://toros.finance/icons/optimism-network.svg"}
-                                 alt={"coin"}/>
-                        </div>
-                        <span style={{ textDecoration: "line-through" }}>DOGE2XOPT</span>
                     </Grid>
                 </Grid>
 
