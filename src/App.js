@@ -72,6 +72,7 @@ const App = () => {
     const [btc3xopt, setBtc3xopt] = useState(false);
     const [btc3xarb, setBtc3xarb] = useState(false);
     const [btc4xopt, setBtc4xopt] = useState(false);
+    const [btc4xarb, setBtc4xarb] = useState(false);
     const [btccvrd2xarb, setBtccvrd2xarb] = useState(false);
 
     const [eth1xpol, setEth1xpol] = useState(false);
@@ -312,6 +313,10 @@ const App = () => {
             case "BTC4XOPT":
                 boolValue = !btc4xopt;
                 setBtc4xopt(!btc4xopt);
+                break;
+            case "BTC4XARB":
+                boolValue = !btc4xarb;
+                setBtc4xarb(!btc4xarb);
                 break;
             case "BTCCVRD2XARB":
                 boolValue = !btccvrd2xarb;
@@ -558,6 +563,7 @@ const App = () => {
         "BTC2XOPT": "2023-10-10",
         "BTC3XOPT": "2024-03-13",
         "BTC4XOPT": "2024-06-05",
+        "BTC4XARB": "2024-06-05",
         "BTCCVRD2XARB": "2025-03-12",
         "BTC3XPOL": "2023-06-27",
         "BTC2XARB": "2024-07-16",
@@ -567,18 +573,18 @@ const App = () => {
         "ETH3XPOL": "2023-06-27",
         "ETH2XARB": "2024-07-16",
         "ETH3XARB": "2024-02-22",
-        "ETH4XARB": "2024-02-22",
+        "ETH4XARB": "2025-03-19",
         "STETH2X": "2024-06-14",
         "STETH3X": "2024-06-14",
         "STETH4X": "2024-06-14",
         "SOL1XARB": "2025-03-13",
         "SOL2XOPT": "2024-05-27",
         "SOL3XOPT": "2024-05-27",
-        "SOL1XXARB": "2025-03-13",
+        "SOL1XXARB": "2025-05-12",
         "SOL2XARB": "2025-03-13",
         "SOL3XARB": "2025-03-13",
         "SUI2XOPT": "2024-11-12",
-        "SUI1XXARB": "2025-04-28",
+        "SUI1XXARB": "2025-05-09",
         "SUI2XARB": "2025-04-28",
         "DOGE2XOPT": "2024-11-13",
         "BTC1XPOL": "2024-05-01",
@@ -1175,6 +1181,29 @@ const App = () => {
                                  alt={"coin"}/>
                         </div>
                         <span>BTC3XARB</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc4xarb}
+                            onChange={() => torosCheckboxClick("BTC4XARB")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC4XARB</span>
                     </Grid>
                     {computeString(paramValue) === "2bf02_s3cr3t" && (
                         <Grid item>
