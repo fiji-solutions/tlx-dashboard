@@ -1288,6 +1288,19 @@ const App = () => {
                         </div>
                         <span>BTC Protected 3X</span>
                     </Grid>
+                    <Grid item style={{"marginTop": "12px", "textAlign": "center", "borderTop": "1px solid #eaeaea", "paddingTop": "10px"}}>
+                        <div style={{"marginBottom": "4px", "fontSize": "0.85rem", "color": "#666"}}>
+                            Read more about
+                        </div>
+                        <a
+                            href="https://x.com/torosfinance/status/1948284944880730309"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{"fontSize": "0.9rem", "fontWeight": "500", "color": "#1976d2", "textDecoration": "none"}}
+                        >
+                            Protected Leverage Vaults
+                        </a>
+                    </Grid>
                 </Grid>
 
 
