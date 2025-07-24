@@ -27,9 +27,6 @@ const App = () => {
     const [datasets, setDatasets] = useState([]);
     const [metrics, setMetrics] = useState([]);
 
-    const params = new URLSearchParams(window.location.search);
-    const paramValue = params.get("unlock");
-
     // const [btc1l, setBtc1l] = useState(false);
     // const [btc2l, setBtc2l] = useState(false);
     // const [btc3l, setBtc3l] = useState(false);
@@ -777,15 +774,6 @@ const App = () => {
 
     const snowflake = document.createElement('img');
     snowflake.src = '/snowflake.png';
-
-    const computeString = (input) => {
-        if (!input) return '';
-        let sum = 0;
-        for (let i = 0; i < input.length; i++) {
-            sum += input.charCodeAt(i) * (i + 3);
-        }
-        return (sum * 7).toString(16) + '_s3cr3t';
-    };
 
     return (
         <div className="App">
