@@ -2390,7 +2390,7 @@ const App = () => {
                         item
                         style={{"text-align": "center"}}
                     >
-                        <h2>Spots and No-Fee Perps</h2>
+                        <h2>Spot and No-Fee Perps</h2>
                     </Grid>
                 </Grid>
             </Grid>
