@@ -49,9 +49,9 @@ const TGA1 = () => {
             ctx.textBaseline = 'middle';
             ctx.translate(width / 2, height / 2);
             ctx.rotate(-Math.PI / 4);
-            ctx.fillText('WWW.JOINTHEREALWORLD.COM', 0, 0);
-            ctx.fillText('WWW.JOINTHEREALWORLD.COM', -width/5, -height/2.5);
-            ctx.fillText('WWW.JOINTHEREALWORLD.COM', width/5, height/2.5);
+            ctx.fillText('', 0, 0);
+            ctx.fillText('', -width/5, -height/2.5);
+            ctx.fillText('', width/5, height/2.5);
             ctx.restore();
         },
     };
@@ -2342,7 +2342,7 @@ const TGA1 = () => {
         const mostRecentDate = filledDates[filledDates.length - 1];
 
         let pineScript = `//@version=5
-indicator("WWW.JOINTHEREALWORLD.COM ${processCombinedChartData().datasets[0].label} Data Plot", overlay=true)
+indicator(" ${processCombinedChartData().datasets[0].label} Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.

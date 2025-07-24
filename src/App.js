@@ -74,6 +74,9 @@ const App = () => {
     const [btc4xopt, setBtc4xopt] = useState(false);
     const [btc4xarb, setBtc4xarb] = useState(false);
     const [btccvrd2xarb, setBtccvrd2xarb] = useState(false);
+    const [btc1xprotected, setBtc1xprotected] = useState(false);
+    const [btc2xprotected, setBtc2xprotected] = useState(false);
+    const [btc3xprotected, setBtc3xprotected] = useState(false);
 
     const [eth1xpol, setEth1xpol] = useState(false);
     const [eth1xopt, setEth1xopt] = useState(false);
@@ -322,6 +325,18 @@ const App = () => {
                 boolValue = !btccvrd2xarb;
                 setBtccvrd2xarb(!btccvrd2xarb);
                 break;
+            case "BTC1XPROTECTED":
+                boolValue = !btc1xprotected;
+                setBtc1xprotected(!btc1xprotected);
+                break;
+            case "BTC2XPROTECTED":
+                boolValue = !btc2xprotected;
+                setBtc2xprotected(!btc2xprotected);
+                break;
+            case "BTC3XPROTECTED":
+                boolValue = !btc3xprotected;
+                setBtc3xprotected(!btc3xprotected);
+                break;
             case "ETH1XPOL":
                 boolValue = !eth1xpol;
                 setEth1xpol(!eth1xpol);
@@ -565,6 +580,9 @@ const App = () => {
         "BTC4XOPT": "2024-06-05",
         "BTC4XARB": "2025-03-19",
         "BTCCVRD2XARB": "2025-03-12",
+        "BTC1XPROTECTED": "2025-06-12",
+        "BTC2XPROTECTED": "2025-06-12",
+        "BTC3XPROTECTED": "2025-06-12",
         "BTC3XPOL": "2023-06-27",
         "BTC2XARB": "2024-07-16",
         "BTC3XARB": "2024-02-22",
@@ -1205,31 +1223,83 @@ const App = () => {
                         </div>
                         <span>BTC4XARB</span>
                     </Grid>
-                    {computeString(paramValue) === "2bf02_s3cr3t" && (
-                        <Grid item>
-                            <Checkbox
-                                checked={btccvrd2xarb}
-                                onChange={() => torosCheckboxClick("BTCCVRD2XARB")}
-                                disabled={loading}
-                            />
-                            <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
-                                <img
-                                    style={{"height": "24px", "marginRight": "4px"}}
-                                    src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
-                                    alt={"coin"}/>
-                                <img style={{
-                                    "height": "12px",
-                                    "position": "absolute",
-                                    "top": 0,
-                                    "right": 0,
-                                    "border-radius": "20px"
-                                }}
-                                     src={"https://toros.finance/icons/arbitrum-network.svg"}
-                                     alt={"coin"}/>
-                            </div>
-                            <span>BTCCVRD2XARB</span>
-                        </Grid>
-                    )}
+                </Grid>
+
+                <Grid
+                    item
+                    container
+                    direction={"column"}
+                    style={{"width": "unset"}}
+                >
+                    <Grid item>
+                        <Checkbox
+                            checked={btc1xprotected}
+                            onChange={() => torosCheckboxClick("BTC1XPROTECTED")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC Protected 1X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc2xprotected}
+                            onChange={() => torosCheckboxClick("BTC2XPROTECTED")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC Protected 2X</span>
+                    </Grid>
+                    <Grid item>
+                        <Checkbox
+                            checked={btc3xprotected}
+                            onChange={() => torosCheckboxClick("BTC3XPROTECTED")}
+                            disabled={loading}
+                        />
+                        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+                            <img
+                                style={{"height": "24px", "marginRight": "4px"}}
+                                src={"https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp"}
+                                alt={"coin"}/>
+                            <img style={{
+                                "height": "12px",
+                                "position": "absolute",
+                                "top": 0,
+                                "right": 0,
+                                "border-radius": "20px"
+                            }}
+                                 src={"https://toros.finance/icons/arbitrum-network.svg"}
+                                 alt={"coin"}/>
+                        </div>
+                        <span>BTC Protected 3X</span>
+                    </Grid>
                 </Grid>
 
 
