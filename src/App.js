@@ -1288,7 +1288,7 @@ const App = () => {
                         </div>
                         <span>BTC Protected 3X</span>
                     </Grid>
-                    <Grid item style={{"marginTop": "12px", "textAlign": "center", "borderTop": "1px solid #eaeaea", "paddingTop": "10px"}}>
+                    <Grid item style={{"marginTop": "12px", "marginLeft": "50px", "textAlign": "center", "borderTop": "1px solid #eaeaea", "paddingTop": "10px"}}>
                         <div style={{"marginBottom": "4px", "fontSize": "0.85rem", "color": "#666"}}>
                             Read more about
                         </div>
