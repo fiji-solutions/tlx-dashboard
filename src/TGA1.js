@@ -48,37 +48,24 @@ const TGA1 = () => {
             const response = await fetch(`${domain}/tga1?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}`);
             const result = await response.json();
 
-            if (!Array.isArray(result) || result.length === 0) {
-                console.warn('No data received from API');
-                setDatasets([]);
-                return;
-            }
-
-            // Process the API response to create multiple chart datasets
-            const validData = result.filter(item => {
-                if (!item || !item.record_date) return false;
-                const date = new Date(item.record_date);
-                return !isNaN(date.getTime());
-            });
-
-            if (validData.length === 0) {
-                console.warn('No valid data after filtering');
-                setDatasets([]);
-                return;
-            }
-
-            // Create multiple datasets for different balance types
+            // Process the API response to match expected chart format
             const processedData = [
-                // TGA Opening Balance
                 {
-                    label: 'TGA Opening Balance',
-                    data: validData.map(item => {
+                    label: 'TGA Balance',
+                    data: result.map(item => {
+                        // Convert the record_date to a proper timestamp
                         const timestamp = new Date(item.record_date);
+                        // Use open_today_bal as the balance value (in millions)
                         const balance = parseFloat(item.open_today_bal) || 0;
+
                         return {
                             timestamp: timestamp.toISOString(),
                             balance: balance
                         };
+                    }).filter(item => {
+                        // Filter out invalid dates and ensure we have valid data
+                        const date = new Date(item.timestamp);
+                        return !isNaN(date.getTime()) && item.balance !== null;
                     }),
                     borderColor: theme.palette.primary.main,
                     backgroundColor: alpha(theme.palette.primary.main, 0.1),
@@ -86,82 +73,16 @@ const TGA1 = () => {
                     pointRadius: 0,
                     pointHoverRadius: 6,
                     tension: 0.1,
-                    fill: false
-                },
-                // TGA Closing Balance (if available)
-                {
-                    label: 'TGA Closing Balance',
-                    data: validData.map(item => {
-                        const timestamp = new Date(item.record_date);
-                        const balance = item.close_today_bal && item.close_today_bal !== "null" 
-                            ? parseFloat(item.close_today_bal) 
-                            : parseFloat(item.open_today_bal) || 0;
-                        return {
-                            timestamp: timestamp.toISOString(),
-                            balance: balance
-                        };
-                    }),
-                    borderColor: theme.palette.secondary.main,
-                    backgroundColor: alpha(theme.palette.secondary.main, 0.1),
-                    borderWidth: 3,
-                    pointRadius: 0,
-                    pointHoverRadius: 6,
-                    tension: 0.1,
-                    fill: false
-                },
-                // Monthly Opening Balance
-                {
-                    label: 'Monthly Opening Balance',
-                    data: validData.map(item => {
-                        const timestamp = new Date(item.record_date);
-                        const balance = parseFloat(item.open_month_bal) || 0;
-                        return {
-                            timestamp: timestamp.toISOString(),
-                            balance: balance
-                        };
-                    }),
-                    borderColor: theme.palette.success.main,
-                    backgroundColor: alpha(theme.palette.success.main, 0.1),
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    pointHoverRadius: 6,
-                    tension: 0.1,
-                    fill: false
-                },
-                // Fiscal Year Opening Balance
-                {
-                    label: 'Fiscal Year Opening Balance',
-                    data: validData.map(item => {
-                        const timestamp = new Date(item.record_date);
-                        const balance = parseFloat(item.open_fiscal_year_bal) || 0;
-                        return {
-                            timestamp: timestamp.toISOString(),
-                            balance: balance
-                        };
-                    }),
-                    borderColor: theme.palette.warning.main,
-                    backgroundColor: alpha(theme.palette.warning.main, 0.1),
-                    borderWidth: 2,
-                    pointRadius: 0,
-                    pointHoverRadius: 6,
-                    tension: 0.1,
-                    fill: false
+                    fill: true
                 }
             ];
 
-            // Create separate datasets for individual charts
-            const chartDatasets = {
-                dailyBalances: [processedData[0], processedData[1]], // Opening and Closing
-                monthlyComparison: [processedData[0], processedData[2]], // Daily vs Monthly
-                fiscalYearComparison: [processedData[0], processedData[3]], // Daily vs Fiscal Year
-                allBalances: processedData // All balances together
-            };
-
-            setDatasets(chartDatasets);
+            setDatasets(processedData);
             setLastUpdated(new Date());
         } catch (error) {
             console.error('Error fetching data:', error);
-            setDatasets({});
+            // Set empty datasets on error to prevent chart crashes
+            setDatasets([]);
         } finally {
             setLoading(false);
         }
@@ -184,8 +105,6 @@ const TGA1 = () => {
         { icon: <ViewQuiltOutlinedIcon />, value: "1.3", tooltip: "Compact Grid" },
         { icon: <GridViewOutlinedIcon />, value: "2", tooltip: "Two Columns" }
     ];
-
-    const hasData = datasets && Object.keys(datasets).length > 0;
 
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -220,8 +139,7 @@ const TGA1 = () => {
                         </Box>
 
                         <Typography variant="h6" color="text.secondary" sx={{ mb: 3, maxWidth: '800px' }}>
-                            Comprehensive analysis of U.S. Treasury General Account balances including daily, monthly, and fiscal year comparisons. 
-                            Track government cash flow and fiscal policy impacts on market liquidity.
+                            Track the U.S. Treasury General Account balance over time. This data provides insights into government cash flow and fiscal policy impacts on market liquidity.
                         </Typography>
 
                         {lastUpdated && (
@@ -345,10 +263,9 @@ const TGA1 = () => {
                     </Card>
 
                     {/* Charts Section */}
-                    {hasData && (
+                    {datasets.length > 0 && (
                         <Fade in timeout={1000}>
                             <Grid container spacing={3}>
-                                {/* Daily Opening vs Closing Balance */}
                                 <Grid item xs={12 / parseFloat(tabValue)}>
                                     <Card
                                         elevation={3}
@@ -360,71 +277,8 @@ const TGA1 = () => {
                                     >
                                         <CardContent sx={{ p: 0 }}>
                                             <CryptoChart
-                                                datasets={datasets.dailyBalances || []}
-                                                title="Daily TGA Balance - Opening vs Closing"
-                                                metric="balance"
-                                                showDatesOnly={true}
-                                            />
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                {/* Daily vs Monthly Opening Balance */}
-                                <Grid item xs={12 / parseFloat(tabValue)}>
-                                    <Card
-                                        elevation={3}
-                                        sx={{
-                                            borderRadius: 3,
-                                            overflow: 'hidden',
-                                            background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)'
-                                        }}
-                                    >
-                                        <CardContent sx={{ p: 0 }}>
-                                            <CryptoChart
-                                                datasets={datasets.monthlyComparison || []}
-                                                title="Daily vs Monthly Opening Balance"
-                                                metric="balance"
-                                                showDatesOnly={true}
-                                            />
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                {/* Daily vs Fiscal Year Opening Balance */}
-                                <Grid item xs={12 / parseFloat(tabValue)}>
-                                    <Card
-                                        elevation={3}
-                                        sx={{
-                                            borderRadius: 3,
-                                            overflow: 'hidden',
-                                            background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)'
-                                        }}
-                                    >
-                                        <CardContent sx={{ p: 0 }}>
-                                            <CryptoChart
-                                                datasets={datasets.fiscalYearComparison || []}
-                                                title="Daily vs Fiscal Year Opening Balance"
-                                                metric="balance"
-                                                showDatesOnly={true}
-                                            />
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-
-                                {/* All Balances Combined */}
-                                <Grid item xs={12 / parseFloat(tabValue)}>
-                                    <Card
-                                        elevation={3}
-                                        sx={{
-                                            borderRadius: 3,
-                                            overflow: 'hidden',
-                                            background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)'
-                                        }}
-                                    >
-                                        <CardContent sx={{ p: 0 }}>
-                                            <CryptoChart
-                                                datasets={datasets.allBalances || []}
-                                                title="All TGA Balance Types - Comprehensive View"
+                                                datasets={datasets}
+                                                title="Treasury General Account Balance"
                                                 metric="balance"
                                                 showDatesOnly={true}
                                             />
@@ -447,34 +301,16 @@ const TGA1 = () => {
                         }}
                     >
                         <Typography variant="h6" gutterBottom color="info.main">
-                            About Treasury General Account (TGA) Balance Types
+                            About Treasury General Account (TGA)
                         </Typography>
-                        
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="body2" color="text.secondary" paragraph>
-                                    <strong>Daily Opening/Closing Balance:</strong> The TGA balance at the start and end of each business day. 
-                                    This shows intraday government cash flow activities.
-                                </Typography>
-                                
-                                <Typography variant="body2" color="text.secondary" paragraph>
-                                    <strong>Monthly Opening Balance:</strong> The TGA balance at the beginning of each month, 
-                                    useful for tracking monthly fiscal patterns and seasonal variations.
-                                </Typography>
-                            </Grid>
-                            
-                            <Grid item xs={12} md={6}>
-                                <Typography variant="body2" color="text.secondary" paragraph>
-                                    <strong>Fiscal Year Opening Balance:</strong> The TGA balance at the start of the fiscal year (October 1st), 
-                                    providing context for annual fiscal policy and budget cycles.
-                                </Typography>
-                                
-                                <Typography variant="body2" color="text.secondary">
-                                    <strong>Market Impact:</strong> TGA balance changes directly affect banking system liquidity. 
-                                    Increases remove liquidity (tightening), while decreases add liquidity (easing).
-                                </Typography>
-                            </Grid>
-                        </Grid>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                            The Treasury General Account is the U.S. government's operating account at the Federal Reserve.
+                            Changes in TGA balance can significantly impact market liquidity and monetary conditions.
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            <strong>Key Insights:</strong> When TGA balance increases, it typically removes liquidity from the banking system.
+                            Conversely, when it decreases, it adds liquidity to markets.
+                        </Typography>
                     </Paper>
                 </Box>
             </Fade>
