@@ -1,4 +1,3 @@
-// src/components/CryptoChart.js
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -13,7 +12,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 
-// Register the necessary components and scales with Chart.js
 ChartJS.register(
     TimeScale,
     LinearScale,
@@ -25,7 +23,14 @@ ChartJS.register(
 );
 
 const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins = [] }) => {
-    // Collect all unique timestamps from all datasets
+    if (!datasets || datasets.length === 0) {
+        return (
+            <div className="loading-container">
+                <p>No data available</p>
+            </div>
+        );
+    }
+
     const allTimestamps = datasets.reduce((acc, dataset) => {
         dataset?.data?.forEach(entry => {
             const timestamp = new Date(entry.timestamp).toISOString();
@@ -36,7 +41,14 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
         return acc;
     }, []).sort((a, b) => new Date(a) - new Date(b));
 
-    // Align each dataset with the unified labels (timestamps)
+    if (allTimestamps.length === 0) {
+        return (
+            <div className="loading-container">
+                <p>No valid timestamps found</p>
+            </div>
+        );
+    }
+
     const alignedDatasets = datasets.map(dataset => {
         const dataMap = new Map(dataset.data.map(entry => [new Date(entry.timestamp).toISOString(), entry[metric]]));
         const data = allTimestamps.map(timestamp => dataMap.get(timestamp) || null);
@@ -54,7 +66,6 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
         datasets: alignedDatasets,
     };
 
-    // Determine the time range
     const startTime = new Date(allTimestamps[0]);
     const endTime = new Date(allTimestamps[allTimestamps.length - 1]);
     const timeDifference = endTime - startTime;
@@ -80,6 +91,8 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
     }
 
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             x: {
                 type: 'time',
@@ -100,13 +113,27 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
                 },
             },
         },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+            },
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false,
+        },
     };
 
     return (
-        <>
+        <div style={{ height: '400px' }}>
             <h1>{title}</h1>
             <Line data={chartData} options={options} plugins={plugins} />
-        </>
+        </div>
     );
 };
 

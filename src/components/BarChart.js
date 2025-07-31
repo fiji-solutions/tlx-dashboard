@@ -1,4 +1,3 @@
-// src/components/BarChart.js
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -11,7 +10,6 @@ import {
     Legend,
 } from 'chart.js';
 
-// Register the necessary components and scales with Chart.js
 ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -22,6 +20,14 @@ ChartJS.register(
 );
 
 const BarChart = ({ metrics, title, metric }) => {
+    if (!metrics || metrics.length === 0) {
+        return (
+            <div className="loading-container">
+                <p>No data available</p>
+            </div>
+        );
+    }
+
     const chartData = {
         labels: metrics.map(m => m.label),
         datasets: [
@@ -36,6 +42,8 @@ const BarChart = ({ metrics, title, metric }) => {
     };
 
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             y: {
                 beginAtZero: true,
@@ -45,13 +53,22 @@ const BarChart = ({ metrics, title, metric }) => {
                 },
             },
         },
+        plugins: {
+            legend: {
+                display: false,
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+            },
+        },
     };
 
     return (
-        <>
+        <div style={{ height: '400px' }}>
             <h1>{title}</h1>
             <Bar data={chartData} options={options} />
-        </>
+        </div>
     );
 };
 

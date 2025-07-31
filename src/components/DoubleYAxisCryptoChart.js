@@ -1,4 +1,3 @@
-// src/components/DoubleYAxisCryptoChart.js
 import React from 'react';
 import { Line } from 'react-chartjs-2';
 import {
@@ -13,7 +12,6 @@ import {
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 
-// Register the necessary components and scales with Chart.js
 ChartJS.register(
     TimeScale,
     LinearScale,
@@ -25,13 +23,27 @@ ChartJS.register(
 );
 
 const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, showDatesOnly = false }) => {
-    // Collect all unique timestamps from both datasets
+    if (!dataset1 || !dataset2 || !dataset1.data || !dataset2.data) {
+        return (
+            <div className="loading-container">
+                <p>No data available</p>
+            </div>
+        );
+    }
+
     const allTimestamps = [...new Set([
         ...dataset1.data.map(entry => new Date(entry.timestamp).toISOString()),
         ...dataset2.data.map(entry => new Date(entry.timestamp).toISOString())
     ])].sort((a, b) => new Date(a) - new Date(b));
 
-    // Align each dataset with the unified labels (timestamps)
+    if (allTimestamps.length === 0) {
+        return (
+            <div className="loading-container">
+                <p>No valid timestamps found</p>
+            </div>
+        );
+    }
+
     const alignedDataset1 = {
         label: dataset1.label,
         data: allTimestamps.map(timestamp => {
@@ -61,7 +73,6 @@ const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, sh
         datasets: [alignedDataset1, alignedDataset2],
     };
 
-    // Determine the time range
     const startTime = new Date(allTimestamps[0]);
     const endTime = new Date(allTimestamps[allTimestamps.length - 1]);
     const timeDifference = endTime - startTime;
@@ -87,6 +98,8 @@ const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, sh
     }
 
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         scales: {
             x: {
                 type: 'time',
@@ -126,13 +139,27 @@ const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, sh
                 },
             },
         },
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            tooltip: {
+                mode: 'index',
+                intersect: false,
+            },
+        },
+        interaction: {
+            mode: 'nearest',
+            axis: 'x',
+            intersect: false,
+        },
     };
 
     return (
-        <>
+        <div style={{ height: '400px' }}>
             <h1>{title1} and {title2}</h1>
             <Line data={chartData} options={options} />
-        </>
+        </div>
     );
 };
 

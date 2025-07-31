@@ -1,18 +1,15 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 import NavTabs from './components/NavTabs';
 import CoingeckoSolMemes from "./CoingeckoSolMemes";
-// import RSPS from "./RSPS";
 import TGA1 from "./TGA1";
 import Jupiter from "./Jupiter";
 import LiquidityValuationIndicator from "./LVI";
 import AddDataForm from "./LVIForm";
 import TradingViewExperiments from "./TradingViewExperiments";
-// import TGA4 from "./TGA4";
 
 const Root = () => {
     const location = useLocation();
@@ -25,9 +22,7 @@ const Root = () => {
                 <Route path="/" element={<TGA1/>}/>
                 <Route path="/toros" element={<App/>}/>
                 <Route path="/coingecko-sol-memes" element={<CoingeckoSolMemes/>}/>
-                {/*<Route path="/rsps" element={<RSPS/>}/>*/}
                 <Route path="/liquidity" element={<TGA1/>}/>
-                {/*<Route path="/liquidity-csv" element={<TGA4/>}/>*/}
                 <Route path="/solana-lst" element={<Jupiter/>}/>
                 <Route path="/lst" element={<Jupiter/>}/>
                 <Route path="/liquidity-valuation-indicators" element={<LiquidityValuationIndicator/>}/>
@@ -65,5 +60,3 @@ root.render(
         </Router>
     </React.StrictMode>
 );
-
-reportWebVitals();

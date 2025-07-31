@@ -2,6 +2,7 @@
   text-align: center;
   margin: 0 8px;
   position: relative;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -28,6 +29,21 @@
 
 .App-link {
   color: #61dafb;
+}
+
+/* Loading states */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .App {
+    margin: 0 4px;
+  }
 }
 
 @keyframes App-logo-spin {
