@@ -1,5 +1,6 @@
 import React from 'react';
 import { Line } from 'react-chartjs-2';
+import { Box, useTheme, alpha } from '@mui/material';
 import {
     Chart as ChartJS,
     TimeScale,
@@ -9,6 +10,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    Filler,
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 
@@ -19,15 +21,29 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    Filler
 );
 
 const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins = [] }) => {
+    const theme = useTheme();
+    
     if (!datasets || datasets.length === 0) {
         return (
-            <div className="loading-container">
-                <p>No data available</p>
-            </div>
+            <Box 
+                display="flex" 
+                justifyContent="center" 
+                alignItems="center" 
+                minHeight={400}
+                sx={{ 
+                    background: alpha(theme.palette.grey[100], 0.5),
+                    borderRadius: 2
+                }}
+            >
+                <Box textAlign="center" color="text.secondary">
+                    No data available
+                </Box>
+            </Box>
         );
     }
 
@@ -93,6 +109,29 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
     const options = {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: {
+            mode: 'index',
+            intersect: false,
+        },
+        elements: {
+            point: {
+                radius: 0,
+                hoverRadius: 6,
+                hitRadius: 10,
+            },
+            line: {
+                tension: 0.2,
+                borderWidth: 3,
+            },
+        },
+        layout: {
+            padding: {
+                top: 20,
+                right: 20,
+                bottom: 20,
+                left: 20,
+            },
+        },
         scales: {
             x: {
                 type: 'time',
@@ -101,39 +140,138 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
                     stepSize: showDatesOnly ? 1 : stepSize,
                     tooltipFormat: showDatesOnly ? 'MM/dd/yyyy' : 'MM/dd/yyyy HH:mm:ss',
                 },
+                grid: {
+                    color: alpha(theme.palette.divider, 0.3),
+                    lineWidth: 1,
+                },
+                ticks: {
+                    color: theme.palette.text.secondary,
+                    font: {
+                        size: 12,
+                        weight: 500,
+                    },
+                    maxTicksLimit: 8,
+                },
                 title: {
                     display: true,
                     text: 'Date',
+                    color: theme.palette.text.primary,
+                    font: {
+                        size: 14,
+                        weight: 600,
+                    },
                 },
             },
             y: {
+                grid: {
+                    color: alpha(theme.palette.divider, 0.2),
+                    lineWidth: 1,
+                },
+                ticks: {
+                    color: theme.palette.text.secondary,
+                    font: {
+                        size: 12,
+                        weight: 500,
+                    },
+                    callback: function(value) {
+                        // Format large numbers
+                        if (value >= 1e12) return (value / 1e12).toFixed(1) + 'T';
+                        if (value >= 1e9) return (value / 1e9).toFixed(1) + 'B';
+                        if (value >= 1e6) return (value / 1e6).toFixed(1) + 'M';
+                        if (value >= 1e3) return (value / 1e3).toFixed(1) + 'K';
+                        return value.toLocaleString();
+                    },
+                },
                 title: {
                     display: true,
                     text: title,
+                    color: theme.palette.text.primary,
+                    font: {
+                        size: 14,
+                        weight: 600,
+                    },
                 },
             },
         },
         plugins: {
             legend: {
                 position: 'top',
+                align: 'start',
+                labels: {
+                    color: theme.palette.text.primary,
+                    font: {
+                        size: 13,
+                        weight: 600,
+                    },
+                    padding: 20,
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                },
             },
             tooltip: {
                 mode: 'index',
                 intersect: false,
+                backgroundColor: alpha(theme.palette.background.paper, 0.95),
+                titleColor: theme.palette.text.primary,
+                bodyColor: theme.palette.text.secondary,
+                borderColor: alpha(theme.palette.primary.main, 0.3),
+                borderWidth: 1,
+                cornerRadius: 8,
+                padding: 12,
+                titleFont: {
+                    size: 14,
+                    weight: 600,
+                },
+                bodyFont: {
+                    size: 13,
+                    weight: 500,
+                },
+                callbacks: {
+                    label: function(context) {
+                        let label = context.dataset.label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        const value = context.parsed.y;
+                        if (value >= 1e12) label += '$' + (value / 1e12).toFixed(2) + 'T';
+                        else if (value >= 1e9) label += '$' + (value / 1e9).toFixed(2) + 'B';
+                        else if (value >= 1e6) label += '$' + (value / 1e6).toFixed(2) + 'M';
+                        else if (value >= 1e3) label += '$' + (value / 1e3).toFixed(2) + 'K';
+                        else label += '$' + value.toLocaleString();
+                        return label;
+                    },
+                },
             },
-        },
-        interaction: {
-            mode: 'nearest',
-            axis: 'x',
-            intersect: false,
         },
     };
 
     return (
-        <div style={{ height: '400px' }}>
-            <h1>{title}</h1>
+        <Box sx={{ height: 500, p: 3 }}>
+            <Box 
+                sx={{ 
+                    mb: 3, 
+                    pb: 2, 
+                    borderBottom: `2px solid ${alpha(theme.palette.primary.main, 0.1)}` 
+                }}
+            >
+                <Box 
+                    component="h2" 
+                    sx={{ 
+                        m: 0,
+                        fontSize: '1.5rem',
+                        fontWeight: 700,
+                        color: theme.palette.text.primary,
+                        background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent'
+                    }}
+                >
+                    {title}
+                </Box>
+            </Box>
             <Line data={chartData} options={options} plugins={plugins} />
-        </div>
+        </Box>
     );
 };
 

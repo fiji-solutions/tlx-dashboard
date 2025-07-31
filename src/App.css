@@ -1,8 +1,9 @@
 .App {
   text-align: center;
-  margin: 0 8px;
+  margin: 0;
   position: relative;
   min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
 .App-logo {
@@ -42,7 +43,7 @@
 /* Responsive improvements */
 @media (max-width: 768px) {
   .App {
-    margin: 0 4px;
+    margin: 0;
   }
 }
 
