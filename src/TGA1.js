@@ -45,7 +45,7 @@ const TGA1 = () => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const response = await fetch(`${domain}/tga?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}`);
+            const response = await fetch(`${domain}/tga1?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}`);
             const result = await response.json();
 
             const processedData = [
@@ -97,11 +97,11 @@ const TGA1 = () => {
             <Fade in timeout={800}>
                 <Box>
                     {/* Header Section */}
-                    <Paper 
-                        elevation={0} 
-                        sx={{ 
-                            p: 4, 
-                            mb: 4, 
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            p: 4,
+                            mb: 4,
                             background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.secondary.main, 0.05)} 100%)`,
                             borderRadius: 3,
                             border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
@@ -109,11 +109,11 @@ const TGA1 = () => {
                     >
                         <Box display="flex" alignItems="center" mb={2}>
                             <TrendingUpIcon sx={{ fontSize: 40, color: theme.palette.primary.main, mr: 2 }} />
-                            <Typography 
-                                variant="h3" 
-                                component="h1" 
+                            <Typography
+                                variant="h3"
+                                component="h1"
                                 fontWeight="bold"
-                                sx={{ 
+                                sx={{
                                     background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
                                     backgroundClip: 'text',
                                     WebkitBackgroundClip: 'text',
@@ -123,13 +123,13 @@ const TGA1 = () => {
                                 Treasury General Account Analysis
                             </Typography>
                         </Box>
-                        
+
                         <Typography variant="h6" color="text.secondary" sx={{ mb: 3, maxWidth: '800px' }}>
                             Track the U.S. Treasury General Account balance over time. This data provides insights into government cash flow and fiscal policy impacts on market liquidity.
                         </Typography>
 
                         {lastUpdated && (
-                            <Chip 
+                            <Chip
                                 icon={<AnalyticsIcon />}
                                 label={`Last updated: ${lastUpdated.toLocaleString()}`}
                                 variant="outlined"
@@ -146,7 +146,7 @@ const TGA1 = () => {
                                 <ShowChartIcon sx={{ mr: 1, color: theme.palette.primary.main }} />
                                 Analysis Parameters
                             </Typography>
-                            
+
                             <Grid container spacing={3} alignItems="center">
                                 <Grid item xs={12} sm={6} md={3}>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -188,13 +188,13 @@ const TGA1 = () => {
                                 </Grid>
 
                                 <Grid item xs={12} sm={6} md={3}>
-                                    <Button 
-                                        onClick={onSearch} 
-                                        variant="contained" 
+                                    <Button
+                                        onClick={onSearch}
+                                        variant="contained"
                                         disabled={loading}
                                         size="large"
                                         startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
-                                        sx={{ 
+                                        sx={{
                                             height: 56,
                                             borderRadius: 2,
                                             textTransform: 'none',
@@ -212,10 +212,10 @@ const TGA1 = () => {
                                 </Grid>
 
                                 <Grid item xs={12} sm={6} md={3}>
-                                    <Paper 
-                                        elevation={1} 
-                                        sx={{ 
-                                            p: 2, 
+                                    <Paper
+                                        elevation={1}
+                                        sx={{
+                                            p: 2,
                                             borderRadius: 2,
                                             background: alpha(theme.palette.primary.main, 0.05)
                                         }}
@@ -253,18 +253,18 @@ const TGA1 = () => {
                         <Fade in timeout={1000}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12 / parseFloat(tabValue)}>
-                                    <Card 
-                                        elevation={3} 
-                                        sx={{ 
+                                    <Card
+                                        elevation={3}
+                                        sx={{
                                             borderRadius: 3,
                                             overflow: 'hidden',
                                             background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)'
                                         }}
                                     >
                                         <CardContent sx={{ p: 0 }}>
-                                            <CryptoChart 
-                                                datasets={datasets} 
-                                                title="Treasury General Account Balance" 
+                                            <CryptoChart
+                                                datasets={datasets}
+                                                title="Treasury General Account Balance"
                                                 metric="balance"
                                                 showDatesOnly={true}
                                             />
@@ -276,11 +276,11 @@ const TGA1 = () => {
                     )}
 
                     {/* Info Section */}
-                    <Paper 
-                        elevation={1} 
-                        sx={{ 
-                            mt: 4, 
-                            p: 3, 
+                    <Paper
+                        elevation={1}
+                        sx={{
+                            mt: 4,
+                            p: 3,
                             borderRadius: 3,
                             background: alpha(theme.palette.info.main, 0.02),
                             border: `1px solid ${alpha(theme.palette.info.main, 0.1)}`
@@ -290,11 +290,11 @@ const TGA1 = () => {
                             About Treasury General Account (TGA)
                         </Typography>
                         <Typography variant="body2" color="text.secondary" paragraph>
-                            The Treasury General Account is the U.S. government's operating account at the Federal Reserve. 
+                            The Treasury General Account is the U.S. government's operating account at the Federal Reserve.
                             Changes in TGA balance can significantly impact market liquidity and monetary conditions.
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            <strong>Key Insights:</strong> When TGA balance increases, it typically removes liquidity from the banking system. 
+                            <strong>Key Insights:</strong> When TGA balance increases, it typically removes liquidity from the banking system.
                             Conversely, when it decreases, it adds liquidity to markets.
                         </Typography>
                     </Paper>
