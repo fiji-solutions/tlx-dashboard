@@ -35,7 +35,7 @@ const TGA1 = () => {
     const theme = useTheme();
     const [datasets, setDatasets] = useState([]);
     const [tabValue, setTabValue] = useState('2');
-    const [fromDate, setFromDate] = useState(dayjs("2020-01-01"));
+    const [fromDate, setFromDate] = useState(dayjs().add(-2, "month"));
     const [toDate, setToDate] = useState(dayjs().add(-1, "day"));
     const [loading, setLoading] = useState(false);
     const [lastUpdated, setLastUpdated] = useState(null);
@@ -48,13 +48,25 @@ const TGA1 = () => {
             const response = await fetch(`${domain}/tga1?start_date=${dayjs(fromDate).format("YYYY-MM-DD")}&end_date=${dayjs(toDate).format("YYYY-MM-DD")}`);
             const result = await response.json();
 
+            // Process the API response to match expected chart format
             const processedData = [
                 {
                     label: 'TGA Balance',
-                    data: result.map(item => ({
-                        timestamp: item.date,
-                        balance: item.tga_balance
-                    })),
+                    data: result.map(item => {
+                        // Convert the record_date to a proper timestamp
+                        const timestamp = new Date(item.record_date);
+                        // Use open_today_bal as the balance value (in millions)
+                        const balance = parseFloat(item.open_today_bal) || 0;
+
+                        return {
+                            timestamp: timestamp.toISOString(),
+                            balance: balance
+                        };
+                    }).filter(item => {
+                        // Filter out invalid dates and ensure we have valid data
+                        const date = new Date(item.timestamp);
+                        return !isNaN(date.getTime()) && item.balance !== null;
+                    }),
                     borderColor: theme.palette.primary.main,
                     backgroundColor: alpha(theme.palette.primary.main, 0.1),
                     borderWidth: 3,
@@ -69,6 +81,8 @@ const TGA1 = () => {
             setLastUpdated(new Date());
         } catch (error) {
             console.error('Error fetching data:', error);
+            // Set empty datasets on error to prevent chart crashes
+            setDatasets([]);
         } finally {
             setLoading(false);
         }
@@ -207,7 +221,7 @@ const TGA1 = () => {
                                         }}
                                         fullWidth
                                     >
-                                        {loading ? 'Loading...' : 'Update Data'}
+                                        {loading ? 'Loading...' : 'Reload Charts'}
                                     </Button>
                                 </Grid>
 

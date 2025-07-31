@@ -22,15 +22,16 @@ ChartJS.register(
 
 const BarChart = ({ metrics, title, metric }) => {
     const theme = useTheme();
-    
-    if (!metrics || metrics.length === 0) {
+
+    // Enhanced validation for metrics
+    if (!metrics || metrics.length === 0 || !Array.isArray(metrics)) {
         return (
-            <Box 
-                display="flex" 
-                justifyContent="center" 
-                alignItems="center" 
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
                 minHeight={400}
-                sx={{ 
+                sx={{
                     background: alpha(theme.palette.grey[100], 0.5),
                     borderRadius: 2
                 }}
@@ -42,13 +43,41 @@ const BarChart = ({ metrics, title, metric }) => {
         );
     }
 
+    // Filter out invalid metrics
+    const validMetrics = metrics.filter(m =>
+        m &&
+        m.label &&
+        m[metric] !== undefined &&
+        m[metric] !== null &&
+        !isNaN(parseFloat(m[metric]))
+    );
+
+    if (validMetrics.length === 0) {
+        return (
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight={400}
+                sx={{
+                    background: alpha(theme.palette.grey[100], 0.5),
+                    borderRadius: 2
+                }}
+            >
+                <Box textAlign="center" color="text.secondary">
+                    No valid metrics available
+                </Box>
+            </Box>
+        );
+    }
+
     const chartData = {
-        labels: metrics.map(m => m.label),
+        labels: validMetrics.map(m => m.label),
         datasets: [
             {
                 label: title,
-                data: metrics.map(m => m[metric]),
-                backgroundColor: metrics.map((_, index) => {
+                data: validMetrics.map(m => parseFloat(m[metric]) || 0),
+                backgroundColor: validMetrics.map((_, index) => {
                     const colors = [
                         theme.palette.primary.main,
                         theme.palette.secondary.main,
@@ -59,7 +88,7 @@ const BarChart = ({ metrics, title, metric }) => {
                     ];
                     return alpha(colors[index % colors.length], 0.7);
                 }),
-                borderColor: metrics.map((_, index) => {
+                borderColor: validMetrics.map((_, index) => {
                     const colors = [
                         theme.palette.primary.main,
                         theme.palette.secondary.main,
@@ -153,16 +182,16 @@ const BarChart = ({ metrics, title, metric }) => {
 
     return (
         <Box sx={{ height: 500, p: 3 }}>
-            <Box 
-                sx={{ 
-                    mb: 3, 
-                    pb: 2, 
-                    borderBottom: `2px solid ${alpha(theme.palette.primary.main, 0.1)}` 
+            <Box
+                sx={{
+                    mb: 3,
+                    pb: 2,
+                    borderBottom: `2px solid ${alpha(theme.palette.primary.main, 0.1)}`
                 }}
             >
-                <Box 
-                    component="h2" 
-                    sx={{ 
+                <Box
+                    component="h2"
+                    sx={{
                         m: 0,
                         fontSize: '1.5rem',
                         fontWeight: 700,

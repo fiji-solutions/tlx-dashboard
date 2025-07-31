@@ -27,15 +27,16 @@ ChartJS.register(
 
 const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins = [] }) => {
     const theme = useTheme();
-    
-    if (!datasets || datasets.length === 0) {
+
+    // Enhanced validation for datasets
+    if (!datasets || datasets.length === 0 || !Array.isArray(datasets)) {
         return (
-            <Box 
-                display="flex" 
-                justifyContent="center" 
-                alignItems="center" 
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
                 minHeight={400}
-                sx={{ 
+                sx={{
                     background: alpha(theme.palette.grey[100], 0.5),
                     borderRadius: 2
                 }}
@@ -47,11 +48,44 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
         );
     }
 
-    const allTimestamps = datasets.reduce((acc, dataset) => {
-        dataset?.data?.forEach(entry => {
-            const timestamp = new Date(entry.timestamp).toISOString();
-            if (!acc.includes(timestamp)) {
-                acc.push(timestamp);
+    // Validate that datasets have data and the data is properly formatted
+    const validDatasets = datasets.filter(dataset =>
+        dataset &&
+        dataset.data &&
+        Array.isArray(dataset.data) &&
+        dataset.data.length > 0
+    );
+
+    if (validDatasets.length === 0) {
+        return (
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight={400}
+                sx={{
+                    background: alpha(theme.palette.grey[100], 0.5),
+                    borderRadius: 2
+                }}
+            >
+                <Box textAlign="center" color="text.secondary">
+                    No valid data available
+                </Box>
+            </Box>
+        );
+    }
+
+    const allTimestamps = validDatasets.reduce((acc, dataset) => {
+        dataset.data.forEach(entry => {
+            // Validate timestamp before processing
+            if (entry && entry.timestamp) {
+                const date = new Date(entry.timestamp);
+                if (!isNaN(date.getTime())) {
+                    const timestamp = date.toISOString();
+                    if (!acc.includes(timestamp)) {
+                        acc.push(timestamp);
+                    }
+                }
             }
         });
         return acc;
@@ -59,21 +93,48 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
 
     if (allTimestamps.length === 0) {
         return (
-            <div className="loading-container">
-                <p>No valid timestamps found</p>
-            </div>
+            <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight={400}
+                sx={{
+                    background: alpha(theme.palette.grey[100], 0.5),
+                    borderRadius: 2
+                }}
+            >
+                <Box textAlign="center" color="text.secondary">
+                    No valid timestamps found
+                </Box>
+            </Box>
         );
     }
 
-    const alignedDatasets = datasets.map(dataset => {
-        const dataMap = new Map(dataset.data.map(entry => [new Date(entry.timestamp).toISOString(), entry[metric]]));
+    const alignedDatasets = validDatasets.map(dataset => {
+        const dataMap = new Map();
+
+        // Safely build the data map with validation
+        dataset.data.forEach(entry => {
+            if (entry && entry.timestamp && entry[metric] !== undefined) {
+                const date = new Date(entry.timestamp);
+                if (!isNaN(date.getTime())) {
+                    dataMap.set(date.toISOString(), entry[metric]);
+                }
+            }
+        });
+
         const data = allTimestamps.map(timestamp => dataMap.get(timestamp) || null);
+
         return {
             label: dataset.label,
             data: data,
             fill: false,
-            backgroundColor: dataset.backgroundColor,
-            borderColor: dataset.borderColor,
+            backgroundColor: dataset.backgroundColor || theme.palette.primary.main,
+            borderColor: dataset.borderColor || theme.palette.primary.main,
+            borderWidth: dataset.borderWidth || 2,
+            pointRadius: dataset.pointRadius || 0,
+            pointHoverRadius: dataset.pointHoverRadius || 4,
+            tension: dataset.tension || 0.1,
         };
     });
 
@@ -247,16 +308,16 @@ const CryptoChart = ({ datasets, title, metric, showDatesOnly = false, plugins =
 
     return (
         <Box sx={{ height: 500, p: 3 }}>
-            <Box 
-                sx={{ 
-                    mb: 3, 
-                    pb: 2, 
-                    borderBottom: `2px solid ${alpha(theme.palette.primary.main, 0.1)}` 
+            <Box
+                sx={{
+                    mb: 3,
+                    pb: 2,
+                    borderBottom: `2px solid ${alpha(theme.palette.primary.main, 0.1)}`
                 }}
             >
-                <Box 
-                    component="h2" 
-                    sx={{ 
+                <Box
+                    component="h2"
+                    sx={{
                         m: 0,
                         fontSize: '1.5rem',
                         fontWeight: 700,

@@ -23,7 +23,11 @@ ChartJS.register(
 );
 
 const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, showDatesOnly = false }) => {
-    if (!dataset1 || !dataset2 || !dataset1.data || !dataset2.data) {
+    // Enhanced validation for datasets
+    if (!dataset1 || !dataset2 ||
+        !dataset1.data || !dataset2.data ||
+        !Array.isArray(dataset1.data) || !Array.isArray(dataset2.data) ||
+        dataset1.data.length === 0 || dataset2.data.length === 0) {
         return (
             <div className="loading-container">
                 <p>No data available</p>
@@ -31,10 +35,25 @@ const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, sh
         );
     }
 
-    const allTimestamps = [...new Set([
-        ...dataset1.data.map(entry => new Date(entry.timestamp).toISOString()),
-        ...dataset2.data.map(entry => new Date(entry.timestamp).toISOString())
-    ])].sort((a, b) => new Date(a) - new Date(b));
+    // Safely extract timestamps with validation
+    const timestamps1 = dataset1.data
+        .filter(entry => entry && entry.timestamp)
+        .map(entry => {
+            const date = new Date(entry.timestamp);
+            return !isNaN(date.getTime()) ? date.toISOString() : null;
+        })
+        .filter(timestamp => timestamp !== null);
+
+    const timestamps2 = dataset2.data
+        .filter(entry => entry && entry.timestamp)
+        .map(entry => {
+            const date = new Date(entry.timestamp);
+            return !isNaN(date.getTime()) ? date.toISOString() : null;
+        })
+        .filter(timestamp => timestamp !== null);
+
+    const allTimestamps = [...new Set([...timestamps1, ...timestamps2])]
+        .sort((a, b) => new Date(a) - new Date(b));
 
     if (allTimestamps.length === 0) {
         return (
@@ -47,24 +66,32 @@ const DoubleYAxisCryptoChart = ({ dataset1, dataset2, title1, title2, metric, sh
     const alignedDataset1 = {
         label: dataset1.label,
         data: allTimestamps.map(timestamp => {
-            const entry = dataset1.data.find(entry => new Date(entry.timestamp).toISOString() === timestamp);
-            return entry ? parseFloat(entry[metric]) : null;
+            const entry = dataset1.data.find(entry => {
+                if (!entry || !entry.timestamp) return false;
+                const date = new Date(entry.timestamp);
+                return !isNaN(date.getTime()) && date.toISOString() === timestamp;
+            });
+            return entry && entry[metric] !== undefined ? parseFloat(entry[metric]) || null : null;
         }),
         fill: false,
-        backgroundColor: dataset1.backgroundColor,
-        borderColor: dataset1.borderColor,
+        backgroundColor: dataset1.backgroundColor || '#1976d2',
+        borderColor: dataset1.borderColor || '#1976d2',
         yAxisID: 'y-axis-1',
     };
 
     const alignedDataset2 = {
         label: dataset2.label,
         data: allTimestamps.map(timestamp => {
-            const entry = dataset2.data.find(entry => new Date(entry.timestamp).toISOString() === timestamp);
-            return entry ? parseFloat(entry[metric]) : null;
+            const entry = dataset2.data.find(entry => {
+                if (!entry || !entry.timestamp) return false;
+                const date = new Date(entry.timestamp);
+                return !isNaN(date.getTime()) && date.toISOString() === timestamp;
+            });
+            return entry && entry[metric] !== undefined ? parseFloat(entry[metric]) || null : null;
         }),
         fill: false,
-        backgroundColor: dataset2.backgroundColor,
-        borderColor: dataset2.borderColor,
+        backgroundColor: dataset2.backgroundColor || '#9c27b0',
+        borderColor: dataset2.borderColor || '#9c27b0',
         yAxisID: 'y-axis-2',
     };
 
