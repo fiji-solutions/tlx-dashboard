@@ -57,6 +57,56 @@ const TGA1 = () => {
     const [openSnackbar, setOpenSnackbar] = useState(false);
     const [lastUpdated, setLastUpdated] = useState(null);
 
+    // Get the latest TGA date for the vertical line plugin
+    const getLatestTgaDate = () => {
+        if (!tgaData || tgaData.length === 0) return null;
+        
+        const validTgaData = tgaData
+            .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
+            .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
+        
+        return validTgaData.length > 0 ? validTgaData[validTgaData.length - 1].record_date : null;
+    };
+
+    // Vertical line plugin for showing latest TGA date
+    const verticalLinePlugin = {
+        id: 'verticalLine',
+        beforeDraw: (chart) => {
+            const latestTgaDate = getLatestTgaDate();
+            if (!latestTgaDate) return;
+
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            const xScale = chart.scales['x'];
+            const targetDate = dayjs(latestTgaDate).utc();
+
+            // Convert the target date to the x-coordinate on the chart
+            const xPosition = xScale.getPixelForValue(targetDate.toDate());
+
+            // Draw the vertical line
+            if (xPosition >= chartArea.left && xPosition <= chartArea.right) {
+                ctx.save();
+
+                // Draw the vertical line
+                ctx.beginPath();
+                ctx.moveTo(xPosition, chartArea.top);
+                ctx.lineTo(xPosition, chartArea.bottom);
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+                ctx.stroke();
+
+                // Add a label at the top of the vertical line
+                ctx.font = 'bold 12px Inter';
+                ctx.fillStyle = 'rgba(75, 192, 192, 1)';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                ctx.fillText('Latest TGA Value', xPosition, chartArea.top - 5);
+
+                ctx.restore();
+            }
+        },
+    };
+
     const domain = "https://api.fijisolutions.net";
 
     // Fetch TGA data
