@@ -9,7 +9,8 @@ import {
     Typography,
     useTheme,
     alpha,
-    Chip
+    Chip,
+    useMediaQuery
 } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -72,6 +73,8 @@ const NavTabs = () => {
                             value={value}
                             onChange={handleChange}
                             aria-label="navigation tabs"
+                            variant={useMediaQuery(theme.breakpoints.down(1024)) ? "scrollable" : "standard"}
+                            scrollButtons={useMediaQuery(theme.breakpoints.down(1024)) ? "auto" : false}
                             sx={{
                                 '& .MuiTab-root': {
                                     textTransform: 'none',
