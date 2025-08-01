@@ -11,6 +11,10 @@ const NavTabs = () => {
         setValue(newValue);
     };
 
+    const openNewSite = () => {
+        window.open("https://finance.fijisolutions.net/", "_blank");
+    };
+
     return (
         <Grid
             container
@@ -23,6 +27,17 @@ const NavTabs = () => {
                         <Tab label="Toros" value="/toros" component={Link} to="/toros" />
                         <Tab label="Liquidity" value="/" component={Link} to="/" />
                         <Tab label="Liquidity Valuation Indicators" value="/liquidity-valuation-indicators" component={Link} to="/liquidity-valuation-indicators" />
+                        <Tab
+                            label="New website here!"
+                            sx={{
+                                color: '#ff5722',
+                                fontWeight: 'bold',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(255, 87, 34, 0.08)'
+                                }
+                            }}
+                            onClick={openNewSite}
+                        />
                     </Tabs>
                 </Box>
             </Grid>
