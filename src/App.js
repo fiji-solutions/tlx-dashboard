@@ -33,6 +33,50 @@ import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+// Move AssetCheckbox outside to prevent recreation on every render
+const AssetCheckbox = ({ checked, onChange, disabled, coinImage, networkImage, label, isProtected = false }) => (
+    <Grid item>
+        <Checkbox
+            checked={checked}
+            onChange={onChange}
+            disabled={disabled}
+        />
+        <div style={{"position": "relative", "display": "inline-block", "vertical-align": "middle", "margin-right": "4px"}}>
+            <img
+                style={{"height": "24px", "marginRight": "4px", "border-radius": coinImage.includes('SOL.webp') ? "20px" : "0"}}
+                src={coinImage}
+                alt={"coin"}/>
+            {networkImage && (
+                <img style={{
+                    "height": "12px",
+                    "position": "absolute",
+                    "top": 0,
+                    "right": 0,
+                    "border-radius": "20px"
+                }}
+                     src={networkImage}
+                     alt={"network"}/>
+            )}
+        </div>
+        <span>{label}</span>
+        {isProtected && (
+            <Grid item style={{"marginTop": "12px", "marginLeft": "50px", "textAlign": "center", "borderTop": "1px solid #eaeaea", "paddingTop": "10px"}}>
+                <div style={{"marginBottom": "4px", "fontSize": "0.85rem", "color": "#666"}}>
+                    Read more about
+                </div>
+                <a
+                    href="https://x.com/torosfinance/status/1948284944880730309"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{"fontSize": "0.9rem", "fontWeight": "500", "color": "#1976d2", "textDecoration": "none"}}
+                >
+                    Protected Leverage Vaults
+                </a>
+            </Grid>
+        )}
+    </Grid>
+);
+
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SearchIcon from '@mui/icons-material/Search';
 import GetAppIcon from '@mui/icons-material/GetApp';
@@ -113,50 +157,6 @@ const App = () => {
     const [sui2xopt, setSui2xopt] = useState(false);
     const [sui1xxarb, setSui1xxarb] = useState(false);
     const [sui2xarb, setSui2xarb] = useState(false);
-
-    const [doge2xopt, setDoge2xopt] = useState(false);
-
-    const [spotBtc, setSpotBtc] = useState(false);
-    const [spotBtc2, setSpotBtc2] = useState(false);
-    const [spotBtc3, setSpotBtc3] = useState(false);
-    const [spotBtc4, setSpotBtc4] = useState(false);
-    const [spotBtc5, setSpotBtc5] = useState(false);
-    const [spotEth, setSpotEth] = useState(false);
-    const [spotEth2, setSpotEth2] = useState(false);
-    const [spotEth3, setSpotEth3] = useState(false);
-    const [spotEth4, setSpotEth4] = useState(false);
-    const [spotEth5, setSpotEth5] = useState(false);
-    const [spotSol, setSpotSol] = useState(false);
-    const [spotSol2, setSpotSol2] = useState(false);
-    const [spotSol3, setSpotSol3] = useState(false);
-    const [spotSol4, setSpotSol4] = useState(false);
-    const [spotSol5, setSpotSol5] = useState(false);
-    const [spotSui, setSpotSui] = useState(false);
-    const [spotSui2, setSpotSui2] = useState(false);
-    const [spotSui3, setSpotSui3] = useState(false);
-    const [spotSui4, setSpotSui4] = useState(false);
-    const [spotSui5, setSpotSui5] = useState(false);
-    const [spotDoge, setSpotDoge] = useState(false);
-    const [spotDoge2, setSpotDoge2] = useState(false);
-    const [spotDoge3, setSpotDoge3] = useState(false);
-    const [spotDoge4, setSpotDoge4] = useState(false);
-    const [spotDoge5, setSpotDoge5] = useState(false);
-
-    const array = [];
-    // const [array,setArray] = useState([]);
-    const [torosArray,setTorosArray] = useState([]);
-    const [spotArray,setSpotArray] = useState([]);
-
-    const [tabValue, setTabValue] = React.useState('2');
-    const [granularity, setGranularity] = useState("DAYS");
-    const [interval, setInterval] = useState("1d");
-    const [granularityUnit, setGranularityUnit] = useState(1);
-    const [fromDate, setFromDate] = useState(dayjs("2024-05-01"));
-    const [toDate, setToDate] = useState(dayjs(undefined));
-    const [initialCapital, setInitialCapital] = useState(1000);
-    const [riskFreeRate, setRiskFreeRate] = useState(0);
-    const [loading, setLoading] = useState(false);
-
     const domain = "https://np40nkw6be.execute-api.us-east-1.amazonaws.com/Prod/";
 
     // const checkboxClick = (asset) => {
