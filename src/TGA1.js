@@ -60,11 +60,11 @@ const TGA1 = () => {
     // Get the latest TGA date for the vertical line plugin
     const getLatestTgaDate = () => {
         if (!tgaData || tgaData.length === 0) return null;
-        
+
         const validTgaData = tgaData
             .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
             .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
-        
+
         return validTgaData.length > 0 ? validTgaData[validTgaData.length - 1].record_date : null;
     };
 
@@ -110,13 +110,6 @@ const TGA1 = () => {
                 ctx.stroke();
 
                 // Draw indicator circle at the top
-                ctx.beginPath();
-                ctx.arc(xPosition, chartArea.top + 15, 6, 0, 2 * Math.PI);
-                ctx.fillStyle = 'rgba(75, 192, 192, 1)';
-                ctx.fill();
-                ctx.strokeStyle = 'white';
-                ctx.lineWidth = 2;
-                ctx.stroke();
 
                 // Add modern label with background
                 const labelText = 'Latest TGA Value';
@@ -159,7 +152,7 @@ const TGA1 = () => {
                 const dateText = dayjs(processTgaChartData().latestDate).format('MMM DD, YYYY');
                 ctx.font = '10px Inter, Arial, sans-serif';
                 ctx.fillStyle = 'rgba(75, 192, 192, 0.8)';
-                ctx.fillText(dateText, xPosition, chartArea.top - 8);
+                ctx.fillText(dateText, xPosition, chartArea.top - 4);
 
                 ctx.restore();
             }
