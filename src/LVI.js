@@ -12,7 +12,6 @@ const LiquidityValuationIndicator = () => {
     const [lastModifiedDates, setLastModifiedDates] = useState({});
 
     useEffect(() => {
-        // Function to fetch Last-Modified header
         const fetchLastModified = async (url) => {
             try {
                 const response = await fetch(url, { method: 'HEAD' });
@@ -35,35 +34,32 @@ const LiquidityValuationIndicator = () => {
         fetchDates();
     }, [imageUrls]);
 
-    const snowflake = document.createElement('img');
-    snowflake.src = '/snowflake.png';
-
     return (
-        <div className="App" style={{"min-height": "2000px"}}>
+        <div className="App" style={{minHeight: "2000px"}}>
             <h1>{"Liquidity Valuation Indicator"}</h1>
             <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px" }}>
                         The charts displayed on this page were created by JayWolf as part of his analysis on liquidity valuation metrics.
                     </Typography>
-                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px" }}>
                         The first two charts look at a third-degree polynomial trend line, and the last three charts look at Michael Howell’s “Better Model” as described in his CBC letter titled “Is Bitcoin A Liquidity Proxy?” (29 September 2024).
                     </Typography>
-                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px" }}>
                         For both trend lines, the Z-scores between data points and the trendlines have been calculated to create a non-stationary time series that could be used for valuation-style analysis.
                     </Typography>
-                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px" }}>
                         Michael Howell’s “Better Model” is calculated by combining the linear trend between Bitcoin and gold prices (log-log) with the linear trend line between gold prices and CBC’s Global Liquidity Index (log-log).
                     </Typography>
-                    <Typography variant={"h6"} style={{ marginBottom: "16px" }}>
+                    <Typography variant="h6" style={{ marginBottom: "16px" }}>
                         {`Charts are updated weekly. Last updated: ${lastModifiedDates["https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png"] || 'Loading...'}`}
                     </Typography>
                 </Grid>
             </Grid>
             <Grid
                 container
-                direction={"column"}
-                justifyContent={"space-evenly"}
+                direction="column"
+                justifyContent="space-evenly"
             >
                 {imageUrls.map((imageUrl, index) => (
                     <Grid item xs={12} key={index} style={{ marginBottom: '16px' }}>

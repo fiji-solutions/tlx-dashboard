@@ -1,4 +1,3 @@
-/* Add this to your CSS file */
 .creator-section {
     display: flex;
     align-items: center;
@@ -6,6 +5,7 @@
     margin-top: 8px !important;
     cursor: pointer;
     transition: transform 0.2s ease, opacity 0.2s ease;
+    user-select: none;
 }
 
 .creator-section:hover {
@@ -21,14 +21,37 @@
     vertical-align: middle;
     object-fit: cover;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.2s ease;
+}
+
+.creator-section:hover .creator-icon {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .creator-name {
     font-weight: bold;
-    color: #007BFF; /* Adjust the color as needed */
+    color: #007BFF;
     transition: color 0.2s ease;
 }
 
 .creator-section:hover .creator-name {
-    color: #0056b3; /* Slightly darker color on hover */
+    color: #0056b3;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    .creator-section {
+        margin-right: 8px !important;
+        margin-top: 4px !important;
+    }
+    
+    .creator-icon {
+        width: 28px;
+        height: 28px;
+        margin: 0 4px;
+    }
+    
+    .creator-name {
+        font-size: 0.9rem;
+    }
 }

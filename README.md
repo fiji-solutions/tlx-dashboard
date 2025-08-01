@@ -1,70 +1,116 @@
-# Getting Started with Create React App
+# Catalytics Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A comprehensive crypto analysis platform featuring liquidity indicators, market cap analysis, and trading performance metrics.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Liquidity Valuation Indicators**: Advanced analysis using JayWolf's methodology and Michael Howell's "Better Model"
+- **Solana Market Analysis**: Market cap tracking for Solana ecosystem and meme coins
+- **LST Performance**: Liquid staking token analysis and comparison
+- **Trading Experiments**: TradingView strategy backtesting results
+- **Toros Finance Integration**: Performance metrics for leveraged tokens
 
-### `npm start`
+## Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Frontend**: React 18 with Vite
+- **UI Library**: Material-UI (MUI)
+- **Charts**: Chart.js with react-chartjs-2
+- **Data Grid**: MUI X Data Grid
+- **Routing**: React Router v6
+- **Deployment**: Vercel
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Getting Started
 
-### `npm test`
+### Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 18+ 
+- npm or yarn
 
-### `npm run build`
+### Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd tlx-dashboard
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+2. Install dependencies:
+```bash
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+3. Create environment file:
+```bash
+cp .env.example .env
+```
 
-### `npm run eject`
+4. Start the development server:
+```bash
+npm run dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The application will be available at `http://localhost:3000`.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Building for Production
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm run build
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+The built files will be in the `dist` directory.
 
-## Learn More
+## Deployment
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This project is configured for deployment on Vercel:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Connect your repository to Vercel
+2. Vercel will automatically detect the Vite configuration
+3. Set any required environment variables in the Vercel dashboard
+4. Deploy!
 
-### Code Splitting
+## Project Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+```
+src/
+├── components/          # Reusable UI components
+│   ├── CryptoChart.js   # Chart component for time series data
+│   ├── BarChart.js      # Bar chart component
+│   └── NavTabs.js       # Navigation component
+├── App.js              # Toros Finance analysis
+├── TGA1.js             # Liquidity analysis
+├── Jupiter.js          # LST analysis
+├── LVI.js              # Liquidity Valuation Indicators
+├── CoingeckoSolMemes.js # Solana meme coin analysis
+└── main.jsx            # Application entry point
+```
 
-### Analyzing the Bundle Size
+## API Integration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+The application integrates with the Fiji Solutions API for:
+- Market data fetching
+- Historical price analysis
+- Correlation calculations
+- Performance metrics
 
-### Making a Progressive Web App
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
-### Advanced Configuration
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+This project is private and proprietary.
 
-### Deployment
+## Acknowledgments
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Special thanks to:
+- Professor Adam
+- JayWolf
+- Cedric
+- Calypso
+- Cryptosaurus Max ₿
+- OG_Simba
 
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+For their contributions to making this platform possible.

@@ -1,30 +1,47 @@
-import React, {useEffect, useState} from 'react';
-import {Line} from 'react-chartjs-2';
-import {Button, CircularProgress, Grid, Snackbar, Tab, Tabs, TextField, Typography,} from '@mui/material';
-import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
-import dayjs from 'dayjs';
+import React, { useEffect, useState } from 'react';
+import CryptoChart from './components/CryptoChart';
+import {
+    Button,
+    CircularProgress,
+    Grid,
+    Card,
+    CardContent,
+    Typography,
+    Box,
+    Paper,
+    Container,
+    Fade,
+    useTheme,
+    alpha,
+    IconButton,
+    Tooltip,
+    Snackbar
+} from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
-import {DatePicker, LocalizationProvider} from "@mui/x-date-pickers";
-import ViewAgendaOutlinedIcon from "@mui/icons-material/ViewAgendaOutlined";
-import ViewQuiltOutlinedIcon from "@mui/icons-material/ViewQuiltOutlined";
-import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
-// import {CognitoRefreshToken, CognitoUser} from "amazon-cognito-identity-js";
-// import {UserPool} from "./UserPool";
-// import {Link} from "react-router-dom";
+import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import ShowChartIcon from '@mui/icons-material/ShowChart';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import "./App.css";
 
-// Apply UTC plugin to dayjs
 dayjs.extend(utc);
 
 const TGA1 = () => {
+    const theme = useTheme();
+
+    // State for all data sources
     const [tgaData, setTgaData] = useState([]);
-    // const [tgaData2, setTgaData2] = useState([]);
     const [rrpData, setRrpData] = useState([]);
     const [wlcData, setWlcData] = useState([]);
     const [h4Data, setH4Data] = useState([]);
     const [walData, setWalData] = useState([]);
-    // const [csv, setCsv] = useState(undefined);
-    // const [csv2, setCsv2] = useState(undefined);
-    // const [csv3, setCsv3] = useState(undefined);
+
+    // UI state
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [errorSource, setErrorSource] = useState("");
@@ -32,148 +49,107 @@ const TGA1 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('2');
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    // const [isLoggedIn, setIsLoggedIn] = useState(undefined);
-    // const [jwtParsed, setJwtParsed] = useState({});
 
-    const watermarkPlugin = {
-        id: 'watermark',
-        beforeDraw: (chart) => {
-            const ctx = chart.ctx;
-            const width = chart.width;
-            const height = chart.height;
+    // Get the latest TGA date for the vertical line plugin
+    const getLatestTgaDate = () => {
+        if (!tgaData || tgaData.length === 0) return null;
 
-            ctx.save();
-            ctx.font = 'bold 30px Arial';
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.translate(width / 2, height / 2);
-            ctx.rotate(-Math.PI / 4);
-            ctx.fillText('', 0, 0);
-            ctx.fillText('', -width/5, -height/2.5);
-            ctx.fillText('', width/5, height/2.5);
-            ctx.restore();
-        },
+        const validTgaData = tgaData
+            .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
+            .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
+
+        return validTgaData.length > 0 ? validTgaData[validTgaData.length - 1].record_date : null;
     };
 
+    // Vertical line plugin for showing latest TGA date
     const verticalLinePlugin = {
         id: 'verticalLine',
         beforeDraw: (chart) => {
+            const latestTgaDate = getLatestTgaDate();
+            if (!latestTgaDate) return;
+
             const ctx = chart.ctx;
             const chartArea = chart.chartArea;
-            const xScale = chart.scales['x']; // Get the x-axis scale
-            const targetDate = dayjs(processTgaChartData().latestDate).utc();
+            const xScale = chart.scales['x'];
+            const targetDate = dayjs(latestTgaDate).utc();
 
             // Convert the target date to the x-coordinate on the chart
-            const xPosition = xScale.getPixelForValue(targetDate);
+            const xPosition = xScale.getPixelForValue(targetDate.toDate());
 
             // Draw the vertical line
             if (xPosition >= chartArea.left && xPosition <= chartArea.right) {
                 ctx.save();
 
-                // Draw the vertical line
+                // Create gradient for the line
+                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient.addColorStop(0, 'rgba(75, 192, 192, 0.8)');
+                gradient.addColorStop(0.5, 'rgba(75, 192, 192, 1)');
+                gradient.addColorStop(1, 'rgba(75, 192, 192, 0.3)');
+
+                // Draw the main vertical line with gradient
                 ctx.beginPath();
                 ctx.moveTo(xPosition, chartArea.top);
                 ctx.lineTo(xPosition, chartArea.bottom);
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = gradient;
                 ctx.stroke();
 
-                // Add a label at the top of the vertical line
-                ctx.font = 'bold 12px Arial';
-                ctx.fillStyle = 'rgba(75, 192, 192, 1)';
+                // Add a subtle shadow line
+                ctx.beginPath();
+                ctx.moveTo(xPosition + 1, chartArea.top);
+                ctx.lineTo(xPosition + 1, chartArea.bottom);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.stroke();
+
+                // Draw indicator circle at the top
+
+                // Enhanced label with background
+                const labelText = 'Latest TGA Value';
+                const dateText = targetDate.format('MM/DD/YYYY');
+                const labelWidth = Math.max(ctx.measureText(labelText).width, ctx.measureText(dateText).width) + 40;
+                const labelHeight = 45;
+                const labelX = xPosition - labelWidth / 2 - 40;
+                const labelY = chartArea.top - labelHeight - 10;
+
+                // Draw label background with shadow
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetY = 2;
+                ctx.fillStyle = 'rgba(75, 192, 192, 0.95)';
+                ctx.roundRect(labelX, labelY, labelWidth, labelHeight, 8);
+                ctx.fill();
+
+                // Reset shadow
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
+
+                // Draw label text
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 12px Inter, Arial, sans-serif';
                 ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                ctx.fillText('Latest TGA Value' /*+ (!isLoggedIn ? " (Lagging)" : "")*/, xPosition, chartArea.top - 5);
+                ctx.textBaseline = 'middle';
+                ctx.fillText(labelText, xPosition - 40, labelY + 15);
+
+                // Draw date text
+                ctx.font = '10px Inter, Arial, sans-serif';
+                ctx.fillText(dateText, xPosition - 40, labelY + 32);
 
                 ctx.restore();
             }
         },
     };
 
-    // const localStorageTokenListener = () => {
-    //     const token = localStorage.getItem("cognito-token");
-    //     if (token) {
-    //         const parsedToken = parseJwt(token);
-    //
-    //         if (parsedToken?.name) {
-    //             setJwtParsed(parsedToken);
-    //             const refreshToken = new CognitoRefreshToken({RefreshToken: localStorage.getItem("cognito-refresh-token")});
-    //
-    //             const cognitoUser = new CognitoUser({
-    //                 Username: localStorage.getItem("email"),
-    //                 Pool: UserPool,
-    //             });
-    //
-    //             cognitoUser.refreshSession(refreshToken, (err, session) => {
-    //                 if (!err) {
-    //                     localStorage.setItem("cognito-token", session.getIdToken().getJwtToken());
-    //                     setIsLoggedIn(true);
-    //                 }
-    //                 else {
-    //                     setIsLoggedIn(false);
-    //                 }
-    //             });
-    //         }
-    //         else {
-    //             setIsLoggedIn(false);
-    //         }
-    //     }
-    //     else {
-    //         setIsLoggedIn(false);
-    //     }
-    // };
+    const domain = "https://api.fijisolutions.net";
 
-    // const parseJwt = (token)  => {
-    //     var base64Url = token.split('.')[1];
-    //     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    //     var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-    //         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    //     }).join(''));
-    //
-    //     return JSON.parse(jsonPayload);
-    // }
-
-    // useEffect(() => {
-    //     localStorageTokenListener();
-    //     window.addEventListener("cognito-token-change", localStorageTokenListener);
-    //     // eslint-disable-next-line
-    // }, []);
-
-    useEffect(() => {
-        fetchTgaData();
-        // fetchTgaData2();
-        // eslint-disable-next-line
-    }, [startDate, endDate/*, isLoggedIn*/]);
-
-    useEffect(() => {
-        fetchRrpData();
-    }, []);
-
-    // useEffect(() => {
-    //     processCombinedChartDataCSV();
-    //     processCombinedChartDataCSV2();
-    //     processCombinedChartDataCSV3();
-    //     // eslint-disable-next-line
-    // }, [tgaData, tgaData2, rrpData, wlcData, h4Data, walData]);
-
+    // Fetch TGA data
     const fetchTgaData = async () => {
-        // if (isLoggedIn === undefined) {
-        //     return;
-        // }
         setError(false);
         setErrorSource("");
         setLoading(true);
         try {
-            const token = localStorage.getItem("cognito-token");
-            const path = /*isLoggedIn ? "new-secret-path" :*/ "tga1";
-
-            const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
-                method: "GET",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            });
+            const response = await fetch(`${domain}/tga1?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`);
             const result = await response.json();
 
             const normalizedData = result.map(item => {
@@ -192,42 +168,8 @@ const TGA1 = () => {
         setLoading(false);
     };
 
-    // const fetchTgaData2 = async () => {
-    //     // if (isLoggedIn === undefined) {
-    //     //     return;
-    //     // }
-    //     setError(false);
-    //     setErrorSource("");
-    //     setLoading(true);
-    //     try {
-    //         const token = localStorage.getItem("cognito-token");
-    //         const path = /*isLoggedIn ? "new-secret-path2" :*/ "tga2";
-    //
-    //         const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
-    //             method: "GET",
-    //             headers: {
-    //                 "Authorization": `Bearer ${token}`
-    //             }
-    //         });
-    //         const result = await response.json();
-    //
-    //         const normalizedData = result.map(item => {
-    //             const normalizedDate = dayjs(item.record_date).utc().format('YYYY-MM-DD');
-    //             return {
-    //                 ...item,
-    //                 record_date: normalizedDate
-    //             };
-    //         });
-    //         setTgaData2(normalizedData);
-    //     } catch (error) {
-    //         console.error('Error fetching TGA2 data:', error);
-    //         setError(true);
-    //         setErrorSource("TGA2");
-    //     }
-    //     setLoading(false);
-    // };
-
-    const fetchRrpData = async () => {
+    // Fetch FRED data for all other indicators
+    const fetchFredData = async () => {
         const rrpBody = {
             "hostName": "fred.stlouisfed.org",
             "series": {},
@@ -1423,18 +1365,16 @@ const TGA1 = () => {
                 "scatter": ""
             }
         };
+
         let count = 0;
         try {
+            // Fetch RRP data
             const response1 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=RRPONTSYD`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(rrpBody),
             });
             const result1 = await response1.json();
-
-            // Normalize timestamp to YYYY-MM-DD
             const normalizedData1 = result1.observations[0].map(([timestamp, value]) => {
                 const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value ? value * 1000 : value];
@@ -1442,16 +1382,13 @@ const TGA1 = () => {
             setRrpData(normalizedData1);
             count = 1;
 
+            // Fetch WLC data
             const response2 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(wlcBody),
             });
             const result2 = await response2.json();
-
-            // Normalize timestamp to YYYY-MM-DD
             const normalizedData2 = result2.observations[0].map(([timestamp, value]) => {
                 const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value];
@@ -1459,16 +1396,13 @@ const TGA1 = () => {
             setWlcData(normalizedData2);
             count = 2;
 
+            // Fetch H4 data
             const response3 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(h4Body),
             });
             const result3 = await response3.json();
-
-            // Normalize timestamp to YYYY-MM-DD
             const normalizedData3 = result3.observations[0].map(([timestamp, value]) => {
                 const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value];
@@ -1476,16 +1410,13 @@ const TGA1 = () => {
             setH4Data(normalizedData3);
             count = 3;
 
+            // Fetch WAL data
             const response4 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(walBody),
             });
             const result4 = await response4.json();
-
-            // Normalize timestamp to YYYY-MM-DD
             const normalizedData4 = result4.observations[0].map(([timestamp, value]) => {
                 const date = dayjs(timestamp).utc().format('YYYY-MM-DD');
                 return [date, value];
@@ -1493,264 +1424,124 @@ const TGA1 = () => {
             setWalData(normalizedData4);
             count = 4;
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching FRED data:', error);
             setError(true);
             setErrorSource(count === 0 ? "RRP" : (count === 1 ? "WLC" : (count === 2 ? "H4" : (count === 3 ? "WAL" : "Exception"))));
         }
     };
 
+    // Filter data by date range
     const filterDataByDate = (data, startDate, endDate) => {
         const startTimestamp = startDate.utc().valueOf();
         const endTimestamp = endDate.utc().valueOf();
 
         return data.filter(([dateString]) => {
-            const timestamp = dayjs(dateString).utc().valueOf(); // Convert date string back to timestamp
+            const timestamp = dayjs(dateString).utc().valueOf();
             return timestamp >= startTimestamp && timestamp <= endTimestamp;
         });
     };
 
+    // Process TGA chart data
     const processTgaChartData = () => {
         const validData = tgaData
             .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
             .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
 
-        const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
-        const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
+        if (validData.length === 0) {
+            return {
+                labels: [],
+                datasets: [{
+                    label: 'TGA Closing Balance',
+                    data: [],
+                    borderColor: theme.palette.primary.main,
+                    backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                }],
+                minValue: 0,
+                maxValue: 0,
+                latestDate: "N/A"
+            };
+        }
 
-        const minValue = Math.min(...openTodayBalances);
-        const maxValue = Math.max(...openTodayBalances);
+        const data = validData.map(item => ({
+            timestamp: dayjs(item.record_date).format('YYYY-MM-DD'),
+            balance: parseFloat(item.open_today_bal)
+        }));
 
-        const latestDate = labels[labels.length - 1] || "N/A";
+        const balances = data.map(item => item.balance);
+        const minValue = Math.min(...balances);
+        const maxValue = Math.max(...balances);
+        const latestDate = data[data.length - 1]?.timestamp || "N/A";
 
         return {
-            labels,
-            datasets: [
-                {
-                    label: 'Closing Balance',
-                    data: openTodayBalances,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    fill: false,
-                },
-            ],
-            minValue, // Return minValue
-            maxValue, // Return maxValue
-            latestDate, // Return latest date
+            labels: data.map(item => item.timestamp),
+            datasets: [{
+                label: 'TGA Closing Balance',
+                data: data,
+                borderColor: theme.palette.primary.main,
+                backgroundColor: alpha(theme.palette.primary.main, 0.1),
+                borderWidth: 3,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                tension: 0.1,
+                fill: true
+            }],
+            minValue,
+            maxValue,
+            latestDate
         };
     };
 
-    // const processTgaChartData2 = () => {
-    //     const validData = tgaData2
-    //         .filter(item => item.open_today_bal !== null && !isNaN(parseFloat(item.open_today_bal)))
-    //         .sort((a, b) => dayjs(a.record_date).utc().toDate() - dayjs(b.record_date).utc().toDate());
-    //
-    //     const labels = validData.map(item => dayjs(item.record_date).format('YYYY-MM-DD'));
-    //     const openTodayBalances = validData.map(item => parseFloat(item.open_today_bal));
-    //
-    //     const minValue = Math.min(...openTodayBalances);
-    //     const maxValue = Math.max(...openTodayBalances);
-    //
-    //     const latestDate = labels[labels.length - 1] || "N/A";
-    //
-    //     return {
-    //         labels,
-    //         datasets: [
-    //             {
-    //                 label: 'Opening Balance',
-    //                 data: openTodayBalances,
-    //                 borderColor: 'rgba(75, 192, 192, 1)',
-    //                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-    //                 fill: false,
-    //             },
-    //         ],
-    //         minValue, // Return minValue
-    //         maxValue, // Return maxValue
-    //         latestDate, // Return latest date
-    //     };
-    // };
-
-    const processRrpChartData = () => {
-        const filteredData = filterDataByDate(rrpData, startDate, endDate);
-
+    // Process individual FRED data charts
+    const processChartData = (data, label, color) => {
+        const filteredData = filterDataByDate(data, startDate, endDate);
         const validData = filteredData.filter(([, value]) => value !== null);
 
         if (validData.length === 0) {
             return {
                 labels: [],
-                datasets: [
-                    {
-                        label: 'RRPONTSYD',
-                        data: [],
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        fill: false,
-                    },
-                ],
+                datasets: [{
+                    label: label,
+                    data: [],
+                    borderColor: color,
+                    backgroundColor: alpha(color, 0.1),
+                }],
+                minValue: 0,
+                maxValue: 0,
+                latestDate: "N/A"
             };
         }
 
-        const labels = validData.map(([date]) => date);
-        const rrpValues = validData.map(([, value]) => value);
+        const chartData = validData.map(([date, value]) => ({
+            timestamp: date,
+            value: value
+        }));
 
-        const minRrpValue = Math.min(...rrpValues);
-        const maxRrpValue = Math.max(...rrpValues);
-
-        const latestDate = labels[labels.length - 1] || "N/A";
+        const values = chartData.map(item => item.value);
+        const minValue = Math.min(...values);
+        const maxValue = Math.max(...values);
+        const latestDate = chartData[chartData.length - 1]?.timestamp || "N/A";
 
         return {
-            labels,
-            datasets: [
-                {
-                    label: 'RRPONTSYD',
-                    data: rrpValues,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-            ],
-            minValue: minRrpValue,
-            maxValue: maxRrpValue,
-            latestDate, // Return latest date
+            labels: chartData.map(item => item.timestamp),
+            datasets: [{
+                label: label,
+                data: chartData,
+                borderColor: color,
+                backgroundColor: alpha(color, 0.1),
+                borderWidth: 3,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                tension: 0.1,
+                fill: true
+            }],
+            minValue,
+            maxValue,
+            latestDate
         };
     };
 
-    const processWlcChartData = () => {
-        const filteredData = filterDataByDate(wlcData, startDate, endDate);
-
-        const validData = filteredData.filter(([, value]) => value !== null);
-
-        if (validData.length === 0) {
-            return {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'WLCFLPCL',
-                        data: [],
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        fill: false,
-                    },
-                ],
-            };
-        }
-
-        const labels = validData.map(([date]) => date);
-        const rrpValues = validData.map(([, value]) => value);
-
-        const minRrpValue = Math.min(...rrpValues);
-        const maxRrpValue = Math.max(...rrpValues);
-
-        const latestDate = labels[labels.length - 1] || "N/A";
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'WLCFLPCL',
-                    data: rrpValues,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-            ],
-            minValue: minRrpValue,
-            maxValue: maxRrpValue,
-            latestDate, // Return latest date
-        };
-    };
-
-    const processH4ChartData = () => {
-        const filteredData = filterDataByDate(h4Data, startDate, endDate);
-
-        const validData = filteredData.filter(([, value]) => value !== null);
-
-        if (validData.length === 0) {
-            return {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'H41RESPPALDKNWW',
-                        data: [],
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        fill: false,
-                    },
-                ],
-            };
-        }
-
-        const labels = validData.map(([date]) => date);
-        const rrpValues = validData.map(([, value]) => value);
-
-        const minRrpValue = Math.min(...rrpValues);
-        const maxRrpValue = Math.max(...rrpValues);
-
-        const latestDate = labels[labels.length - 1] || "N/A";
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'H41RESPPALDKNWW',
-                    data: rrpValues,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-            ],
-            minValue: minRrpValue,
-            maxValue: maxRrpValue,
-            latestDate, // Return latest date
-        };
-    };
-
-    const processWalChartData = () => {
-        const filteredData = filterDataByDate(walData, startDate, endDate);
-
-        const validData = filteredData.filter(([, value]) => value !== null);
-
-        if (validData.length === 0) {
-            return {
-                labels: [],
-                datasets: [
-                    {
-                        label: 'WALCL',
-                        data: [],
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        fill: false,
-                    },
-                ],
-            };
-        }
-
-        const labels = validData.map(([date]) => date);
-        const rrpValues = validData.map(([, value]) => value);
-
-        const minRrpValue = Math.min(...rrpValues);
-        const maxRrpValue = Math.max(...rrpValues);
-
-        const latestDate = labels[labels.length - 1] || "N/A";
-
-        return {
-            labels,
-            datasets: [
-                {
-                    label: 'WALCL',
-                    data: rrpValues,
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    fill: false,
-                },
-            ],
-            minValue: minRrpValue,
-            maxValue: maxRrpValue,
-            latestDate, // Return latest date
-        };
-    };
-
+    // Process combined formula chart
     const processCombinedChartData = () => {
-        // Convert start and end dates to strings in YYYY-MM-DD format
         let startString = startDate.utc().format('YYYY-MM-DD');
         const endString = endDate.utc().format('YYYY-MM-DD');
 
@@ -1774,7 +1565,6 @@ const TGA1 = () => {
             Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
         );
 
-        // Convert the timestamp back to a date string
         // Update startString to this latest common start date
         startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
 
@@ -1808,7 +1598,7 @@ const TGA1 = () => {
             lastH4Value = h4Value;
             lastWlcValue = wlcValue;
 
-            // Apply the formula
+            // Apply the formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL
             return walValue - tgaValue - rrpValue + h4Value + wlcValue;
         });
 
@@ -1822,511 +1612,51 @@ const TGA1 = () => {
             }
         }
 
-        // Use the dates directly as labels (they are already in YYYY-MM-DD format)
-        const labels = filteredDates;
+        const chartData = filteredDates.map((date, index) => ({
+            timestamp: date,
+            liquidity: filteredData[index]
+        }));
 
         const minValue = filteredData.length > 0 ? Math.min(...filteredData) : 0;
         const maxValue = filteredData.length > 0 ? Math.max(...filteredData) : 0;
-
-        const latestDate = labels[labels.length - 1] || "N/A";
+        const latestDate = filteredDates[filteredDates.length - 1] || "N/A";
 
         return {
-            labels,
-            datasets: [
-                {
-                    label: 'NET FED Liquidity Formula',
-                    data: filteredData,
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                    fill: false,
-                },
-            ],
+            labels: filteredDates,
+            datasets: [{
+                label: 'NET FED Liquidity Formula',
+                data: chartData,
+                borderColor: theme.palette.secondary.main,
+                backgroundColor: alpha(theme.palette.secondary.main, 0.1),
+                borderWidth: 3,
+                pointRadius: 0,
+                pointHoverRadius: 6,
+                tension: 0.1,
+                fill: true
+            }],
             minValue,
             maxValue,
-            latestDate,
+            latestDate
         };
     };
 
-    // const processCombinedChartData3 = () => {
-    //     // Convert start and end dates to strings in YYYY-MM-DD format
-    //     let startString = startDate.utc().format('YYYY-MM-DD');
-    //     const endString = endDate.utc().format('YYYY-MM-DD');
-    //
-    //     // Extract all dates from each dataset and convert them to timestamps
-    //     const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const tgaDates = tgaData2.map(item => dayjs(item.record_date).utc().toDate().getTime());
-    //     const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //
-    //     // Convert start and end strings to timestamps
-    //     const startTimestamp = dayjs(startString).utc().toDate().getTime();
-    //     const endTimestamp = dayjs(endString).utc().toDate().getTime();
-    //
-    //     // Find the latest common start date across all datasets
-    //     const latestCommonStartDateTimestamp = Math.max(
-    //         Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
-    //     );
-    //
-    //     // Convert the timestamp back to a date string
-    //     // Update startString to this latest common start date
-    //     startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
-    //
-    //     // Synchronize the dates and filter based on start and end dates
-    //     const dates = Array.from(new Set([
-    //         ...walData.map(([date]) => date),
-    //         ...tgaData2.map(item => item.record_date),
-    //         ...rrpData.map(([date]) => date),
-    //         ...h4Data.map(([date]) => date),
-    //         ...wlcData.map(([date]) => date),
-    //     ])).filter(date => date >= startString && date <= endString)
-    //         .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
-    //
-    //     let lastWalValue = 0;
-    //     let lastTgaValue = 0;
-    //     let lastRrpValue = 0;
-    //     let lastH4Value = 0;
-    //     let lastWlcValue = 0;
-    //
-    //     const combinedData = dates.map(date => {
-    //         const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
-    //         const tgaValue = tgaData2.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
-    //         const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
-    //         const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
-    //         const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
-    //
-    //         // Update the last known values
-    //         lastWalValue = walValue;
-    //         lastTgaValue = tgaValue;
-    //         lastRrpValue = rrpValue;
-    //         lastH4Value = h4Value;
-    //         lastWlcValue = wlcValue;
-    //
-    //         if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
-    //             return 0;
-    //         }
-    //
-    //         // Apply the formula
-    //         return walValue - tgaValue - rrpValue + h4Value + wlcValue;
-    //     });
-    //
-    //     const filteredData = [];
-    //     const filteredDates = [];
-    //
-    //     for (let i = 0; i < combinedData.length; i++) {
-    //         if (combinedData[i] !== 0) {
-    //             filteredData.push(combinedData[i]);
-    //             filteredDates.push(dates[i]);
-    //         }
-    //     }
-    //
-    //     // Use the dates directly as labels (they are already in YYYY-MM-DD format)
-    //     const labels = filteredDates;
-    //
-    //     const minValue = filteredData.length > 0 ? Math.min(...filteredData) : 0;
-    //     const maxValue = filteredData.length > 0 ? Math.max(...filteredData) : 0;
-    //
-    //     const latestDate = labels[labels.length - 1] || "N/A";
-    //
-    //     return {
-    //         labels,
-    //         datasets: [
-    //             {
-    //                 label: 'NET FED Liquidity Formula',
-    //                 data: filteredData,
-    //                 borderColor: 'rgba(153, 102, 255, 1)',
-    //                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
-    //                 fill: false,
-    //             },
-    //         ],
-    //         minValue,
-    //         maxValue,
-    //         latestDate,
-    //     };
-    // };
+    // Generate Pine Script for TradingView
+    const generatePineScript = (chartData, title) => {
+        const values = chartData.datasets[0].data;
+        const dates = chartData.labels;
 
-    // const processCombinedChartData2 = () => {
-    //     // Convert start and end dates to strings in YYYY-MM-DD format
-    //     let startString = startDate.utc().format('YYYY-MM-DD');
-    //     const endString = endDate.utc().format('YYYY-MM-DD');
-    //
-    //     // Extract all dates from each dataset and convert them to timestamps
-    //     const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const tgaDates = tgaData.map(item => dayjs(item.record_date).utc().toDate().getTime());
-    //     const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //
-    //     // Convert start and end strings to timestamps
-    //     const startTimestamp = dayjs(startString).utc().toDate().getTime();
-    //     const endTimestamp = dayjs(endString).utc().toDate().getTime();
-    //
-    //     // Find the latest common start date across all datasets
-    //     const latestCommonStartDateTimestamp = Math.max(
-    //         Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
-    //     );
-    //
-    //     // Convert the timestamp back to a date string
-    //     // Update startString to this latest common start date
-    //     startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
-    //
-    //     // Synchronize the dates and filter based on start and end dates
-    //     const dates = Array.from(new Set([
-    //         ...walData.map(([date]) => date),
-    //         ...tgaData.map(item => item.record_date),
-    //         ...rrpData.map(([date]) => date),
-    //         ...h4Data.map(([date]) => date),
-    //         ...wlcData.map(([date]) => date),
-    //     ])).filter(date => date >= startString && date <= endString)
-    //         .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
-    //
-    //     let lastWalValue = 0;
-    //     let lastTgaValue = 0;
-    //     let lastRrpValue = 0;
-    //     let lastH4Value = 0;
-    //     let lastWlcValue = 0;
-    //
-    //     const combinedData = dates.map(date => {
-    //         const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
-    //         const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
-    //         const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
-    //         const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
-    //         const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
-    //
-    //         // Update the last known values
-    //         lastWalValue = walValue;
-    //         lastTgaValue = tgaValue;
-    //         lastRrpValue = rrpValue;
-    //         lastH4Value = h4Value;
-    //         lastWlcValue = wlcValue;
-    //
-    //         if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
-    //             return 0;
-    //         }
-    //
-    //         // Apply the formula
-    //         return walValue - tgaValue - (rrpValue * 1.9) + h4Value + wlcValue;
-    //     });
-    //
-    //     const filteredData = [];
-    //     const filteredDates = [];
-    //
-    //     for (let i = 0; i < combinedData.length; i++) {
-    //         if (combinedData[i] !== 0) {
-    //             filteredData.push(combinedData[i]);
-    //             filteredDates.push(dates[i]);
-    //         }
-    //     }
-    //
-    //     // Use the dates directly as labels (they are already in YYYY-MM-DD format)
-    //     const labels = filteredDates;
-    //
-    //     const minValue = filteredData.length > 0 ? Math.min(...filteredData) : 0;
-    //     const maxValue = filteredData.length > 0 ? Math.max(...filteredData) : 0;
-    //
-    //     const latestDate = labels[labels.length - 1] || "N/A";
-    //
-    //     return {
-    //         labels,
-    //         datasets: [
-    //             {
-    //                 label: 'NET FED Liquidity Formulas, weighted RRP',
-    //                 data: filteredData,
-    //                 borderColor: 'rgba(153, 102, 255, 1)',
-    //                 backgroundColor: 'rgba(153, 102, 255, 0.2)',
-    //                 fill: false,
-    //             },
-    //         ],
-    //         minValue,
-    //         maxValue,
-    //         latestDate,
-    //     };
-    // };
-
-    // const processCombinedChartDataCSV = () => {
-    //     // Convert start and end dates to strings in YYYY-MM-DD format
-    //     let startString = startDate.utc().format('YYYY-MM-DD');
-    //     const endString = endDate.utc().format('YYYY-MM-DD');
-    //
-    //     // Extract all dates from each dataset and convert them to timestamps
-    //     const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const tgaDates = tgaData.map(item => dayjs(item.record_date).utc().toDate().getTime());
-    //     const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //
-    //     // Convert start and end strings to timestamps
-    //     const startTimestamp = dayjs(startString).utc().toDate().getTime();
-    //     const endTimestamp = dayjs(endString).utc().toDate().getTime();
-    //
-    //     // Find the latest common start date across all datasets
-    //     const latestCommonStartDateTimestamp = Math.max(
-    //         Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
-    //     );
-    //
-    //     // Convert the timestamp back to a date string
-    //     // Update startString to this latest common start date
-    //     startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
-    //
-    //     // Synchronize the dates and filter based on start and end dates
-    //     const dates = Array.from(new Set([
-    //         ...walData.map(([date]) => date),
-    //         ...tgaData.map(item => item.record_date),
-    //         ...rrpData.map(([date]) => date),
-    //         ...h4Data.map(([date]) => date),
-    //         ...wlcData.map(([date]) => date),
-    //     ])).filter(date => date >= startString && date <= endString)
-    //         .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
-    //
-    //     let lastWalValue = 0;
-    //     let lastTgaValue = 0;
-    //     let lastRrpValue = 0;
-    //     let lastH4Value = 0;
-    //     let lastWlcValue = 0;
-    //
-    //     const combinedData = dates.map(date => {
-    //         const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
-    //         const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
-    //         const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
-    //         const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
-    //         const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
-    //
-    //         // Update the last known values
-    //         lastWalValue = walValue;
-    //         lastTgaValue = tgaValue;
-    //         lastRrpValue = rrpValue;
-    //         lastH4Value = h4Value;
-    //         lastWlcValue = wlcValue;
-    //
-    //         if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
-    //             return 0;
-    //         }
-    //
-    //         // Apply the formula
-    //         return walValue - tgaValue - rrpValue + h4Value + wlcValue;
-    //     });
-    //
-    //     const filteredData = [];
-    //     const filteredDates = [];
-    //
-    //     for (let i = 0; i < combinedData.length; i++) {
-    //         if (combinedData[i] !== 0) {
-    //             filteredData.push(combinedData[i]);
-    //             filteredDates.push(dates[i]);
-    //         }
-    //     }
-    //
-    //     setCsv(createCSV(filteredDates, filteredData));
-    // };
-
-    // const processCombinedChartDataCSV3 = () => {
-    //     // Convert start and end dates to strings in YYYY-MM-DD format
-    //     let startString = startDate.utc().format('YYYY-MM-DD');
-    //     const endString = endDate.utc().format('YYYY-MM-DD');
-    //
-    //     // Extract all dates from each dataset and convert them to timestamps
-    //     const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const tgaDates = tgaData2.map(item => dayjs(item.record_date).utc().toDate().getTime());
-    //     const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //
-    //     // Convert start and end strings to timestamps
-    //     const startTimestamp = dayjs(startString).utc().toDate().getTime();
-    //     const endTimestamp = dayjs(endString).utc().toDate().getTime();
-    //
-    //     // Find the latest common start date across all datasets
-    //     const latestCommonStartDateTimestamp = Math.max(
-    //         Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
-    //     );
-    //
-    //     // Convert the timestamp back to a date string
-    //     // Update startString to this latest common start date
-    //     startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
-    //
-    //     // Synchronize the dates and filter based on start and end dates
-    //     const dates = Array.from(new Set([
-    //         ...walData.map(([date]) => date),
-    //         ...tgaData2.map(item => item.record_date),
-    //         ...rrpData.map(([date]) => date),
-    //         ...h4Data.map(([date]) => date),
-    //         ...wlcData.map(([date]) => date),
-    //     ])).filter(date => date >= startString && date <= endString)
-    //         .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
-    //
-    //     let lastWalValue = 0;
-    //     let lastTgaValue = 0;
-    //     let lastRrpValue = 0;
-    //     let lastH4Value = 0;
-    //     let lastWlcValue = 0;
-    //
-    //     const combinedData = dates.map(date => {
-    //         const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
-    //         const tgaValue = tgaData2.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
-    //         const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
-    //         const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
-    //         const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
-    //
-    //         // Update the last known values
-    //         lastWalValue = walValue;
-    //         lastTgaValue = tgaValue;
-    //         lastRrpValue = rrpValue;
-    //         lastH4Value = h4Value;
-    //         lastWlcValue = wlcValue;
-    //
-    //         if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
-    //             return 0;
-    //         }
-    //
-    //         // Apply the formula
-    //         return walValue - tgaValue - rrpValue + h4Value + wlcValue;
-    //     });
-    //
-    //     const filteredData = [];
-    //     const filteredDates = [];
-    //
-    //     for (let i = 0; i < combinedData.length; i++) {
-    //         if (combinedData[i] !== 0) {
-    //             filteredData.push(combinedData[i]);
-    //             filteredDates.push(dates[i]);
-    //         }
-    //     }
-    //
-    //     setCsv3(createCSV(filteredDates, filteredData));
-    // };
-
-    // const processCombinedChartDataCSV2 = () => {
-    //     // Convert start and end dates to strings in YYYY-MM-DD format
-    //     let startString = startDate.utc().format('YYYY-MM-DD');
-    //     const endString = endDate.utc().format('YYYY-MM-DD');
-    //
-    //     // Extract all dates from each dataset and convert them to timestamps
-    //     const walDates = walData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const tgaDates = tgaData.map(item => dayjs(item.record_date).utc().toDate().getTime());
-    //     const rrpDates = rrpData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const h4Dates = h4Data.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //     const wlcDates = wlcData.map(([date]) => dayjs(date).utc().toDate().getTime());
-    //
-    //     // Convert start and end strings to timestamps
-    //     const startTimestamp = dayjs(startString).utc().toDate().getTime();
-    //     const endTimestamp = dayjs(endString).utc().toDate().getTime();
-    //
-    //     // Find the latest common start date across all datasets
-    //     const latestCommonStartDateTimestamp = Math.max(
-    //         Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
-    //         Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
-    //     );
-    //
-    //     // Convert the timestamp back to a date string
-    //     // Update startString to this latest common start date
-    //     startString = dayjs(latestCommonStartDateTimestamp).utc().format('YYYY-MM-DD');
-    //
-    //     // Synchronize the dates and filter based on start and end dates
-    //     const dates = Array.from(new Set([
-    //         ...walData.map(([date]) => date),
-    //         ...tgaData.map(item => item.record_date),
-    //         ...rrpData.map(([date]) => date),
-    //         ...h4Data.map(([date]) => date),
-    //         ...wlcData.map(([date]) => date),
-    //     ])).filter(date => date >= startString && date <= endString)
-    //         .sort((a, b) => dayjs(a).utc().toDate() - dayjs(b).utc().toDate());
-    //
-    //     let lastWalValue = 0;
-    //     let lastTgaValue = 0;
-    //     let lastRrpValue = 0;
-    //     let lastH4Value = 0;
-    //     let lastWlcValue = 0;
-    //
-    //     const combinedData = dates.map(date => {
-    //         const walValue = walData.find(([d]) => d === date)?.[1] || lastWalValue;
-    //         const tgaValue = tgaData.find(item => item.record_date === date)?.open_today_bal || lastTgaValue;
-    //         const rrpValue = rrpData.find(([d]) => d === date)?.[1] || lastRrpValue;
-    //         const h4Value = h4Data.find(([d]) => d === date)?.[1] || lastH4Value;
-    //         const wlcValue = wlcData.find(([d]) => d === date)?.[1] || lastWlcValue;
-    //
-    //         // Update the last known values
-    //         lastWalValue = walValue;
-    //         lastTgaValue = tgaValue;
-    //         lastRrpValue = rrpValue;
-    //         lastH4Value = h4Value;
-    //         lastWlcValue = wlcValue;
-    //
-    //         if (walValue === 0 || tgaValue === 0 || rrpValue === 0 || h4Value === 0 || wlcValue === 0) {
-    //             return 0;
-    //         }
-    //
-    //         // Apply the formula
-    //         return walValue - tgaValue - (rrpValue * 1.9) + h4Value + wlcValue;
-    //     });
-    //
-    //     const filteredData = [];
-    //     const filteredDates = [];
-    //
-    //     for (let i = 0; i < combinedData.length; i++) {
-    //         if (combinedData[i] !== 0) {
-    //             filteredData.push(combinedData[i]);
-    //             filteredDates.push(dates[i]);
-    //         }
-    //     }
-    //
-    //     setCsv2(createCSV(filteredDates, filteredData));
-    // };
-
-    const handleTabChange = (event, newValue) => {
-        setTabValue(newValue);
-    };
-
-    const generatePineScript = (formula) => {
-        let dataFunction;
-
-        switch (formula) {
-            case 1:
-                dataFunction = processCombinedChartData;
-                break;
-//             case 2:
-//                 dataFunction = processCombinedChartData2;
-//                 break;
-//             case 3:
-//                 dataFunction = processCombinedChartData3;
-//                 break;
-            default:
-                dataFunction = processCombinedChartData;
-                break;
-        }
-
-        const values = dataFunction().datasets[0].data;
-        const dates = dataFunction().labels;
+        if (!values || values.length === 0) return;
 
         const filledDates = [];
         const filledValues = [];
-
         let lastKnownValue = null;
-
         let currentIndex = 0;
+
         for (let d = new Date(dates[0]); d <= new Date(dates[dates.length - 1]); d.setDate(d.getDate() + 1)) {
             const currentDateString = d.toISOString().split('T')[0];
 
             if (dates[currentIndex] === currentDateString) {
-                lastKnownValue = values[currentIndex];
+                lastKnownValue = Array.isArray(values[currentIndex]) ? values[currentIndex].liquidity || values[currentIndex].balance || values[currentIndex].value : values[currentIndex];
                 filledDates.push(currentDateString);
                 filledValues.push(lastKnownValue);
                 currentIndex++;
@@ -2342,7 +1672,7 @@ const TGA1 = () => {
         const mostRecentDate = filledDates[filledDates.length - 1];
 
         let pineScript = `//@version=5
-indicator(" ${processCombinedChartData().datasets[0].label} Data Plot", overlay=true)
+indicator("${title} Data Plot", overlay=true)
 
 var customValues = array.new_float()
 bump = input(true, '', inline = '1') // Enable/Disable offset of origin bar.
@@ -2355,12 +1685,12 @@ if bar_index == indx
      `;
 
         for (let i = 0; i < filledDates.length; i++) {
-            pineScript += `${filledValues[i] * 1000000}${i < filledValues.length - 1 ? ', ' : `
+            const multiplier = title.includes('Formula') ? 1000000 : 1;
+            pineScript += `${filledValues[i] * multiplier}${i < filledValues.length - 1 ? ', ' : `
  `}`;
         }
 
         pineScript += `    )`;
-
         pineScript += `
 
 plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00) // Plot and shrink dataset for bars within data range.
@@ -2380,588 +1710,325 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         setOpenSnackbar(false);
     };
 
-    // const generateCsv = (formula) => {
-    //     let theCsv;
-    //
-    //     switch (formula) {
-    //         case 1:
-    //             theCsv = csv;
-    //             break;
-    //         case 2:
-    //             theCsv = csv2;
-    //             break;
-    //         case 3:
-    //             theCsv = csv3;
-    //             break;
-    //         default:
-    //             theCsv = csv;
-    //             break;
-    //     }
-    //
-    //     downloadCSV(theCsv, "data.csv");
-    // };
+    const onRefresh = () => {
+        fetchTgaData();
+        fetchFredData();
+    };
 
-    // const createCSV = (dates, values) => {
-    //     let csvContent = "data:text/csv;charset=utf-8,";
-    //     csvContent += "Date,Value\n"; // Add the headers
-    //
-    //     dates.forEach((date, index) => {
-    //         csvContent += `${date},${values[index]}\n`;
-    //     });
-    //
-    //     return csvContent;
-    // }
+    useEffect(() => {
+        fetchTgaData();
+        fetchFredData();
+    }, [startDate, endDate]);
 
-    // const downloadCSV = (csvContent, fileName) => {
-    //     const encodedUri = encodeURI(csvContent);
-    //     const link = document.createElement("a");
-    //     link.setAttribute("href", encodedUri);
-    //     link.setAttribute("download", fileName);
-    //     document.body.appendChild(link); // Required for FF
-    //
-    //     link.click();
-    //     document.body.removeChild(link);
-    // }
+    const chartIcons = [
+        { icon: <ViewAgendaOutlinedIcon />, value: "1", tooltip: "Single Column" },
+        // { icon: <ViewQuiltOutlinedIcon />, value: "1.3", tooltip: "Compact Grid" },
+        { icon: <GridViewOutlinedIcon />, value: "2", tooltip: "Two Columns" }
+    ];
 
-    const snowflake = document.createElement('img');
-    snowflake.src = '/snowflake.png';
+    // Chart configurations
+    const charts = [
+        {
+            title: "Formula #1: NET FED Liquidity",
+            subtitle: "WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)",
+            data: processCombinedChartData(),
+            metric: "liquidity",
+            plugins: [verticalLinePlugin]
+        },
+        {
+            title: "Treasury General Account (TGA) Closing Balance",
+            subtitle: "TGA Closing Balance Over Time (Millions)",
+            data: processTgaChartData(),
+            metric: "balance"
+        },
+        {
+            title: "Total Assets Supplying Reserve Funds (WALCL)",
+            subtitle: "WALCL on Wednesdays (Millions)",
+            data: processChartData(walData, 'WALCL', theme.palette.success.main),
+            metric: "value"
+        },
+        {
+            title: "Treasury Securities Sold by Fed (RRPONTSYD)",
+            subtitle: "Overnight Reverse Repurchase Agreements (Millions)",
+            data: processChartData(rrpData, 'RRPONTSYD', theme.palette.error.main),
+            metric: "value"
+        },
+        {
+            title: "Liquidity and Credit Facilities Loans (H41RESPPALDKNWW)",
+            subtitle: "Bank Term Funding Program, Net on Wednesdays (Millions)",
+            data: processChartData(h4Data, 'H41RESPPALDKNWW', theme.palette.warning.main),
+            metric: "value"
+        },
+        {
+            title: "Loans Held by Federal Reserve (WLCFLPCL)",
+            subtitle: "Primary Credit on Wednesdays (Millions)",
+            data: processChartData(wlcData, 'WLCFLPCL', theme.palette.info.main),
+            metric: "value"
+        }
+    ];
 
     return (
-        <div className="App" style={{"min-height": "2000px"}}>
-            <h1>{"NET FED Liquidity Formulas" /*+ (!isLoggedIn ? " (LAGGING)" : "")*/}</h1>
-            {/*{!isLoggedIn && (*/}
-            {/*    <>*/}
-            {/*        <Typography variant={"body1"} style={{marginBottom: "16px"}}>*/}
-            {/*            The TGA data below lags by 7 entries. For the most recent data, join the Crypto Investing Campus and watch the Daily Investing Analysis. Go to <Link to={"/login"}>login</Link>.*/}
-            {/*        </Typography>*/}
-            {/*    </>*/}
-            {/*)}*/}
-            <Grid container spacing={2} justifyContent="center">
-                <Grid item>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="Start Date"
-                            value={startDate}
-                            onChange={(newValue) => {
-                                setStartDate(dayjs(newValue).utc());
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                            minDate={dayjs("2023-03-16").utc()}
-                            maxDate={endDate}
-                        />
-                    </LocalizationProvider>
-                </Grid>
-                <Grid item>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            label="End Date"
-                            value={endDate}
-                            onChange={(newValue) => {
-                                setEndDate(dayjs(newValue).utc());
-                            }}
-                            renderInput={(params) => <TextField {...params} />}
-                            minDate={startDate}
-                            maxDate={dayjs().utc()}
-                        />
-                    </LocalizationProvider>
-                </Grid>
-
-                <Grid
-                    container
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    direction={"column"}
-                >
-                    <Grid item>
-                        <h4>Change charts size</h4>
-                    </Grid>
-
-                    <Grid item>
-                        <Tabs value={tabValue} onChange={handleTabChange}>
-                            <Tab label={(<ViewAgendaOutlinedIcon/>)} value={"1"}/>
-                            <Tab label={(<ViewQuiltOutlinedIcon/>)} value={"1.3"}/>
-                            <Tab label={(<GridViewOutlinedIcon/>)} value={"2"}/>
-                        </Tabs>
-                    </Grid>
-                </Grid>
-            </Grid>
-            {loading ? (
-                <CircularProgress/>
-            ) : (
-                <Grid
-                    container
-                    direction={"row"}
-                    justifyContent={"space-evenly"}
-                >
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
+        <Container maxWidth="xl" sx={{ py: 4 }}>
+            <Fade in timeout={800}>
+                <Box>
+                    {/* Header Section */}
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            p: 4,
+                            mb: 4,
+                            background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.1)} 0%, ${alpha(theme.palette.secondary.main, 0.05)} 100%)`,
+                            borderRadius: 3,
+                            border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
+                        }}
                     >
-                        <h1>Formula #1, Original</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processCombinedChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            // eslint-disable-next-line no-useless-concat
-                                            text: 'NET FED Liquidity' /*+ (jwtParsed?.name ? jwtParsed?.name : "") */ + ' Formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processCombinedChartData().minValue - 10000,
-                                            max: processCombinedChartData().maxValue + 10000,
-                                        },
-                                    },
+                        <Box display="flex" alignItems="center" mt={2}>
+                            <TrendingUpIcon sx={{ fontSize: 40, color: theme.palette.primary.main, mr: 2 }} />
+                            <Typography
+                                variant="h3"
+                                component="h1"
+                                fontWeight="bold"
+                                sx={{
+                                    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
+                                    backgroundClip: 'text',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent'
                                 }}
-                                plugins={[watermarkPlugin, verticalLinePlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processCombinedChartData().latestDate}
+                            >
+                                NET FED Liquidity Analysis
                             </Typography>
-                        </Grid>
-                        <Grid container item justifyContent="center">
-                            <Grid item>
-                                <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(1)} variant="contained"
-                                        disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>
-                                    {loading || processCombinedChartData().datasets[0].data.length === 0 ? (
-                                        <CircularProgress size={25} color={"grey"}/>
-                                    ) : (
-                                        "Copy Pine Script"
-                                    )}
-                                </Button>
+                        </Box>
 
-                        {/*        <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(1)}>*/}
-                        {/*            {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
-                        {/*                <CircularProgress size={25} color={"grey"}/>*/}
-                        {/*            ) : (*/}
-                        {/*                "Download CSV"*/}
-                        {/*            )}*/}
-                        {/*        </Button>*/}
+                        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '800px' }}>
+                            Comprehensive analysis of Federal Reserve liquidity using the formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL.
+                            Track all components that affect market liquidity and monetary conditions.
+                        </Typography>
+                    </Paper>
+
+                    {/* Controls Section */}
+                    <Card elevation={2} sx={{ mb: 4, borderRadius: 3 }}>
+                        <CardContent sx={{ p: 3 }}>
+                            <Typography variant="h6" gutterBottom sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+                                <ShowChartIcon sx={{ mr: 1, color: theme.palette.primary.main }} />
+                                Analysis Parameters
+                            </Typography>
+
+                            <Grid container spacing={3} alignItems="center">
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DatePicker
+                                            label="Start Date"
+                                            value={startDate}
+                                            onChange={(newValue) => setStartDate(dayjs(newValue).utc())}
+                                            disabled={loading}
+                                            maxDate={endDate}
+                                            minDate={dayjs("2023-03-16").utc()}
+                                            sx={{ width: '100%' }}
+                                            slotProps={{
+                                                textField: {
+                                                    variant: 'outlined',
+                                                    size: 'medium'
+                                                }
+                                            }}
+                                        />
+                                    </LocalizationProvider>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                        <DatePicker
+                                            label="End Date"
+                                            value={endDate}
+                                            onChange={(newValue) => setEndDate(dayjs(newValue).utc())}
+                                            disabled={loading}
+                                            minDate={startDate}
+                                            maxDate={dayjs().utc()}
+                                            sx={{ width: '100%' }}
+                                            slotProps={{
+                                                textField: {
+                                                    variant: 'outlined',
+                                                    size: 'medium'
+                                                }
+                                            }}
+                                        />
+                                    </LocalizationProvider>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <Button
+                                        onClick={onRefresh}
+                                        variant="contained"
+                                        disabled={loading}
+                                        size="large"
+                                        startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <RefreshIcon />}
+                                        sx={{
+                                            height: 56,
+                                            borderRadius: 2,
+                                            textTransform: 'none',
+                                            fontSize: '1rem',
+                                            fontWeight: 600,
+                                            boxShadow: theme.shadows[4],
+                                            '&:hover': {
+                                                boxShadow: theme.shadows[8]
+                                            }
+                                        }}
+                                        fullWidth
+                                    >
+                                        {loading ? 'Loading...' : 'Reload Charts'}
+                                    </Button>
+                                </Grid>
+
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <Paper
+                                        elevation={1}
+                                        sx={{
+                                            p: 2,
+                                            borderRadius: 2,
+                                            background: alpha(theme.palette.primary.main, 0.05)
+                                        }}
+                                    >
+                                        <Typography variant="body2" color="text.secondary" gutterBottom>
+                                            Chart Layout
+                                        </Typography>
+                                        <Box display="flex" justifyContent="center">
+                                            {chartIcons.map((item) => (
+                                                <Tooltip key={item.value} title={item.tooltip}>
+                                                    <IconButton
+                                                        onClick={() => setTabValue(item.value)}
+                                                        color={tabValue === item.value ? "primary" : "default"}
+                                                        sx={{
+                                                            mx: 0.5,
+                                                            backgroundColor: tabValue === item.value ? alpha(theme.palette.primary.main, 0.1) : 'transparent',
+                                                            '&:hover': {
+                                                                backgroundColor: alpha(theme.palette.primary.main, 0.1)
+                                                            }
+                                                        }}
+                                                    >
+                                                        {item.icon}
+                                                    </IconButton>
+                                                </Tooltip>
+                                            ))}
+                                        </Box>
+                                    </Paper>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Grid>
-                    {/*<Grid*/}
-                    {/*    item*/}
-                    {/*    xs={11 / parseFloat(tabValue)}*/}
-                    {/*    justifyContent="center"*/}
-                    {/*>*/}
-                    {/*    <h1>Formula #2, TGA Opening Balance (Unverified)</h1>*/}
-                    {/*    <Grid item xs={12}>*/}
-                    {/*        <Line*/}
-                    {/*            data={processCombinedChartData3()}*/}
-                    {/*            options={{*/}
-                    {/*                responsive: true,*/}
-                    {/*                plugins: {*/}
-                    {/*                    legend: {*/}
-                    {/*                        position: 'top',*/}
-                    {/*                    },*/}
-                    {/*                    title: {*/}
-                    {/*                        display: true,*/}
-                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA (Opening) - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*                scales: {*/}
-                    {/*                    x: {*/}
-                    {/*                        type: 'time',*/}
-                    {/*                        time: {*/}
-                    {/*                            unit: 'day',*/}
-                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
-                    {/*                        },*/}
-                    {/*                    },*/}
-                    {/*                    y: {*/}
-                    {/*                        beginAtZero: false,*/}
-                    {/*                        min: processCombinedChartData3().minValue - 10000,*/}
-                    {/*                        max: processCombinedChartData3().maxValue + 10000,*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*            }}*/}
-                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
-                    {/*        />*/}
-                    {/*        <Typography variant="body1" align="center">*/}
-                    {/*            Latest Date: {processCombinedChartData3().latestDate}*/}
-                    {/*        </Typography>*/}
-                    {/*    </Grid>*/}
-                    {/*    <Grid container item justifyContent="center">*/}
-                    {/*        <Grid item>*/}
-                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(3)} variant="contained"*/}
-                    {/*                    disabled={loading || processCombinedChartData3().datasets[0].data.length === 0}>*/}
-                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
-                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                    {/*                ) : (*/}
-                    {/*                    "Copy Pine Script"*/}
-                    {/*                )}*/}
-                    {/*            </Button>*/}
+                        </CardContent>
+                    </Card>
 
-                    {/*            <Button disabled={loading || processCombinedChartData3().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(3)}>*/}
-                    {/*                {loading || processCombinedChartData3().datasets[0].data.length === 0 ? (*/}
-                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                    {/*                ) : (*/}
-                    {/*                    "Download CSV"*/}
-                    {/*                )}*/}
-                    {/*            </Button>*/}
-                    {/*        </Grid>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
-                    {/*<Grid*/}
-                    {/*    item*/}
-                    {/*    xs={11 / parseFloat(tabValue)}*/}
-                    {/*    justifyContent="center"*/}
-                    {/*>*/}
-                    {/*    <h1>Formula #3, weighted RRP (Unverified)</h1>*/}
-                    {/*    <Grid item xs={12}>*/}
-                    {/*        <Line*/}
-                    {/*            data={processCombinedChartData2()}*/}
-                    {/*            options={{*/}
-                    {/*                responsive: true,*/}
-                    {/*                plugins: {*/}
-                    {/*                    legend: {*/}
-                    {/*                        position: 'top',*/}
-                    {/*                    },*/}
-                    {/*                    title: {*/}
-                    {/*                        display: true,*/}
-                    {/*                        text: 'NET FED Liquidity' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Formula: WALCL - TGA - (RRPONTSYD * 1.9) + H41RESPPALDKNWW + WLCFLPCL (Millions)',*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*                scales: {*/}
-                    {/*                    x: {*/}
-                    {/*                        type: 'time',*/}
-                    {/*                        time: {*/}
-                    {/*                            unit: 'day',*/}
-                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
-                    {/*                        },*/}
-                    {/*                    },*/}
-                    {/*                    y: {*/}
-                    {/*                        beginAtZero: false,*/}
-                    {/*                        min: processCombinedChartData2().minValue - 10000,*/}
-                    {/*                        max: processCombinedChartData2().maxValue + 10000,*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*            }}*/}
-                    {/*            plugins={[watermarkPlugin, verticalLinePlugin]}*/}
-                    {/*        />*/}
-                    {/*        <Typography variant="body1" align="center">*/}
-                    {/*            Latest Date: {processCombinedChartData2().latestDate}*/}
-                    {/*        </Typography>*/}
-                    {/*    </Grid>*/}
-                    {/*    <Grid container item justifyContent="center">*/}
-                    {/*        <Grid item>*/}
-                    {/*            <Button style={{"marginLeft": "8px"}} onClick={() => generatePineScript(2)} variant="contained"*/}
-                    {/*                    disabled={loading || processCombinedChartData().datasets[0].data.length === 0}>*/}
-                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
-                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                    {/*                ) : (*/}
-                    {/*                    "Copy Pine Script"*/}
-                    {/*                )}*/}
-                    {/*            </Button>*/}
+                    {/* Charts Section */}
+                    {!loading && (
+                        <Fade in timeout={1000}>
+                            <Grid container spacing={3}>
+                                {charts.map((chart, index) => (
+                                    <Grid key={index} item xs={12 / parseFloat(tabValue)}>
+                                        <Card
+                                            elevation={3}
+                                            sx={{
+                                                borderRadius: 3,
+                                                overflow: 'hidden',
+                                                background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
+                                                mb: 2
+                                            }}
+                                        >
+                                            <CardContent sx={{ p: 0 }}>
+                                                <Box sx={{ p: 2, borderBottom: `1px solid ${alpha(theme.palette.divider, 0.1)}` }}>
+                                                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                                                        <Box>
+                                                            <Typography variant="h6" fontWeight="bold" color="primary">
+                                                                {chart.title}
+                                                            </Typography>
+                                                            <Typography variant="body2" color="text.secondary">
+                                                                {chart.subtitle}
+                                                            </Typography>
+                                                            <Typography variant="caption" color="text.secondary">
+                                                                Latest value: {chart.data.latestDate}
+                                                            </Typography>
+                                                        </Box>
+                                                        <Tooltip title="Copy Pine Script">
+                                                            <IconButton
+                                                                onClick={() => generatePineScript(chart.data, chart.title)}
+                                                                disabled={!chart.data.datasets[0].data.length}
+                                                                color="primary"
+                                                            >
+                                                                <ContentCopyIcon />
+                                                            </IconButton>
+                                                        </Tooltip>
+                                                    </Box>
+                                                </Box>
+                                                <CryptoChart
+                                                    datasets={chart.data.datasets}
+                                                    title=""
+                                                    metric={chart.metric}
+                                                    showDatesOnly={true}
+                                                    plugins={chart.plugins}
+                                                />
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        </Fade>
+                    )}
 
-                    {/*            <Button disabled={loading || processCombinedChartData().datasets[0].data.length === 0} style={{marginLeft: "8px"}} variant="contained" onClick={() => generateCsv(2)}>*/}
-                    {/*                {loading || processCombinedChartData().datasets[0].data.length === 0 ? (*/}
-                    {/*                    <CircularProgress size={25} color={"grey"}/>*/}
-                    {/*                ) : (*/}
-                    {/*                    "Download CSV"*/}
-                    {/*                )}*/}
-                    {/*            </Button>*/}
-                    {/*        </Grid>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
+                    {loading && (
+                        <Box display="flex" justifyContent="center" alignItems="center" minHeight={400}>
+                            <CircularProgress size={60} />
+                        </Box>
+                    )}
 
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
+                    {/* Info Section */}
+                    <Paper
+                        elevation={1}
+                        sx={{
+                            mt: 4,
+                            p: 3,
+                            borderRadius: 3,
+                            background: alpha(theme.palette.info.main, 0.02),
+                            border: `1px solid ${alpha(theme.palette.info.main, 0.1)}`
+                        }}
                     >
-                        <h1>Treasury General Account (TGA) Closing Balance</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processTgaChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            // eslint-disable-next-line no-useless-concat
-                                            text: 'TGA' /*+ (jwtParsed?.name ? jwtParsed?.name : "")*/ + ' Closing Balance Over Time (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: true,
-                                            min: processTgaChartData().minValue - 5000,
-                                            max: processTgaChartData().maxValue + 5000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processTgaChartData().latestDate}
+                        <Typography variant="h6" gutterBottom color="info.main">
+                            About NET FED Liquidity Formula
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                            <strong>Formula:</strong> WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary" paragraph>
+                            <strong>Components:</strong>
+                        </Typography>
+                        <Box component="ul" sx={{ pl: 2, m: 0 }}>
+                            <Typography component="li" variant="body2" color="text.secondary">
+                                <strong>WALCL:</strong> Total assets supplying reserve funds (adds liquidity)
                             </Typography>
-                        </Grid>
-                    </Grid>
-
-                    {/*<Grid*/}
-                    {/*    item*/}
-                    {/*    xs={11 / parseFloat(tabValue)}*/}
-                    {/*    justifyContent="center"*/}
-                    {/*>*/}
-                    {/*    <h1>Treasury General Account (TGA) Opening Balance</h1>*/}
-                    {/*    <Grid item xs={12}>*/}
-                    {/*        <Line*/}
-                    {/*            data={processTgaChartData2()}*/}
-                    {/*            options={{*/}
-                    {/*                responsive: true,*/}
-                    {/*                plugins: {*/}
-                    {/*                    legend: {*/}
-                    {/*                        position: 'top',*/}
-                    {/*                    },*/}
-                    {/*                    title: {*/}
-                    {/*                        display: true,*/}
-                    {/*                        text: 'TGA' + (jwtParsed?.name ? jwtParsed?.name : "") + ' Opening Balance Over Time (Millions)',*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*                scales: {*/}
-                    {/*                    x: {*/}
-                    {/*                        type: 'time',*/}
-                    {/*                        time: {*/}
-                    {/*                            unit: 'day',*/}
-                    {/*                            tooltipFormat: 'MM/dd/yyyy',*/}
-                    {/*                        },*/}
-                    {/*                    },*/}
-                    {/*                    y: {*/}
-                    {/*                        beginAtZero: true,*/}
-                    {/*                        min: processTgaChartData2().minValue - 5000,*/}
-                    {/*                        max: processTgaChartData2().maxValue + 5000,*/}
-                    {/*                    },*/}
-                    {/*                },*/}
-                    {/*            }}*/}
-                    {/*            plugins={[watermarkPlugin]}*/}
-                    {/*        />*/}
-                    {/*        <Typography variant="body1" align="center">*/}
-                    {/*            Latest Date: {processTgaChartData2().latestDate}*/}
-                    {/*        </Typography>*/}
-                    {/*    </Grid>*/}
-                    {/*</Grid>*/}
-
-
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Factors Affecting Reserve Balances:</h1>
-                        <h1>Total Assets Supplying Reserve Funds on Wednesdays (WALCL)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processWalChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'WALCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processWalChartData().minValue - 3000,
-                                            max: processWalChartData().maxValue + 3000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processWalChartData().latestDate}
+                            <Typography component="li" variant="body2" color="text.secondary">
+                                <strong>TGA:</strong> Treasury General Account balance (removes liquidity when high)
                             </Typography>
-                        </Grid>
-                    </Grid>
-
-
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Overnight Reverse Repurchase Agreements:</h1>
-                        <h1>Treasury Securities Sold by the Federal Reserve (RRPONTSYD)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processRrpChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'RRPONTSYD (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processRrpChartData().minValue - 10000,
-                                            max: processRrpChartData().maxValue + 10000,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processRrpChartData().latestDate}
+                            <Typography component="li" variant="body2" color="text.secondary">
+                                <strong>RRPONTSYD:</strong> Reverse repo operations (removes liquidity)
                             </Typography>
-                        </Grid>
-                    </Grid>
-
-
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Factors Affecting Reserve Balances: Reserve Bank Credit:</h1>
-                        <h1>Liquidity and Credit Facilities: Loans on Wednesdays (H41RESPPALDKNWW)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processH4ChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'H41RESPPALDKNWW (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processH4ChartData().minValue - 200,
-                                            max: processH4ChartData().maxValue + 200,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processH4ChartData().latestDate}
+                            <Typography component="li" variant="body2" color="text.secondary">
+                                <strong>H41RESPPALDKNWW:</strong> Bank Term Funding Program (adds liquidity)
                             </Typography>
-                        </Grid>
-                    </Grid>
-
-
-                    <Grid
-                        item
-                        xs={11 / parseFloat(tabValue)}
-                        justifyContent="center"
-                    >
-                        <h1>Assets: Liquidity and Credit Facilities:</h1>
-                        <h1>Loans Held by the Federal Reserve (WLCFLPCL)</h1>
-                        <Grid item xs={12}>
-                            <Line
-                                data={processWlcChartData()}
-                                options={{
-                                    responsive: true,
-                                    plugins: {
-                                        legend: {
-                                            position: 'top',
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'WLCFLPCL (Millions)',
-                                        },
-                                    },
-                                    scales: {
-                                        x: {
-                                            type: 'time',
-                                            time: {
-                                                unit: 'day',
-                                                tooltipFormat: 'MM/dd/yyyy',
-                                            },
-                                        },
-                                        y: {
-                                            beginAtZero: false,
-                                            min: processWlcChartData().minValue - 500,
-                                            max: processWlcChartData().maxValue + 500,
-                                        },
-                                    },
-                                }}
-                                plugins={[watermarkPlugin]}
-                            />
-                            <Typography variant="body1" align="center">
-                                Latest Date: {processWlcChartData().latestDate}
+                            <Typography component="li" variant="body2" color="text.secondary">
+                                <strong>WLCFLPCL:</strong> Primary credit loans (adds liquidity)
                             </Typography>
-                        </Grid>
-                    </Grid>
-                </Grid>
-            )}
+                        </Box>
+                    </Paper>
 
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={6000}
-                onClose={handleCloseSnackbar}
-                message="Pine Script copied to clipboard!"
-            />
+                    <Snackbar
+                        open={openSnackbar}
+                        autoHideDuration={6000}
+                        onClose={handleCloseSnackbar}
+                        message="Pine Script copied to clipboard!"
+                    />
 
-            <Snackbar
-                open={error}
-                message={`Error on data loading occurred: ${errorSource}, try reloading the page`}
-            />
-        </div>
+                    <Snackbar
+                        open={error}
+                        message={`Error loading data: ${errorSource}. Try reloading the page.`}
+                    />
+                </Box>
+            </Fade>
+        </Container>
     );
 };
 
