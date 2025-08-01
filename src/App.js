@@ -1577,7 +1577,7 @@ const App = () => {
                             <Grid item xs={12 / parseFloat(tabValue)}>
                                 <Paper elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
                                     <BarChart metrics={metrics} title="CDF-based Omega Ratio" metric="omega_ratio"/>
-                                    <Box p={2}>
+                                    <Box p={2} mt={3}>
                                         <Typography variant="body2" color="text.secondary">
                                             This chart displays the Omega ratio calculated using probability-weighted gains and losses
                                             derived from the Cumulative Distribution Function (CDF) of the returns.
@@ -1589,7 +1589,7 @@ const App = () => {
                             <Grid item xs={12 / parseFloat(tabValue)}>
                                 <Paper elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
                                     <BarChart metrics={metrics} title="Simple Sum-Based Omega Ratio" metric="simple_omega_ratio"/>
-                                    <Box p={2}>
+                                    <Box p={2} mt={3}>
                                         <Typography variant="body2" color="text.secondary">
                                             This chart shows the Omega ratio calculated using the straightforward sum of gains and absolute
                                             sum of losses without considering probability weights.
