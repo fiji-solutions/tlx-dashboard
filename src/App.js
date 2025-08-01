@@ -16,7 +16,6 @@ import {
     Box,
     Typography,
     Card,
-    CardContent,
     Chip,
     Divider,
     useTheme,
@@ -36,6 +35,54 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
 import SearchIcon from '@mui/icons-material/Search';
 import GetAppIcon from '@mui/icons-material/GetApp';
+
+// Helper component for asset selection with improved styling
+const AssetCheckbox = ({ checked, onChange, icon, networkIcon, label, disabled = false }) => (
+    <FormControlLabel
+        control={
+            <Checkbox
+                checked={checked}
+                onChange={onChange}
+                disabled={disabled}
+            />
+        }
+        label={
+            <Box display="flex" alignItems="center" gap={1}>
+                <Box position="relative">
+                    <img
+                        style={{ height: '28px', width: '28px', borderRadius: networkIcon ? '50%' : '4px' }}
+                        src={icon}
+                        alt="coin"
+                    />
+                    {networkIcon && (
+                        <img
+                            style={{
+                                height: '14px',
+                                width: '14px',
+                                position: 'absolute',
+                                top: -2,
+                                right: -2,
+                                borderRadius: '50%',
+                                border: '1px solid white'
+                            }}
+                            src={networkIcon}
+                            alt="network"
+                        />
+                    )}
+                </Box>
+                <Typography variant="body2" fontWeight={500}>
+                    {label}
+                </Typography>
+            </Box>
+        }
+        sx={{
+            margin: 0,
+            '& .MuiFormControlLabel-label': {
+                fontSize: '0.875rem'
+            }
+        }}
+    />
+);
 
 const App = () => {
     const theme = useTheme();
@@ -790,61 +837,8 @@ const App = () => {
     const snowflake = document.createElement('img');
     snowflake.src = '/snowflake.png';
 
-    // Helper component for asset selection with improved styling
-    const AssetCheckbox = ({ checked, onChange, icon, networkIcon, label, disabled = false }) => (
-        <FormControlLabel
-            control={
-                <Checkbox
-                    checked={checked}
-                    onChange={onChange}
-                    disabled={disabled}
-                    sx={{
-                        '&.Mui-checked': {
-                            color: theme.palette.primary.main,
-                        }
-                    }}
-                />
-            }
-            label={
-                <Box display="flex" alignItems="center" gap={1}>
-                    <Box position="relative">
-                        <img
-                            style={{ height: '28px', width: '28px', borderRadius: networkIcon ? '50%' : '4px' }}
-                            src={icon}
-                            alt="coin"
-                        />
-                        {networkIcon && (
-                            <img
-                                style={{
-                                    height: '14px',
-                                    width: '14px',
-                                    position: 'absolute',
-                                    top: -2,
-                                    right: -2,
-                                    borderRadius: '50%',
-                                    border: '1px solid white'
-                                }}
-                                src={networkIcon}
-                                alt="network"
-                            />
-                        )}
-                    </Box>
-                    <Typography variant="body2" fontWeight={500}>
-                        {label}
-                    </Typography>
-                </Box>
-            }
-            sx={{
-                margin: 0,
-                '& .MuiFormControlLabel-label': {
-                    fontSize: '0.875rem'
-                }
-            }}
-        />
-    );
-
     return (
-        <Box sx={{ 
+        <Box sx={{
             minHeight: '100vh',
             background: `linear-gradient(135deg, ${alpha(theme.palette.primary.main, 0.02)} 0%, ${alpha(theme.palette.secondary.main, 0.02)} 100%)`,
         }}>
@@ -871,23 +865,23 @@ const App = () => {
                             </Typography>
                         </Box>
                     </Box>
-                    
+
                     <Box display="flex" gap={1} flexWrap="wrap">
-                        <Chip 
-                            icon={<AnalyticsIcon />} 
-                            label="Performance Analytics" 
-                            color="primary" 
-                            variant="outlined" 
+                        <Chip
+                            icon={<AnalyticsIcon />}
+                            label="Performance Analytics"
+                            color="primary"
+                            variant="outlined"
                         />
-                        <Chip 
-                            label="Real-time Data" 
-                            color="success" 
-                            variant="outlined" 
+                        <Chip
+                            label="Real-time Data"
+                            color="success"
+                            variant="outlined"
                         />
-                        <Chip 
-                            label="Risk Metrics" 
-                            color="warning" 
-                            variant="outlined" 
+                        <Chip
+                            label="Risk Metrics"
+                            color="warning"
+                            variant="outlined"
                         />
                     </Box>
                 </Paper>
@@ -1017,7 +1011,7 @@ const App = () => {
                                     >
                                         {loading ? 'Analyzing...' : 'Fetch Data'}
                                     </Button>
-                                    
+
                                     <Button
                                         onClick={onExport}
                                         variant="outlined"
@@ -1400,8 +1394,8 @@ const App = () => {
 
                         <Grid container spacing={2}>
                             {[
-                                { 
-                                    title: 'BTC', 
+                                {
+                                    title: 'BTC',
                                     icon: 'https://d2l35o8v06vi7z.cloudfront.net/bitcoin.webp',
                                     assets: [
                                         { checked: spotBtc, onChange: () => spotCheckboxClick("btc-1"), label: 'BTC' },
@@ -1411,8 +1405,8 @@ const App = () => {
                                         { checked: spotBtc5, onChange: () => spotCheckboxClick("btc-5"), label: 'BTC5X' },
                                     ]
                                 },
-                                { 
-                                    title: 'ETH', 
+                                {
+                                    title: 'ETH',
                                     icon: 'https://d2l35o8v06vi7z.cloudfront.net/fiji/ethereum.png',
                                     assets: [
                                         { checked: spotEth, onChange: () => spotCheckboxClick("eth-1"), label: 'ETH' },
@@ -1422,8 +1416,8 @@ const App = () => {
                                         { checked: spotEth5, onChange: () => spotCheckboxClick("eth-5"), label: 'ETH5X' },
                                     ]
                                 },
-                                { 
-                                    title: 'SOL', 
+                                {
+                                    title: 'SOL',
                                     icon: 'https://d2l35o8v06vi7z.cloudfront.net/SOL.webp',
                                     assets: [
                                         { checked: spotSol, onChange: () => spotCheckboxClick("sol-1"), label: 'SOL' },
@@ -1433,8 +1427,8 @@ const App = () => {
                                         { checked: spotSol5, onChange: () => spotCheckboxClick("sol-5"), label: 'SOL5X' },
                                     ]
                                 },
-                                { 
-                                    title: 'SUI', 
+                                {
+                                    title: 'SUI',
                                     icon: 'https://d2l35o8v06vi7z.cloudfront.net/fiji/sui.png',
                                     assets: [
                                         { checked: spotSui, onChange: () => spotCheckboxClick("sui-1"), label: 'SUI' },
@@ -1444,8 +1438,8 @@ const App = () => {
                                         { checked: spotSui5, onChange: () => spotCheckboxClick("sui-5"), label: 'SUI5X' },
                                     ]
                                 },
-                                { 
-                                    title: 'DOGE', 
+                                {
+                                    title: 'DOGE',
                                     icon: 'https://d2l35o8v06vi7z.cloudfront.net/fiji/dogecoin.png',
                                     assets: [
                                         { checked: spotDoge, onChange: () => spotCheckboxClick("doge-1"), label: 'DOGE' },
@@ -1505,21 +1499,21 @@ const App = () => {
                                     Chart Layout
                                 </Typography>
                                 <Tabs value={tabValue} onChange={handleTabChange}>
-                                    <Tab 
-                                        icon={<ViewAgendaOutlinedIcon />} 
-                                        value="1" 
+                                    <Tab
+                                        icon={<ViewAgendaOutlinedIcon />}
+                                        value="1"
                                         label="Single Column"
                                         sx={{ minHeight: 48 }}
                                     />
-                                    <Tab 
-                                        icon={<ViewQuiltOutlinedIcon />} 
-                                        value="1.3" 
+                                    <Tab
+                                        icon={<ViewQuiltOutlinedIcon />}
+                                        value="1.3"
                                         label="Compact"
                                         sx={{ minHeight: 48 }}
                                     />
-                                    <Tab 
-                                        icon={<GridViewOutlinedIcon />} 
-                                        value="2" 
+                                    <Tab
+                                        icon={<GridViewOutlinedIcon />}
+                                        value="2"
                                         label="Two Columns"
                                         sx={{ minHeight: 48 }}
                                     />
@@ -1531,9 +1525,9 @@ const App = () => {
                         <Grid container spacing={3}>
                             <Grid item xs={12 / parseFloat(tabValue)}>
                                 <Paper elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
-                                    <CryptoChart 
-                                        datasets={datasets} 
-                                        title="Price" 
+                                    <CryptoChart
+                                        datasets={datasets}
+                                        title="Price"
                                         metric="price"
                                         showDatesOnly={granularity === "DAYS"}
                                     />
@@ -1542,9 +1536,9 @@ const App = () => {
 
                             <Grid item xs={12 / parseFloat(tabValue)}>
                                 <Paper elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
-                                    <CryptoChart 
-                                        datasets={datasets} 
-                                        title="Returns" 
+                                    <CryptoChart
+                                        datasets={datasets}
+                                        title="Returns"
                                         metric="returns"
                                         showDatesOnly={granularity === "DAYS"}
                                     />
@@ -1553,9 +1547,9 @@ const App = () => {
 
                             <Grid item xs={12 / parseFloat(tabValue)}>
                                 <Paper elevation={2} sx={{ borderRadius: 2, overflow: 'hidden' }}>
-                                    <CryptoChart 
-                                        datasets={datasets} 
-                                        title="Investment Value" 
+                                    <CryptoChart
+                                        datasets={datasets}
+                                        title="Investment Value"
                                         metric="investment-value"
                                         showDatesOnly={granularity === "DAYS"}
                                     />
