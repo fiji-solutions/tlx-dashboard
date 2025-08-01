@@ -4,13 +4,10 @@ import {
     Button,
     CircularProgress,
     Grid,
-    Tab,
-    Tabs,
     Card,
     CardContent,
     Typography,
     Box,
-    Chip,
     Paper,
     Container,
     Fade,
@@ -26,15 +23,12 @@ import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
-import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import "./App.css";
 
-// Apply UTC plugin to dayjs
 dayjs.extend(utc);
 
 const TGA1 = () => {
@@ -55,7 +49,6 @@ const TGA1 = () => {
     const [endDate, setEndDate] = useState(dayjs().utc());
     const [tabValue, setTabValue] = useState('2');
     const [openSnackbar, setOpenSnackbar] = useState(false);
-    const [lastUpdated, setLastUpdated] = useState(null);
 
     // Get the latest TGA date for the vertical line plugin
     const getLatestTgaDate = () => {
@@ -114,9 +107,9 @@ const TGA1 = () => {
                 // Enhanced label with background
                 const labelText = 'Latest TGA Value';
                 const dateText = targetDate.format('MM/DD/YYYY');
-                const labelWidth = Math.max(ctx.measureText(labelText).width, ctx.measureText(dateText).width) + 20;
-                const labelHeight = 50;
-                const labelX = xPosition - labelWidth / 2 - 20;
+                const labelWidth = Math.max(ctx.measureText(labelText).width, ctx.measureText(dateText).width) + 40;
+                const labelHeight = 45;
+                const labelX = xPosition - labelWidth / 2 - 40;
                 const labelY = chartArea.top - labelHeight - 10;
 
                 // Draw label background with shadow
@@ -137,20 +130,11 @@ const TGA1 = () => {
                 ctx.font = 'bold 12px Inter, Arial, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(labelText, xPosition - 20, labelY + 15);
+                ctx.fillText(labelText, xPosition - 40, labelY + 15);
 
                 // Draw date text
                 ctx.font = '10px Inter, Arial, sans-serif';
-                ctx.fillText(dateText, xPosition - 20, labelY + 32);
-
-                // Draw indicator circle at top of line
-                ctx.beginPath();
-                ctx.arc(xPosition - 20, chartArea.top, 4, 0, 2 * Math.PI);
-                ctx.fillStyle = 'rgba(75, 192, 192, 1)';
-                ctx.fill();
-                ctx.strokeStyle = 'white';
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                ctx.fillText(dateText, xPosition - 40, labelY + 32);
 
                 ctx.restore();
             }
@@ -1439,8 +1423,6 @@ const TGA1 = () => {
             });
             setWalData(normalizedData4);
             count = 4;
-
-            setLastUpdated(new Date());
         } catch (error) {
             console.error('Error fetching FRED data:', error);
             setError(true);
@@ -1721,10 +1703,6 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
         });
     };
 
-    const handleTabChange = (event, newValue) => {
-        setTabValue(newValue);
-    };
-
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -1804,7 +1782,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`
                         }}
                     >
-                        <Box display="flex" alignItems="center" mb={2}>
+                        <Box display="flex" alignItems="center" mt={2}>
                             <TrendingUpIcon sx={{ fontSize: 40, color: theme.palette.primary.main, mr: 2 }} />
                             <Typography
                                 variant="h3"
@@ -1821,20 +1799,10 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                             </Typography>
                         </Box>
 
-                        <Typography variant="h6" color="text.secondary" sx={{ mb: 3, maxWidth: '800px' }}>
+                        <Typography variant="h6" color="text.secondary" sx={{ maxWidth: '800px' }}>
                             Comprehensive analysis of Federal Reserve liquidity using the formula: WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL.
                             Track all components that affect market liquidity and monetary conditions.
                         </Typography>
-
-                        {lastUpdated && (
-                            <Chip
-                                icon={<AnalyticsIcon />}
-                                label={`Last updated: ${lastUpdated.toLocaleString()}`}
-                                variant="outlined"
-                                color="primary"
-                                size="small"
-                            />
-                        )}
                     </Paper>
 
                     {/* Controls Section */}
@@ -1973,7 +1941,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                                 {chart.subtitle}
                                                             </Typography>
                                                             <Typography variant="caption" color="text.secondary">
-                                                                Latest: {chart.data.latestDate}
+                                                                Latest value: {chart.data.latestDate}
                                                             </Typography>
                                                         </Box>
                                                         <Tooltip title="Copy Pine Script">

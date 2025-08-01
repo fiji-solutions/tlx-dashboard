@@ -125,9 +125,9 @@ const theme = createTheme({
 
 const Footer = () => {
     const currentTheme = theme;
-    
+
     const contributors = [
-        'Professor Adam', 'JayWolf', 'Cedric', 'Calypso', 
+        'Professor Adam', 'JayWolf', 'Cedric', 'Calypso',
         'Cryptosaurus Max ₿', 'OG_Simba'
     ];
 
@@ -144,12 +144,12 @@ const Footer = () => {
         >
             <Container maxWidth="lg">
                 <Box textAlign="center" mb={4}>
-                    <Typography 
-                        variant="h6" 
-                        gutterBottom 
-                        sx={{ 
-                            display: 'flex', 
-                            alignItems: 'center', 
+                    <Typography
+                        variant="h6"
+                        gutterBottom
+                        sx={{
+                            display: 'flex',
+                            alignItems: 'center',
                             justifyContent: 'center',
                             color: currentTheme.palette.primary.main,
                             fontWeight: 600
@@ -158,20 +158,20 @@ const Footer = () => {
                         <FavoriteIcon sx={{ mr: 1, color: '#e91e63' }} />
                         Special Thanks
                     </Typography>
-                    
-                    <Typography 
-                        variant="body1" 
-                        color="text.secondary" 
+
+                    <Typography
+                        variant="body1"
+                        color="text.secondary"
                         paragraph
                         sx={{ maxWidth: 600, mx: 'auto', mb: 3 }}
                     >
                         Huge thanks to everyone who helped make this platform possible:
                     </Typography>
-                    
-                    <Box 
-                        display="flex" 
-                        flexWrap="wrap" 
-                        justifyContent="center" 
+
+                    <Box
+                        display="flex"
+                        flexWrap="wrap"
+                        justifyContent="center"
                         gap={1}
                         mb={4}
                     >
@@ -197,8 +197,8 @@ const Footer = () => {
 
                 <Divider sx={{ my: 3, opacity: 0.3 }} />
 
-                <Box 
-                    display="flex" 
+                <Box
+                    display="flex"
                     flexDirection={{ xs: 'column', md: 'row' }}
                     justifyContent="space-between"
                     alignItems="center"
@@ -208,10 +208,10 @@ const Footer = () => {
                         <GitHubIcon sx={{ color: currentTheme.palette.text.secondary }} />
                         <Typography variant="body2" color="text.secondary">
                             View source code:{' '}
-                            <MuiLink 
-                                href="https://github.com/fiji-solutions" 
+                            <MuiLink
+                                href="https://github.com/fiji-solutions"
                                 target="_blank"
-                                sx={{ 
+                                sx={{
                                     color: currentTheme.palette.primary.main,
                                     textDecoration: 'none',
                                     fontWeight: 500,
@@ -224,12 +224,12 @@ const Footer = () => {
                             </MuiLink>
                         </Typography>
                     </Box>
-                    
+
                     <Typography variant="body2" color="text.secondary">
-                        For feedback or ideas, tag me in TRW: 
-                        <Box 
-                            component="span" 
-                            sx={{ 
+                        For feedback or ideas, tag me in TRW:
+                        <Box
+                            component="span"
+                            sx={{
                                 ml: 1,
                                 px: 1.5,
                                 py: 0.5,
@@ -240,7 +240,7 @@ const Footer = () => {
                                 fontSize: '0.8rem'
                             }}
                         >
-                            @01HK0BGJQMWXQC26SRG2W46TET
+                            {"<@01HK0BGJQMWXQC26SRG2W46TET>"}
                         </Box>
                     </Typography>
                 </Box>
@@ -259,7 +259,7 @@ const Root = () => {
             <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
                 {/* Conditionally render NavTabs based on the current path */}
                 {location.pathname !== '/solana-lst' && <NavTabs />}
-                
+
                 <Box sx={{ flex: 1 }}>
                     <Routes>
                         <Route path="/" element={<TGA1 />} />

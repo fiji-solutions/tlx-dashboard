@@ -1,13 +1,13 @@
 import React from 'react';
 import {
-    Tabs, 
-    Tab, 
-    Box, 
-    Grid, 
-    Paper, 
-    Avatar, 
-    Typography, 
-    useTheme, 
+    Tabs,
+    Tab,
+    Box,
+    Grid,
+    Paper,
+    Avatar,
+    Typography,
+    useTheme,
     alpha,
     Chip
 } from '@mui/material';
@@ -34,28 +34,28 @@ const NavTabs = () => {
             description: "Leveraged Token Analysis"
         },
         {
-            label: "Liquidity Analysis", 
+            label: "Liquidity Analysis",
             value: "/",
             icon: <AnalyticsIcon sx={{ fontSize: 20, mr: 1 }} />,
             description: "TGA & Market Liquidity"
         },
         {
             label: "Valuation Indicators",
-            value: "/liquidity-valuation-indicators", 
+            value: "/liquidity-valuation-indicators",
             icon: <AccountBalanceIcon sx={{ fontSize: 20, mr: 1 }} />,
             description: "Advanced Metrics"
         }
     ];
 
     return (
-        <Paper 
+        <Paper
             elevation={2}
-            sx={{ 
+            sx={{
                 borderRadius: 0,
                 borderBottom: `3px solid ${theme.palette.primary.main}`,
                 background: `linear-gradient(135deg, ${theme.palette.background.paper} 0%, ${alpha(theme.palette.primary.main, 0.02)} 100%)`,
-                position: 'sticky',
-                top: 0,
+                // position: 'sticky',
+                // top: 0,
                 zIndex: 1000,
                 backdropFilter: 'blur(10px)'
             }}
@@ -68,12 +68,10 @@ const NavTabs = () => {
             >
                 <Grid item xs={12} md={8}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Tabs 
-                            value={value} 
-                            onChange={handleChange} 
+                        <Tabs
+                            value={value}
+                            onChange={handleChange}
                             aria-label="navigation tabs"
-                            variant="scrollable"
-                            scrollButtons="auto"
                             sx={{
                                 '& .MuiTab-root': {
                                     textTransform: 'none',
@@ -95,14 +93,12 @@ const NavTabs = () => {
                                     }
                                 },
                                 '& .MuiTabs-indicator': {
-                                    height: 3,
-                                    borderRadius: '3px 3px 0 0',
-                                    background: `linear-gradient(45deg, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`
+                                    visibility: "hidden"
                                 }
                             }}
                         >
                             {tabData.map((tab) => (
-                                <Tab 
+                                <Tab
                                     key={tab.value}
                                     label={
                                         <Box display="flex" alignItems="center" flexDirection="column">
@@ -110,9 +106,9 @@ const NavTabs = () => {
                                                 {tab.icon}
                                                 {tab.label}
                                             </Box>
-                                            <Typography 
-                                                variant="caption" 
-                                                sx={{ 
+                                            <Typography
+                                                variant="caption"
+                                                sx={{
                                                     opacity: 0.7,
                                                     fontSize: '0.75rem',
                                                     mt: 0.5
@@ -122,21 +118,21 @@ const NavTabs = () => {
                                             </Typography>
                                         </Box>
                                     }
-                                    value={tab.value} 
-                                    component={Link} 
+                                    value={tab.value}
+                                    component={Link}
                                     to={tab.value}
                                 />
                             ))}
                         </Tabs>
                     </Box>
                 </Grid>
-                
-                <Grid 
-                    item 
-                    xs={12} 
+
+                <Grid
+                    item
+                    xs={12}
                     md={4}
-                    sx={{ 
-                        display: 'flex', 
+                    sx={{
+                        display: 'flex',
                         justifyContent: { xs: 'center', md: 'flex-end' },
                         mt: { xs: 2, md: 0 }
                     }}
@@ -161,33 +157,33 @@ const NavTabs = () => {
                             }
                         }}
                     >
-                        <Typography 
-                            variant="body2" 
-                            sx={{ 
-                                mr: 2, 
+                        <Typography
+                            variant="body2"
+                            sx={{
+                                mr: 2,
                                 fontWeight: 500,
                                 color: theme.palette.text.secondary
                             }}
                         >
                             Created by
                         </Typography>
-                        
+
                         <Avatar
                             src="https://d2l35o8v06vi7z.cloudfront.net/fiji/fiji2.png"
                             alt="Fiji Icon"
-                            sx={{ 
-                                width: 40, 
-                                height: 40, 
+                            sx={{
+                                width: 40,
+                                height: 40,
                                 mr: 1,
                                 border: `2px solid ${theme.palette.primary.main}`,
                                 boxShadow: theme.shadows[3]
                             }}
                         />
-                        
+
                         <Box>
-                            <Typography 
-                                variant="body1" 
-                                sx={{ 
+                            <Typography
+                                variant="body1"
+                                sx={{
                                     fontWeight: 700,
                                     color: theme.palette.primary.main,
                                     lineHeight: 1.2
@@ -195,12 +191,12 @@ const NavTabs = () => {
                             >
                                 Fiji Solutions
                             </Typography>
-                            <Chip 
+                            <Chip
                                 label="Analytics Platform"
                                 size="small"
                                 variant="outlined"
                                 color="primary"
-                                sx={{ 
+                                sx={{
                                     height: 20,
                                     fontSize: '0.7rem',
                                     mt: 0.5
