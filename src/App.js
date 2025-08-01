@@ -42,6 +42,9 @@ const AssetCheckbox = ({ checked, onChange, disabled, coinImage, networkImage, l
             sx={{
                 display: 'flex',
                 alignItems: 'center',
+            }
+            }
+    )
     const theme = useTheme();
     const [datasets, setDatasets] = useState([]);
     const [metrics, setMetrics] = useState([]);
