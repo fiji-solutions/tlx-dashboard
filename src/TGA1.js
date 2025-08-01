@@ -111,48 +111,46 @@ const TGA1 = () => {
 
                 // Draw indicator circle at the top
 
-                // Add modern label with background
+                // Enhanced label with background
                 const labelText = 'Latest TGA Value';
-                ctx.font = 'bold 11px Inter, Arial, sans-serif';
-                const textMetrics = ctx.measureText(labelText);
-                const labelWidth = textMetrics.width + 16;
-                const labelHeight = 24;
-                const labelX = xPosition - labelWidth / 2;
-                const labelY = chartArea.top - 35;
+                const dateText = targetDate.format('MM/DD/YYYY');
+                const labelWidth = Math.max(ctx.measureText(labelText).width, ctx.measureText(dateText).width) + 20;
+                const labelHeight = 50;
+                const labelX = xPosition - labelWidth / 2 - 20;
+                const labelY = chartArea.top - labelHeight - 10;
 
-                // Draw label background with rounded corners
-                const radius = 4;
-                ctx.beginPath();
-                ctx.roundRect(labelX, labelY, labelWidth, labelHeight, radius);
+                // Draw label background with shadow
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
+                ctx.shadowBlur = 4;
+                ctx.shadowOffsetY = 2;
                 ctx.fillStyle = 'rgba(75, 192, 192, 0.95)';
-                ctx.fill();
-                ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
-                ctx.lineWidth = 1;
-                ctx.stroke();
-
-                // Add subtle shadow to label
-                ctx.beginPath();
-                ctx.roundRect(labelX + 1, labelY + 1, labelWidth, labelHeight, radius);
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.roundRect(labelX, labelY, labelWidth, labelHeight, 8);
                 ctx.fill();
 
-                // Draw the label background again (on top of shadow)
-                ctx.beginPath();
-                ctx.roundRect(labelX, labelY, labelWidth, labelHeight, radius);
-                ctx.fillStyle = 'rgba(75, 192, 192, 0.95)';
-                ctx.fill();
+                // Reset shadow
+                ctx.shadowColor = 'transparent';
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
 
-                // Add label text
+                // Draw label text
                 ctx.fillStyle = 'white';
+                ctx.font = 'bold 12px Inter, Arial, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                ctx.fillText(labelText, xPosition, labelY + labelHeight / 2);
+                ctx.fillText(labelText, xPosition - 20, labelY + 15);
 
-                // Add date information below the main label
-                const dateText = dayjs(processTgaChartData().latestDate).format('MMM DD, YYYY');
+                // Draw date text
                 ctx.font = '10px Inter, Arial, sans-serif';
-                ctx.fillStyle = 'rgba(75, 192, 192, 0.8)';
-                ctx.fillText(dateText, xPosition, chartArea.top - 4);
+                ctx.fillText(dateText, xPosition - 20, labelY + 32);
+
+                // Draw indicator circle at top of line
+                ctx.beginPath();
+                ctx.arc(xPosition - 20, chartArea.top, 4, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(75, 192, 192, 1)';
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.stroke();
 
                 ctx.restore();
             }
