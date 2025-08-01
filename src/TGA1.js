@@ -73,18 +73,15 @@ const TGA1 = () => {
         id: 'verticalLine',
         beforeDraw: (chart) => {
             const latestTgaDate = getLatestTgaDate();
-        }
-    }
-    const verticalLinePlugin = {
-        id: 'verticalLine',
-        beforeDraw: (chart) => {
+            if (!latestTgaDate) return;
+
             const ctx = chart.ctx;
             const chartArea = chart.chartArea;
-            const xScale = chart.scales['x']; // Get the x-axis scale
-            const targetDate = dayjs(processTgaChartData().latestDate).utc();
+            const xScale = chart.scales['x'];
+            const targetDate = dayjs(latestTgaDate).utc();
 
             // Convert the target date to the x-coordinate on the chart
-            const xPosition = xScale.getPixelForValue(targetDate);
+            const xPosition = xScale.getPixelForValue(targetDate.toDate());
 
             // Draw the vertical line
             if (xPosition >= chartArea.left && xPosition <= chartArea.right) {
@@ -99,7 +96,7 @@ const TGA1 = () => {
                 ctx.stroke();
 
                 // Add a label at the top of the vertical line
-                ctx.font = 'bold 12px Arial';
+                ctx.font = 'bold 12px Inter';
                 ctx.fillStyle = 'rgba(75, 192, 192, 1)';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
@@ -1707,7 +1704,8 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
             title: "Formula #1: NET FED Liquidity",
             subtitle: "WALCL - TGA - RRPONTSYD + H41RESPPALDKNWW + WLCFLPCL (Millions)",
             data: processCombinedChartData(),
-            metric: "liquidity"
+            metric: "liquidity",
+            plugins: [verticalLinePlugin]
         },
         {
             title: "Treasury General Account (TGA) Closing Balance",
@@ -1784,7 +1782,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 label={`Last updated: ${lastUpdated.toLocaleString()}`}
                                 variant="outlined"
                                 color="primary"
-                                plugins={[watermarkPlugin, verticalLinePlugin]}
+                                size="small"
                             />
                         )}
                     </Paper>
@@ -1944,6 +1942,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                                     title=""
                                                     metric={chart.metric}
                                                     showDatesOnly={true}
+                                                    plugins={chart.plugins}
                                                 />
                                             </CardContent>
                                         </Card>
