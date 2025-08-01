@@ -73,6 +73,8 @@ const TGA1 = () => {
         id: 'verticalLine',
         beforeDraw: (chart) => {
             const latestTgaDate = getLatestTgaDate();
+        }
+    }
     const verticalLinePlugin = {
         id: 'verticalLine',
         beforeDraw: (chart) => {
