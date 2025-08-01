@@ -87,20 +87,79 @@ const TGA1 = () => {
             if (xPosition >= chartArea.left && xPosition <= chartArea.right) {
                 ctx.save();
 
-                // Draw the vertical line
+                // Create gradient for the line
+                const gradient = ctx.createLinearGradient(0, chartArea.top, 0, chartArea.bottom);
+                gradient.addColorStop(0, 'rgba(75, 192, 192, 0.8)');
+                gradient.addColorStop(0.5, 'rgba(75, 192, 192, 1)');
+                gradient.addColorStop(1, 'rgba(75, 192, 192, 0.3)');
+
+                // Draw the main vertical line with gradient
                 ctx.beginPath();
                 ctx.moveTo(xPosition, chartArea.top);
                 ctx.lineTo(xPosition, chartArea.bottom);
-                ctx.lineWidth = 2;
-                ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = gradient;
                 ctx.stroke();
 
-                // Add a label at the top of the vertical line
-                ctx.font = 'bold 12px Inter';
+                // Add a subtle shadow line
+                ctx.beginPath();
+                ctx.moveTo(xPosition + 1, chartArea.top);
+                ctx.lineTo(xPosition + 1, chartArea.bottom);
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.stroke();
+
+                // Draw indicator circle at the top
+                ctx.beginPath();
+                ctx.arc(xPosition, chartArea.top + 15, 6, 0, 2 * Math.PI);
                 ctx.fillStyle = 'rgba(75, 192, 192, 1)';
+                ctx.fill();
+                ctx.strokeStyle = 'white';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Add modern label with background
+                const labelText = 'Latest TGA Value';
+                ctx.font = 'bold 11px Inter, Arial, sans-serif';
+                const textMetrics = ctx.measureText(labelText);
+                const labelWidth = textMetrics.width + 16;
+                const labelHeight = 24;
+                const labelX = xPosition - labelWidth / 2;
+                const labelY = chartArea.top - 35;
+
+                // Draw label background with rounded corners
+                const radius = 4;
+                ctx.beginPath();
+                ctx.roundRect(labelX, labelY, labelWidth, labelHeight, radius);
+                ctx.fillStyle = 'rgba(75, 192, 192, 0.95)';
+                ctx.fill();
+                ctx.strokeStyle = 'rgba(75, 192, 192, 1)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Add subtle shadow to label
+                ctx.beginPath();
+                ctx.roundRect(labelX + 1, labelY + 1, labelWidth, labelHeight, radius);
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+                ctx.fill();
+
+                // Draw the label background again (on top of shadow)
+                ctx.beginPath();
+                ctx.roundRect(labelX, labelY, labelWidth, labelHeight, radius);
+                ctx.fillStyle = 'rgba(75, 192, 192, 0.95)';
+                ctx.fill();
+
+                // Add label text
+                ctx.fillStyle = 'white';
                 ctx.textAlign = 'center';
-                ctx.textBaseline = 'bottom';
-                ctx.fillText('Latest TGA Value', xPosition, chartArea.top - 5);
+                ctx.textBaseline = 'middle';
+                ctx.fillText(labelText, xPosition, labelY + labelHeight / 2);
+
+                // Add date information below the main label
+                const dateText = dayjs(processTgaChartData().latestDate).format('MMM DD, YYYY');
+                ctx.font = '10px Inter, Arial, sans-serif';
+                ctx.fillStyle = 'rgba(75, 192, 192, 0.8)';
+                ctx.fillText(dateText, xPosition, chartArea.top - 8);
 
                 ctx.restore();
             }
