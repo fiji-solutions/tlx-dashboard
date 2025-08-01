@@ -33,15 +33,11 @@ import ViewAgendaOutlinedIcon from '@mui/icons-material/ViewAgendaOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import ViewQuiltOutlinedIcon from '@mui/icons-material/ViewQuiltOutlined';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-// Move AssetCheckbox outside of App component to prevent recreation on every render
-const AssetCheckbox = ({ checked, onChange, disabled, coinImage, networkImage, label, description }) => {
-    const theme = useTheme();
-    
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
+import AnalyticsIcon from '@mui/icons-material/Analytics';
+import SearchIcon from '@mui/icons-material/Search';
+import GetAppIcon from '@mui/icons-material/GetApp';
+
+const App = () => {
     const theme = useTheme();
     const [datasets, setDatasets] = useState([]);
     const [metrics, setMetrics] = useState([]);
