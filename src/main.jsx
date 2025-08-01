@@ -14,6 +14,7 @@ import Jupiter from "./Jupiter";
 import LiquidityValuationIndicator from "./LVI";
 import AddDataForm from "./LVIForm";
 import TradingViewExperiments from "./TradingViewExperiments";
+import { Analytics } from "@vercel/analytics/react"
 
 // Create a modern theme
 const theme = createTheme({
@@ -286,5 +287,6 @@ root.render(
         <Router>
             <Root />
         </Router>
+        <Analytics />
     </React.StrictMode>
 );
