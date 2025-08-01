@@ -73,15 +73,16 @@ const TGA1 = () => {
         id: 'verticalLine',
         beforeDraw: (chart) => {
             const latestTgaDate = getLatestTgaDate();
-            if (!latestTgaDate) return;
-
+    const verticalLinePlugin = {
+        id: 'verticalLine',
+        beforeDraw: (chart) => {
             const ctx = chart.ctx;
             const chartArea = chart.chartArea;
-            const xScale = chart.scales['x'];
-            const targetDate = dayjs(latestTgaDate).utc();
+            const xScale = chart.scales['x']; // Get the x-axis scale
+            const targetDate = dayjs(processTgaChartData().latestDate).utc();
 
             // Convert the target date to the x-coordinate on the chart
-            const xPosition = xScale.getPixelForValue(targetDate.toDate());
+            const xPosition = xScale.getPixelForValue(targetDate);
 
             // Draw the vertical line
             if (xPosition >= chartArea.left && xPosition <= chartArea.right) {
@@ -96,7 +97,7 @@ const TGA1 = () => {
                 ctx.stroke();
 
                 // Add a label at the top of the vertical line
-                ctx.font = 'bold 12px Inter';
+                ctx.font = 'bold 12px Arial';
                 ctx.fillStyle = 'rgba(75, 192, 192, 1)';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'bottom';
@@ -1781,7 +1782,7 @@ plot(array.size(customValues) < 1 ? na : array.pop(customValues), 'csv', #ffff00
                                 label={`Last updated: ${lastUpdated.toLocaleString()}`}
                                 variant="outlined"
                                 color="primary"
-                                size="small"
+                                plugins={[watermarkPlugin, verticalLinePlugin]}
                             />
                         )}
                     </Paper>
