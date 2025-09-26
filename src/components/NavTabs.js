@@ -44,15 +44,27 @@ const NavTabs = () => {
             <Grid
                 item
                 className="creator-section"
-                onClick={() => window.open("https://www.fijisolutions.net/en", "_blank")}
             >
-                <span>Created by</span>
-                <img
-                    src="https://d2l35o8v06vi7z.cloudfront.net/fiji/fiji2.png"
-                    alt="Fiji Icon"
-                    className="creator-icon"
-                />
-                <span className="creator-name">Fiji</span>
+                <a
+                    href="https://www.fijisolutions.net/en"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                        textDecoration: 'none',
+                        color: 'inherit',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px'
+                    }}
+                >
+                    <span>Created by</span>
+                    <img
+                        src="https://d2l35o8v06vi7z.cloudfront.net/fiji/fiji2.png"
+                        alt="Fiji Solutions - Software Company"
+                        className="creator-icon"
+                    />
+                    <span className="creator-name">Fiji Solutions</span>
+                </a>
             </Grid>
 
         </Grid>
