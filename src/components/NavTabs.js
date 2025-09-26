@@ -143,13 +143,18 @@ const NavTabs = () => {
                     <Paper
                         elevation={1}
                         className="creator-section"
-                        onClick={() => window.open("https://www.fijisolutions.net/en", "_blank")}
+                        component="a"
+                        href="https://www.fijisolutions.net/en"
+                        target="_blank"
+                        rel="noopener noreferrer"
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
                             p: 2,
                             borderRadius: 3,
                             cursor: 'pointer',
+                            textDecoration: 'none',
+                            color: 'inherit',
                             transition: 'all 0.3s ease',
                             background: alpha(theme.palette.primary.main, 0.05),
                             border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
@@ -173,7 +178,7 @@ const NavTabs = () => {
 
                         <Avatar
                             src="https://d2l35o8v06vi7z.cloudfront.net/fiji/fiji2.png"
-                            alt="Fiji Icon"
+                            alt="Fiji Solutions - Software Company"
                             sx={{
                                 width: 40,
                                 height: 40,
@@ -195,7 +200,7 @@ const NavTabs = () => {
                                 Fiji Solutions
                             </Typography>
                             <Chip
-                                label="Analytics Platform"
+                                label="Software Company"
                                 size="small"
                                 variant="outlined"
                                 color="primary"
