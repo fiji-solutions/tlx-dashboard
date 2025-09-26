@@ -143,7 +143,7 @@ const NavTabs = () => {
                     <Paper
                         elevation={1}
                         className="creator-section"
-                        onClick={() => window.open("https://linktr.ee/fiji_solutions", "_blank")}
+                        onClick={() => window.open("https://www.fijisolutions.net/en", "_blank")}
                         sx={{
                             display: 'flex',
                             alignItems: 'center',
