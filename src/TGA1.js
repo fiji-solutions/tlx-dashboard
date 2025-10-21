@@ -1369,7 +1369,7 @@ const TGA1 = () => {
         let count = 0;
         try {
             // Fetch RRP data
-            const response1 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=RRPONTSYD`, {
+            const response1 = await fetch(`https://cors.fijisolutions.net/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=RRPONTSYD`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(rrpBody),
@@ -1383,7 +1383,7 @@ const TGA1 = () => {
             count = 1;
 
             // Fetch WLC data
-            const response2 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
+            const response2 = await fetch(`https://cors.fijisolutions.net/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WLCFLPCL`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(wlcBody),
@@ -1397,7 +1397,7 @@ const TGA1 = () => {
             count = 2;
 
             // Fetch H4 data
-            const response3 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
+            const response3 = await fetch(`https://cors.fijisolutions.net/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=H41RESPPALDKNWW`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(h4Body),
@@ -1411,7 +1411,7 @@ const TGA1 = () => {
             count = 3;
 
             // Fetch WAL data
-            const response4 = await fetch(`https://cors.fijisolutions.net:8082/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
+            const response4 = await fetch(`https://cors.fijisolutions.net/https://fred.stlouisfed.org/graph/api/series/?obs=true&sid=WALCL`, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(walBody),
