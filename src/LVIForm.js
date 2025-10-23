@@ -43,7 +43,7 @@ const AddDataForm = () => {
             const queryParams = new URLSearchParams();
             if (password) queryParams.append('password', password);
 
-            const response = await fetch(`https://api.fijisolutions.net/get-data?${queryParams.toString()}`);
+            const response = await fetch(`https://api.finance.fijisolutions.net/get-data?${queryParams.toString()}`);
             const data = await response.json();
             // Assuming the API response provides a flat array of records
             setRows(data["data"]);
@@ -68,7 +68,7 @@ const AddDataForm = () => {
         };
 
         try {
-            const response = await fetch('https://api.fijisolutions.net/add-data', {
+            const response = await fetch('https://api.finance.fijisolutions.net/add-data', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -102,7 +102,7 @@ const AddDataForm = () => {
     const handleDelete = async () => {
         setOpenDialog(false);
         try {
-            const response = await fetch('https://api.fijisolutions.net/delete-data', {
+            const response = await fetch('https://api.finance.fijisolutions.net/delete-data', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

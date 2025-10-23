@@ -168,7 +168,7 @@ const TGA1 = () => {
             const token = localStorage.getItem("cognito-token");
             const path = /*isLoggedIn ? "new-secret-path" :*/ "tga1";
 
-            const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
+            const response = await fetch(`https://api.finance.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -203,7 +203,7 @@ const TGA1 = () => {
     //         const token = localStorage.getItem("cognito-token");
     //         const path = /*isLoggedIn ? "new-secret-path2" :*/ "tga2";
     //
-    //         const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
+    //         const response = await fetch(`https://api.finance.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
     //             method: "GET",
     //             headers: {
     //                 "Authorization": `Bearer ${token}`

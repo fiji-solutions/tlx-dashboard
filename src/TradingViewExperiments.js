@@ -37,7 +37,7 @@ const TradingViewExperiments = () => {
             if (experiment) queryParams.append('experiment', experiment);
             if (password) queryParams.append('password', password);
 
-            const response = await fetch(`https://api.fijisolutions.net/trading-view-experiments?${queryParams.toString()}`);
+            const response = await fetch(`https://api.finance.fijisolutions.net/trading-view-experiments?${queryParams.toString()}`);
             const data = await response.json();
             // Assuming the API response provides a flat array of records
             setRows(data);

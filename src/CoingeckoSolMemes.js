@@ -233,7 +233,7 @@ const CoingeckoSolMemes = () => {
     const [correlationsSelected, setCorrelationsSelected] = useState([]);
     const [checked, setChecked] = useState(true);
 
-    const domain = "https://api.fijisolutions.net/coingecko-sol-memes";
+    const domain = "https://api.finance.fijisolutions.net/coingecko-sol-memes";
     // const domain = "http://127.0.0.1:8000/coingecko-sol-memes";
 
     const handleCoinSelectChange = (event) => {

@@ -55,7 +55,7 @@ const RSPS = () => {
     const [topResults, setTopResults] = useState(15);
     const [excludedCoins, setExcludedCoins] = useState("wownero,harrypottertrumphomersimpson777inu,cake-monster,curve-inu,robo-inu-finance,pepe-token,meme-brc-20,garlicoin,fable-of-the-dragon,harrypotterobamasonic10in,piccolo-inu,cumrocket,dinolfg,mog-coin,osaka-protocol,polydoge,el-hippo,dogegf,shina-inu,kiba-inu,floki,pepe,elmoerc,corgiai,dingocoin,baby-shiba-inu-erc,safemoon-inu,shib-original-vision,risitas,bob-token,wall-street-bets-dapp,shiba-saga,hathor,oggy-inu,tamadoge,samoyedcoin,kuma-inu,volt-inu-2,baby-doge-coin,ahatoken,richquack,snailbrook,dogelon-mars,kitty-inu,lovely-inu-finance,bone-shibaswap,milady-meme-coin,cramer-coin,sanin-inu,katana-inu,constitutiondao,vita-inu,bonk,catecoin,sharbi,cat-token");
 
-    const domain = "https://api.fijisolutions.net";
+    const domain = "https://api.finance.fijisolutions.net";
     // const domain = "http://127.0.0.1:8000";
 
     const fetchData = async () => {
