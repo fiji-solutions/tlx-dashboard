@@ -3,11 +3,11 @@ import { Grid, Typography } from '@mui/material';
 
 const LiquidityValuationIndicator = () => {
     const [imageUrls] = useState([
-        "https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png",
-        "https://api.fijisolutions.net/static/plots/zscore_btc_prices.png",
-        "https://api.fijisolutions.net/static/plots/michael_howell_better_model.png",
-        "https://api.fijisolutions.net/static/plots/btc_vs_gl_better_model.png",
-        "https://api.fijisolutions.net/static/plots/zscore_btc_prices_valuation.png",
+        "https://api.finance.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png",
+        "https://api.finance.fijisolutions.net/static/plots/zscore_btc_prices.png",
+        "https://api.finance.fijisolutions.net/static/plots/michael_howell_better_model.png",
+        "https://api.finance.fijisolutions.net/static/plots/btc_vs_gl_better_model.png",
+        "https://api.finance.fijisolutions.net/static/plots/zscore_btc_prices_valuation.png",
     ]);
     const [lastModifiedDates, setLastModifiedDates] = useState({});
 
@@ -52,7 +52,7 @@ const LiquidityValuationIndicator = () => {
                         Michael Howell’s “Better Model” is calculated by combining the linear trend between Bitcoin and gold prices (log-log) with the linear trend line between gold prices and CBC’s Global Liquidity Index (log-log).
                     </Typography>
                     <Typography variant="h6" style={{ marginBottom: "16px" }}>
-                        {`Charts are updated weekly. Last updated: ${lastModifiedDates["https://api.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png"] || 'Loading...'}`}
+                        {`Charts are updated weekly. Last updated: ${lastModifiedDates["https://api.finance.fijisolutions.net/static/plots/global_liquidity_vs_bitcoin.png"] || 'Loading...'}`}
                     </Typography>
                 </Grid>
             </Grid>

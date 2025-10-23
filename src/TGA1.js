@@ -141,7 +141,7 @@ const TGA1 = () => {
         },
     };
 
-    const domain = "https://api.fijisolutions.net";
+    const domain = "https://api.finance.fijisolutions.net";
 
     // Fetch TGA data
     const fetchTgaData = async () => {

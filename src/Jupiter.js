@@ -93,8 +93,8 @@ const Jupiter = () => {
 
 
     const fetchAssets = async () => {
-        // const response = await fetch('http://localhost:8000/jupiter-all');
-        const response = await fetch('https://api.fijisolutions.net/jupiter-all');
+        // const response = await fetch('https://api.finance.fijisolutions.net/jupiter-all');
+        const response = await fetch('https://api.finance.fijisolutions.net/jupiter-all');
         const data = await response.json();
         const sortedData = data.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -116,8 +116,8 @@ const Jupiter = () => {
 
         const allAssets = selectedAssets.concat("solana").join(',');
 
-        // const response = await fetch(`http://localhost:8000/jupiter?ids=${encodeURIComponent(allAssets)}`);
-        const response = await fetch(`https://api.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
+        // const response = await fetch(`https://api.finance.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
+        const response = await fetch(`https://api.finance.fijisolutions.net/jupiter?ids=${encodeURIComponent(allAssets)}`);
         const results = await response.json();
 
         const colorMap = {};

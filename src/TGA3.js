@@ -167,7 +167,7 @@ const TGA3 = () => {
 
     const fetchCorrelation = async (number) => {
         try {
-            const response = await fetch(`https://api.fijisolutions.net/liquidity/correlation`, {
+            const response = await fetch(`https://api.finance.fijisolutions.net/liquidity/correlation`, {
                 method: "POST",
                 body: JSON.stringify({
                     liquidity: number === 1 ? api : (number === 2 ? api2 : api3),
@@ -209,7 +209,7 @@ const TGA3 = () => {
             const token = localStorage.getItem("cognito-token");
             const path = isLoggedIn ? "new-secret-path" : "tga1";
 
-            const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
+            const response = await fetch(`https://api.finance.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
@@ -244,7 +244,7 @@ const TGA3 = () => {
             const token = localStorage.getItem("cognito-token");
             const path = isLoggedIn ? "new-secret-path2" : "tga2";
 
-            const response = await fetch(`https://api.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
+            const response = await fetch(`https://api.finance.fijisolutions.net/${path}?start_date=${startDate.format('YYYY-MM-DD')}&end_date=${endDate.format('YYYY-MM-DD')}`, {
                 method: "GET",
                 headers: {
                     "Authorization": `Bearer ${token}`
