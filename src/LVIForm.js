@@ -79,6 +79,22 @@ const AddDataForm = () => {
             const result = await response.json();
             if (response.ok) {
                 setMessage('Data added successfully!');
+                
+                // Make 6 quick calls to /trw-guy-generate to reach all replicas
+                const generatePromises = [];
+                for (let i = 0; i < 6; i++) {
+                    generatePromises.push(
+                        fetch('https://api.finance.fijisolutions.net/trw-guy-generate', {
+                            method: 'GET'
+                        }).catch(error => {
+                            console.warn(`trw-guy-generate call ${i + 1} failed:`, error);
+                        })
+                    );
+                }
+                
+                // Execute all calls in parallel without waiting for responses
+                Promise.allSettled(generatePromises);
+                
                 // Clear the form fields
                 setDate('');
                 setGlobalLiquidity('');
