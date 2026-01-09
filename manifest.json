@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Fiji Solutions",
+  "name": "Fiji Solutions Financial Dashboard",
+  "description": "Advanced cryptocurrency analysis and liquidity tracking platform by Fiji Solutions",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,10 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#1a2332",
+  "background_color": "#ffffff",
+  "contact": {
+    "telegram": "fiji_solutions",
+    "twitter": "fiji_solutions"
+  }
 }
