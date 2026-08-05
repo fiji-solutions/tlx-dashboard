@@ -1765,14 +1765,22 @@ const TGA1 = () => {
         const startTimestamp = dayjs(startString).utc().toDate().getTime();
         const endTimestamp = dayjs(endString).utc().toDate().getTime();
 
-        // Find the latest common start date across all datasets
-        const latestCommonStartDateTimestamp = Math.max(
+        // Find the latest common start date across all datasets.
+        // A series with no observations in the window yields Math.min() === Infinity,
+        // so skip it instead of letting it poison the whole reduction. H41RESPPALDKNWW
+        // was discontinued by FRED (last observation 2026-05-06), which is what made
+        // this fire on the default two-month window.
+        const inWindowStarts = [
             Math.min(...walDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
             Math.min(...tgaDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
             Math.min(...rrpDates.filter(date => date >= startTimestamp && date <= endTimestamp)),
             Math.min(...h4Dates.filter(date => date >= startTimestamp && date <= endTimestamp)),
             Math.min(...wlcDates.filter(date => date >= startTimestamp && date <= endTimestamp))
-        );
+        ].filter(Number.isFinite);
+
+        const latestCommonStartDateTimestamp = inWindowStarts.length > 0
+            ? Math.max(...inWindowStarts)
+            : startTimestamp;
 
         // Convert the timestamp back to a date string
         // Update startString to this latest common start date
