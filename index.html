@@ -11,7 +11,12 @@
     <meta name="description" content="Professional-grade cryptocurrency analysis platform featuring Federal Reserve liquidity tracking, leveraged token performance, Solana LST analytics, and advanced risk metrics by Fiji Solutions." />
     <meta name="keywords" content="cryptocurrency analysis, Federal Reserve liquidity, crypto analytics, DeFi metrics, Solana LST, leveraged tokens, financial dashboard, Fiji Solutions" />
     <meta name="author" content="Fiji Solutions" />
-    <meta name="robots" content="index, follow" />
+    <!-- noindex: these dashboards are products, not marketing pages. They were outranking
+         www.fijisolutions.net on the company name itself. Owner decision 2026-09-04.
+         "follow" is deliberate so links out to the company site are still crawled.
+         Do NOT add "Disallow: /" to robots.txt: a blocked crawler never reads this tag,
+         which would leave the page indexed with no description instead of removing it. -->
+    <meta name="robots" content="noindex, follow" />
     <link rel="canonical" href="https://finance.fijisolutions.net/" />
     
     <!-- Contact Information -->

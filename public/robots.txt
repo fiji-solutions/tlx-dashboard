@@ -1,3 +1,6 @@
 # https://www.robotstxt.org/robotstxt.html
+# Crawling stays allowed on purpose. The noindex meta tag in index.html is what
+# removes these pages from search, and a crawler that is blocked here would never
+# read that tag.
 User-agent: *
 Disallow:
